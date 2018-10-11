@@ -1,0 +1,58 @@
+{% extends 'website/base.html' %}
+
+{% block custom_css %}
+{% endblock custom_css %}
+
+{% block content %}
+
+{% include 'website/server_messages.html' %}
+
+<div class="container">
+  <div class="row">
+    <div class="col text-center">
+      <h1 class="text-danger">Request Time Off</h1>
+    </br>
+  </br>
+    </div>
+  </div>
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col"></th>
+          <th scope="col">Monday</th>
+          <th scope="col">Tuesday</th>
+          <th scope="col">Wednesday</th>
+          <th scope="col">Thursday</th>
+          <th scope="col">Friday</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">Breakfast</th>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <th scope="row">Lunch</th>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <th scope="row">Dinner</th>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+{% endblock content %}

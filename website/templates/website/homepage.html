@@ -8,36 +8,71 @@
 
 <div class="container"></br>
   <div class="row">
-    <div class = "col text-center">(Employee's name) Employement Summary</div>
+    <div class = "col text-center">
+      <h4 class="text-danger">(Employee's name) Employement Summary</h4>
+    </div>
   </div>
 </br>
 </br>
 </br>
   <div class="row">
-    <div class="col-4 text-center">
-      <a href="">Request Time off</a>
+    <div class="col-4 text-center link-danger">
+      <a href="{% url 'website:RequestTimeOffPageView' %}">Request Time off</a>
     </div>
     <div class="col">
       |
     </div>
-    <div class="col-3 text-center">
+    <div class="col-3 text-center link-danger">
       <a href="">Shifts available</a>
     </div>
     <div class="col">
       |
     </div>
-    <div class="col-3 text-left">
+    <div class="col-3 text-left link-danger">
       <a href="">Ranking</a>
     </div>
   </div>
 </br>
 </br>
   <div class="row">
-    <div class="col text-center">
+    <div class="col text-center text-danger">
       <a href="">Either submit availability or schedule</a>
     </div>
   </div>
   <!-- for loop to create table -->
+</br>
+</br>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Monday</th>
+      <th scope="col">Tuesday</th>
+      <th scope="col">Wednesday</th>
+      <th scope="col">Thursday</th>
+      <th scope="col">Friday</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">Breakfast</th>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <th scope="row">Lunch</th>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <th scope="row">Dinner</th>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
 </br>
 </br>
   <div class="row">

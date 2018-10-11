@@ -14,3 +14,8 @@ def homepage_view(request):
     context = {
     }
     return render(request, 'website/homepage.html', context)
+
+def request_time_off_page_view(request):
+    context = {
+    }
+    return render(request, 'website/request_time_off.html', context)
