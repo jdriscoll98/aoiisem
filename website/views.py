@@ -19,3 +19,13 @@ def request_time_off_page_view(request):
     context = {
     }
     return render(request, 'website/request_time_off.html', context)
+
+def request_time_off_form_view(request):
+    context = {
+    }
+    return render(request, 'website/request_time_off_form.html', context)
+
+def shifts_available_page_view(request):
+    context = {
+    }
+    return render(request, 'website/shifts_available.html', context)
