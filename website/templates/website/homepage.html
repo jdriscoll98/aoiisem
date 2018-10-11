@@ -5,6 +5,58 @@
 
 {% block content %}
 {% include 'website/server_messages.html' %}
+
+<div class="container"></br>
+  <div class="row">
+    <div class = "col text-center">(Employee's name) Employement Summary</div>
+  </div>
+</br>
+</br>
+</br>
+  <div class="row">
+    <div class="col-4 text-center">
+      <a href="">Request Time off</a>
+    </div>
+    <div class="col">
+      |
+    </div>
+    <div class="col-3 text-center">
+      <a href="">Shifts available</a>
+    </div>
+    <div class="col">
+      |
+    </div>
+    <div class="col-3 text-left">
+      <a href="">Ranking</a>
+    </div>
+  </div>
+</br>
+</br>
+  <div class="row">
+    <div class="col text-center">
+      <a href="">Either submit availability or schedule</a>
+    </div>
+  </div>
+  <!-- for loop to create table -->
+</br>
+</br>
+  <div class="row">
+    <div class="col-8 text-left">
+      Hours Scheduled:
+    </div>
+    <div class="col text-left">
+      Hours
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-8 text-left">
+      Estimated Earnings (2 weeks):
+    </div>
+    <div class="col">
+      $$
+    </div>
+  </div>
+</div>
 {% endblock content %}
 
 {% block js %}

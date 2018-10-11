@@ -55,16 +55,15 @@
 </style>
 <!-- end-recaptcha -->
 
-
-<div class="center">
+</br>
+<div class="container">
 	<div class="row">
-		<div class="col-md-6 offset-md-3">
-				{% include 'website/server_messages.html' %}
+		<div class="col">
+			<div class = "col">
+					<h3 class="col-md-3 ">Aoii Employee Management</h3>
+				</div>
 		</div>
 	</div>
-
-	<h1 style="color:white;font-size:300%;">How's it going Pal?</h1>
-	<h3 class="secondary-color">Please login to continue</h3>
 	<br />
 	{% if form.errors %}
 	<p>Your username and password didn't match. Please try again.</p>
@@ -83,34 +82,9 @@
 				<button class="g-recaptcha btn btn-success col-md-8 " data-sitekey="{{ recaptcha_site_key }}" data-callback='onSubmit'>Login</button>
 			</form>
 			<br />
-			<text id="create-account" class="secondary-color" data-toggle="modal" data-target="#create-account-modal"><strong>Create an Account</strong></text>
 		</div>
 	</div>
 </div>
-
-<div class="modal" id="create-account-modal">
-	 <div class="modal-dialog modal-lg modal-dialog-centered">
-		 <div class="modal-content">
-
-			 <!-- Modal Header -->
-			 <div class="modal-header">
-				 <h4 class="modal-title">Create an Account</h4>
-				 <button type="button" class="close" data-dismiss="modal">&times;</button>
-			 </div>
-
-			 <!-- Modal body -->
-			 <div class="modal-body center">
-			
-			 </div>
-
-			 <!-- Modal footer -->
-			 <div class="modal-footer">
-				 <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-			 </div>
-
-		 </div>
-	 </div>
- </div>
 {% endblock content %}
 
 {% block js %}
