@@ -12,6 +12,7 @@ import json
 @login_required
 def homepage_view(request):
     context = {
+        "employee": request.user.username
     }
     return render(request, 'website/homepage.html', context)
 
