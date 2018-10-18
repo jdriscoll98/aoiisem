@@ -9,7 +9,7 @@
 <div class="container"></br>
   <div class="row">
     <div class = "col text-center">
-      <h4 class="text-danger">{{ employee }}'s Employement Summary</h4>
+      <h4 class="text-danger">{{ employee.user.first_name }}'s Employement Summary</h4>
     </div>
   </div>
 </br>
@@ -45,31 +45,44 @@
 <table class="table">
   <thead>
     <tr>
-      <th scope="col">Monday</th>
-      <th scope="col">Tuesday</th>
-      <th scope="col">Wednesday</th>
-      <th scope="col">Thursday</th>
-      <th scope="col">Friday</th>
+      <th scope="col-6"></th>
+      <th scope="col-6">Monday</th>
+      <th scope="col-6">Tuesday</th>
+      <th scope="col-6">Wednesday</th>
+      <th scope="col-6">Thursday</th>
+      <th scope="col-6">Friday</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th scope="row">Breakfast</th>
-      <td></td>
-      <td></td>
-      <td></td>
+      {% for shift in shifts %}
+        {% if shift.type == 'Breakfast' %}
+          <td bgcolor="#2ECC71" ></td>
+        {% else %}
+          <td></td>
+        {% endif %}
+      {% endfor %}
     </tr>
     <tr>
       <th scope="row">Lunch</th>
-      <td></td>
-      <td></td>
-      <td></td>
+      {% for shift in shifts %}
+        {% if shift.type == 'Lunch' %}
+          <td bgcolor="#2ECC71" ></td>
+        {% else %}
+          <td></td>
+        {% endif %}
+      {% endfor %}
     </tr>
     <tr>
       <th scope="row">Dinner</th>
-      <td></td>
-      <td></td>
-      <td></td>
+      {% for shift in shifts %}
+        {% if shift.type == 'Dinner' %}
+          <td  bgcolor="#2ECC71" ></td>
+        {% else %}
+          <td></td>
+        {% endif %}
+      {% endfor %}
     </tr>
   </tbody>
 </table>

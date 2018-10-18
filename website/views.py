@@ -4,6 +4,7 @@ from django.http import JsonResponse
 from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.template.loader import render_to_string
+from .utils import get_employees, get_shifts
 import json
 
 #-------------------------------------------------------------------------------
@@ -11,9 +12,12 @@ import json
 #-------------------------------------------------------------------------------
 @login_required
 def homepage_view(request):
+    employee = get_employees(request.user)
     context = {
-        "employee": request.user.username
+        "employee": employee,
+        "shifts" : employee.get_scheduled_shifts()
     }
+    print(str(employee.get_scheduled_shifts()))
     return render(request, 'website/homepage.html', context)
 
 def request_time_off_page_view(request):

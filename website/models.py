@@ -1,11 +1,10 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import User
 
-
-class Employee(AbstractUser):
+class Employee(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
     name = models.CharField(blank=True, max_length=100)
     email = models.EmailField()
-    password = models.CharField(max_length=100)
     number_of_scheduled_hours = models.IntegerField(blank=True, null=True)
     head_bus_boy = models.BooleanField(default=False)
 
@@ -13,7 +12,7 @@ class Employee(AbstractUser):
         return AvailableShift.filter(employee=self)
 
     def get_scheduled_shifts(self):
-        return ScheduledShift.filter(employee=self)
+        return ScheduledShift.objects.filter(employee=self)
 
     def __str__(self):
         return str(self.name)
@@ -56,4 +55,4 @@ class ScheduledShift(models.Model):
     employee = models.ForeignKey(Employee, on_delete=models.CASCADE, blank=True, null=True)
 
     def __str__(self):
-        return  str(self.employee) + " " + str(self.day) + " " + str(self.type)
+        return  str(self.employee) + " | " + str(self.day) + " " + str(self.type)
