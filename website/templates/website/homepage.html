@@ -57,8 +57,8 @@
     <tr>
       <th scope="row">Breakfast</th>
       {% for shift in shifts %}
-        {% if shift.type == 'Breakfast' %}
-          <td bgcolor="#2ECC71" ></td>
+        {% if shift.type == 'Breakfast' and shift.day == 'Monday' %}
+          <td bgcolor="#2ECC71" >{{ shift }}</td>
         {% else %}
           <td></td>
         {% endif %}
@@ -68,7 +68,7 @@
       <th scope="row">Lunch</th>
       {% for shift in shifts %}
         {% if shift.type == 'Lunch' %}
-          <td bgcolor="#2ECC71" ></td>
+          <td bgcolor="#2ECC71" >{{ shift }}</td>
         {% else %}
           <td></td>
         {% endif %}
@@ -78,7 +78,7 @@
       <th scope="row">Dinner</th>
       {% for shift in shifts %}
         {% if shift.type == 'Dinner' %}
-          <td  bgcolor="#2ECC71" ></td>
+          <td  bgcolor="#2ECC71" >{{ shift }}</td>
         {% else %}
           <td></td>
         {% endif %}
@@ -93,7 +93,7 @@
       Hours Scheduled:
     </div>
     <div class="col text-left">
-      Hours
+      {{ hours }}
     </div>
   </div>
   <div class="row">
@@ -101,7 +101,7 @@
       Estimated Earnings (2 weeks):
     </div>
     <div class="col">
-      $$
+    ${{ pay }}
     </div>
   </div>
 </div>
