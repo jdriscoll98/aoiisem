@@ -5,6 +5,7 @@ class Employee(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
     name = models.CharField(blank=True, max_length=100)
     email = models.EmailField()
+    number_of_scheduled_hours = models.IntegerField(blank=True, null=True)
     head_bus_boy = models.BooleanField(default=False)
 
     def get_available_shifts(self):
@@ -12,15 +13,6 @@ class Employee(models.Model):
 
     def get_scheduled_shifts(self):
         return ScheduledShift.objects.filter(employee=self)
-
-    def get_num_of_hours(self):
-        num_hours = 0
-        for shift in self.get_scheduled_shifts():
-            if shift.type == 'Breakfast':
-                num_hours += 1
-            else:
-                num_hours += 3
-        return num_hours
 
     def __str__(self):
         return str(self.name)

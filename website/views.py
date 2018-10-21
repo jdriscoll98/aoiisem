@@ -15,9 +15,7 @@ def homepage_view(request):
     employee = get_employees(request.user)
     context = {
         "employee": employee,
-        "shifts" : employee.get_scheduled_shifts(),
-        "hours": employee.get_num_of_hours(),
-        "pay":  employee.get_num_of_hours() * 8
+        "shifts" : employee.get_scheduled_shifts()
     }
     print(str(employee.get_scheduled_shifts()))
     return render(request, 'website/homepage.html', context)
