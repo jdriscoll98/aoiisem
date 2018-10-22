@@ -56,33 +56,87 @@
   <tbody>
     <tr>
       <th scope="row">Breakfast</th>
-      {% for shift in shifts %}
-        {% if shift.type == 'Breakfast' %}
-          <td bgcolor="#2ECC71" ></td>
+        {% if MondayBreakfast %}
+          <td bgcolor="#2ECC71"></td>
         {% else %}
           <td></td>
         {% endif %}
-      {% endfor %}
+        {% if TuesdayBreakfast %}
+          <td bgcolor="#2ECC71"></td>
+        {% else %}
+          <td></td>
+        {% endif %}
+        {% if WednesdayBreakfast %}
+          <td bgcolor="#2ECC71"></td>
+        {% else %}
+          <td></td>
+        {% endif %}
+        {% if ThursdayBreakfast %}
+          <td bgcolor="#2ECC71"></td>
+        {% else %}
+          <td></td>
+        {% endif %}
+        {% if FridayBreakfast %}
+          <td bgcolor="#2ECC71"></td>
+        {% else %}
+          <td></td>
+        {% endif %}
     </tr>
     <tr>
       <th scope="row">Lunch</th>
-      {% for shift in shifts %}
-        {% if shift.type == 'Lunch' %}
-          <td bgcolor="#2ECC71" ></td>
-        {% else %}
-          <td></td>
-        {% endif %}
-      {% endfor %}
+      {% if MondayLunch %}
+        <td bgcolor="#2ECC71"></td>
+      {% else %}
+        <td></td>
+      {% endif %}
+      {% if TuesdayLunch %}
+        <td bgcolor="#2ECC71"></td>
+      {% else %}
+        <td></td>
+      {% endif %}
+      {% if WednesdayLunch %}
+        <td bgcolor="#2ECC71"></td>
+      {% else %}
+        <td></td>
+      {% endif %}
+      {% if ThursdayLunch %}
+        <td bgcolor="#2ECC71"></td>
+      {% else %}
+        <td></td>
+      {% endif %}
+      {% if FridayLunch %}
+        <td bgcolor="#2ECC71"></td>
+      {% else %}
+        <td></td>
+      {% endif %}
     </tr>
     <tr>
       <th scope="row">Dinner</th>
-      {% for shift in shifts %}
-        {% if shift.type == 'Dinner' %}
-          <td  bgcolor="#2ECC71" ></td>
-        {% else %}
-          <td></td>
-        {% endif %}
-      {% endfor %}
+      {% if MondayDinner %}
+        <td bgcolor="#2ECC71"></td>
+      {% else %}
+        <td></td>
+      {% endif %}
+      {% if TuesdayDinner %}
+        <td bgcolor="#2ECC71"></td>
+      {% else %}
+        <td></td>
+      {% endif %}
+      {% if WednesdayDinner %}
+        <td bgcolor="#2ECC71"></td>
+      {% else %}
+        <td></td>
+      {% endif %}
+      {% if ThursdayDinner %}
+        <td bgcolor="#2ECC71"></td>
+      {% else %}
+        <td></td>
+      {% endif %}
+      {% if FridayDinner %}
+        <td bgcolor="#2ECC71"></td>
+      {% else %}
+        <td></td>
+      {% endif %}
     </tr>
   </tbody>
 </table>

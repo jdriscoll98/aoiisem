@@ -11,8 +11,8 @@ class Employee(models.Model):
     def get_available_shifts(self):
         return AvailableShift.filter(employee=self)
 
-    def get_scheduled_shifts(self):
-        return ScheduledShift.objects.filter(employee=self)
+    def get_scheduled_shifts(self, day, type):
+        return ScheduledShift.objects.filter(employee=self, day=day, type=type)
 
     def __str__(self):
         return str(self.name)
