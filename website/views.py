@@ -59,5 +59,6 @@ class PostShiftView(CreateView):
 
 def shifts_available_page_view(request):
     context = {
+        "AvailableShifts": PostShift.objects.all()
     }
     return render(request, 'website/shifts_available.html', context)
