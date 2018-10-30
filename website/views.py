@@ -40,16 +40,21 @@ def homepage_view(request):
 
 class PostShiftView(CreateView):
     model = PostShift
-    fields = ('day', 'type', 'employee')
+    fields = '__all__'
     success_url = '/'
 
-    def get_initial(self, *args, **kwargs):
+    def get_initial(self):
         # Get the initial dictionary from the superclass method
         initial = super(PostShiftView, self).get_initial()
         # Copy the dictionary so we don't accidentally change a mutable dict
         initial = initial.copy()
+        shift = ScheduledShift.objects.get(pk=self.kwargs['pk'])
         employee = Employee.objects.get(user=self.request.user)
-        initial['employee'] = employee
+        initial = {
+            'employee': employee,
+            'day': shift.day,
+            'type': shift.type
+        }
         return initial
 
 def shifts_available_page_view(request):

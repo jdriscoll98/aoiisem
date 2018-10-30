@@ -57,27 +57,27 @@
     <tr>
       <th scope="row">Breakfast</th>
         {% if MondayBreakfast %}
-          <td class="request-time-off" href="{% url 'website:post_shift' %}" bgcolor="#2ECC71"></td>
+          <td class="request-time-off" href="{% url 'website:post_shift' pk=MondayBreakfast.pk %}" bgcolor="#2ECC71"></td>
         {% else %}
           <td class="request-time-off" ></td>
         {% endif %}
         {% if TuesdayBreakfast %}
-          <td bgcolor="#2ECC71"></td>
+          <td class="request-time-off" href="{% url 'website:post_shift' pk=TuesdayBreakfast.pk %}" bgcolor="#2ECC71"></td>
         {% else %}
           <td></td>
         {% endif %}
         {% if WednesdayBreakfast %}
-          <td bgcolor="#2ECC71"></td>
+          <td class="request-time-off" href="{% url 'website:post_shift' pk=WednesdayBreakfast.pk %}" bgcolor="#2ECC71"></td>
         {% else %}
           <td></td>
         {% endif %}
         {% if ThursdayBreakfast %}
-          <td bgcolor="#2ECC71"></td>
+          <td class="request-time-off" href="{% url 'website:post_shift' pk=ThursdayBreakfast.pk %}" bgcolor="#2ECC71"></td>
         {% else %}
           <td></td>
         {% endif %}
         {% if FridayBreakfast %}
-          <td bgcolor="#2ECC71"></td>
+          <td class="request-time-off" href="{% url 'website:post_shift' pk=FridayBreakfast.pk %}" bgcolor="#2ECC71"></td>
         {% else %}
           <td></td>
         {% endif %}
@@ -85,27 +85,27 @@
     <tr>
       <th scope="row">Lunch</th>
       {% if MondayLunch %}
-        <td class="request-time-off" bgcolor="#2ECC71"></td>
+        <td class="request-time-off" href="{% url 'website:post_shift' pk=MondayLunch.pk %}" bgcolor="#2ECC71"></td>
       {% else %}
         <td></td>
       {% endif %}
       {% if TuesdayLunch %}
-        <td bgcolor="#2ECC71"></td>
+        <td class="request-time-off" href="{% url 'website:post_shift' pk=TuesdayLunch.pk %}"  bgcolor="#2ECC71"></td>
       {% else %}
         <td></td>
       {% endif %}
       {% if WednesdayLunch %}
-        <td bgcolor="#2ECC71"></td>
+        <td class="request-time-off" href="{% url 'website:post_shift' pk=WednesdayLunch.pk %}" bgcolor="#2ECC71"></td>
       {% else %}
         <td></td>
       {% endif %}
       {% if ThursdayLunch %}
-        <td bgcolor="#2ECC71"></td>
+        <td class="request-time-off" href="{% url 'website:post_shift' pk=ThursdayLunch.pk %}" bgcolor="#2ECC71"></td>
       {% else %}
         <td></td>
       {% endif %}
       {% if FridayLunch %}
-        <td bgcolor="#2ECC71"></td>
+        <td class="request-time-off" href="{% url 'website:post_shift' pk=FridayLunch.pk %}" bgcolor="#2ECC71"></td>
       {% else %}
         <td></td>
       {% endif %}
@@ -113,27 +113,27 @@
     <tr>
       <th scope="row">Dinner</th>
       {% if MondayDinner %}
-        <td bgcolor="#2ECC71"></td>
+        <td class="request-time-off" href="{% url 'website:post_shift' pk=MondayDinner.pk %}" bgcolor="#2ECC71"></td>
       {% else %}
         <td></td>
       {% endif %}
       {% if TuesdayDinner %}
-        <td bgcolor="#2ECC71"></td>
+        <td class="request-time-off" href="{% url 'website:post_shift' pk=TuesdayDinner.pk %}" bgcolor="#2ECC71"></td>
       {% else %}
         <td></td>
       {% endif %}
       {% if WednesdayDinner %}
-        <td bgcolor="#2ECC71"></td>
+        <td class="request-time-off" href="{% url 'website:post_shift' pk=WednesdayDinner.pk %}" bgcolor="#2ECC71"></td>
       {% else %}
         <td></td>
       {% endif %}
       {% if ThursdayDinner %}
-        <td bgcolor="#2ECC71"></td>
+        <td class="request-time-off" href="{% url 'website:post_shift' pk=ThursdayDinner.pk %}" bgcolor="#2ECC71"></td>
       {% else %}
         <td></td>
       {% endif %}
       {% if FridayDinner %}
-        <td bgcolor="#2ECC71"></td>
+        <td class="request-time-off" href="{% url 'website:post_shift' pk=FridayDinner.pk %}" bgcolor="#2ECC71"></td>
       {% else %}
         <td></td>
       {% endif %}
