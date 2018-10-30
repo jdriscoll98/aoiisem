@@ -5,6 +5,9 @@ from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.template.loader import render_to_string
 from .utils import get_employees, get_shifts
+from.forms import RequestTimeOffForm
+from django.views.generic.edit import FormView, CreateView
+from .models import PostShift
 import json
 
 #-------------------------------------------------------------------------------
@@ -30,18 +33,19 @@ def homepage_view(request):
         "WednesdayDinner" : employee.get_scheduled_shifts('Wednesday', 'Dinner'),
         "ThursdayDinner" : employee.get_scheduled_shifts('Thursday', 'Dinner'),
         "FridayDinner" : employee.get_scheduled_shifts('Friday', 'Dinner'),
+        "Hours" : employee.get_number_of_hours(),
+        "money":  employee.get_number_of_hours() * 16
     }
     return render(request, 'website/homepage.html', context)
 
-def request_time_off_page_view(request):
-    context = {
-    }
-    return render(request, 'website/request_time_off.html', context)
+class PostShiftView(FormView):
+    form_class = RequestTimeOffForm
+    template_name = 'website/request_time_off.html'
 
-def request_time_off_form_view(request):
-    context = {
-    }
-    return render(request, 'website/request_time_off_form.html', context)
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.save()
+        returnsuper(PostShifpkgdreateView, self).form_valid(form)
 
 def shifts_available_page_view(request):
     context = {

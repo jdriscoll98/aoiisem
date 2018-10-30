@@ -17,7 +17,7 @@
 </br>
   <div class="row">
     <div class="col-4 text-center link-danger">
-      <a href="{% url 'website:RequestTimeOffPageView' %}">Request Time off</a>
+      <a>Request Time off</a>
     </div>
     <div class="col">
       |
@@ -57,9 +57,9 @@
     <tr>
       <th scope="row">Breakfast</th>
         {% if MondayBreakfast %}
-          <td bgcolor="#2ECC71"></td>
+          <td class="request-time-off" href="{% url 'website:post_shift' %}" bgcolor="#2ECC71"></td>
         {% else %}
-          <td></td>
+          <td class="request-time-off" ></td>
         {% endif %}
         {% if TuesdayBreakfast %}
           <td bgcolor="#2ECC71"></td>
@@ -85,7 +85,7 @@
     <tr>
       <th scope="row">Lunch</th>
       {% if MondayLunch %}
-        <td bgcolor="#2ECC71"></td>
+        <td class="request-time-off" bgcolor="#2ECC71"></td>
       {% else %}
         <td></td>
       {% endif %}
@@ -147,7 +147,7 @@
       Hours Scheduled:
     </div>
     <div class="col text-left">
-      Hours
+      {{ Hours }}
     </div>
   </div>
   <div class="row">
@@ -155,7 +155,7 @@
       Estimated Earnings (2 weeks):
     </div>
     <div class="col">
-      $$
+      ${{ money }}
     </div>
   </div>
 </div>
@@ -163,6 +163,10 @@
 
 {% block js %}
 <script>
-
+//------------------------------------------------------
+$('.request-time-off').click(function() {
+  direct_to_href($(this));
+});
+//------------------------------------------------------
 </script>
 {% endblock js %}
