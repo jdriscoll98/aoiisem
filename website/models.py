@@ -20,7 +20,10 @@ class Employee(models.Model):
         return AvailableShift.filter(employee=self)
 
     def get_scheduled_shifts(self, day, type):
-        return ScheduledShift.objects.filter(employee=self, day=day, type=type)
+        try:
+            return ScheduledShift.objects.get(employee=self, day=day, type=type)
+        except:
+            return None
 
     def __str__(self):
         return str(self.name)
@@ -66,6 +69,21 @@ class ScheduledShift(models.Model):
         return  str(self.employee) + " | " + str(self.day) + " " + str(self.type)
 
 class PostShift(models.Model):
-    day = models.CharField(max_length = 100, blank=True)
-    type = models.CharField(max_length=100, blank=True)
+    DAYS= (
+    ('Monday', 'Monday'),
+    ('Tuesday', 'Tuesday'),
+    ('Wednesday', 'Wednesday'),
+    ('Thursday', 'Thursday'),
+    ('Friday', 'Friday'),
+    )
+    TYPES=(
+    ('Breakfast', 'Breakfast'),
+    ('Lunch', 'Lunch'),
+    ('Dinner', 'Dinner')
+    )
+    day = models.CharField(max_length = 100, choices=DAYS)
+    type = models.CharField(max_length=100, choices=TYPES)
     employee = models.ForeignKey(Employee, on_delete=models.CASCADE, blank=True, null=True)
+
+    def __str__(self):
+        return  str(self.employee) + " | " + str(self.day) + " " + str(self.type)

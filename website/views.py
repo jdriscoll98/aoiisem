@@ -7,7 +7,7 @@ from django.template.loader import render_to_string
 from .utils import get_employees, get_shifts
 from.forms import RequestTimeOffForm
 from django.views.generic.edit import FormView, CreateView
-from .models import PostShift
+from .models import PostShift, Employee, ScheduledShift
 import json
 
 #-------------------------------------------------------------------------------
@@ -38,14 +38,19 @@ def homepage_view(request):
     }
     return render(request, 'website/homepage.html', context)
 
-class PostShiftView(FormView):
-    form_class = RequestTimeOffForm
-    template_name = 'website/request_time_off.html'
+class PostShiftView(CreateView):
+    model = PostShift
+    fields = ('day', 'type', 'employee')
+    success_url = '/'
 
-    def form_valid(self, form):
-        self.object = form.save(commit=False)
-        self.object.save()
-        returnsuper(PostShifpkgdreateView, self).form_valid(form)
+    def get_initial(self, *args, **kwargs):
+        # Get the initial dictionary from the superclass method
+        initial = super(PostShiftView, self).get_initial()
+        # Copy the dictionary so we don't accidentally change a mutable dict
+        initial = initial.copy()
+        employee = Employee.objects.get(user=self.request.user)
+        initial['employee'] = employee
+        return initial
 
 def shifts_available_page_view(request):
     context = {
