@@ -22,3 +22,4 @@ class Shift(models.Model):
 class Availability(models.Model):
     ShiftType = models.ForeignKey(ShiftType, on_delete=models.CASCADE)
     days = models.ManyToManyField(Days)
+    emplyoee = models.ForeignKey(Employee, on_delete=models.CASCADE)
