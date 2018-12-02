@@ -6,29 +6,4 @@
 {% block content %}
 {% include 'website/server_messages.html' %}
 
-<div class="container">
-  <div class="row">
-    <div class="col text-danger text-center">
-      <h1>Shifts Available<h1>
-    </div>
-  </div>
-</div>
-
-<table border="1" class="table table-hover text-centerd" margin="auto">
-  <tr>
-    <th>Employee</th>
-    <th>Day</th>
-    <th>Type</th>
-    <th>Cover?</th>
-  </tr>
-  {% for shift in AvailableShifts %}
-    <tr>
-      <td>{{ shift.employee }}</td>
-      <td>{{ shift.day }}</td>
-      <td>{{ shift.type }}</td>
-      <td><button type="submit" class="btn btn-primary">Pick up</button></td>
-    </tr>
-  {% endfor %}
-</table>
-
 {% endblock content %}
