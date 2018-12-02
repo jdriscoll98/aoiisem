@@ -56,10 +56,6 @@ function setup_ajax() {
   });
 }
 // -----------------------------------------------------------------------------
-function direct_to_href(element) {
-  window.location.href = element.attr('href');
-}
-// -----------------------------------------------------------------------------
 function set_active_menu_tab(tab_id) {
   $('.menu-item').each(function() {
     $(this).css({

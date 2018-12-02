@@ -8,14 +8,41 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 
-		<title>{% block title %}Aoii Employee Management{% endblock title %}</title>
+		<title>{% block title %}Sorority Employee Management{% endblock title %}</title>
+		<nav class="navbar navbar-expand-lg navbar-dark bg-darker">
+  <a class="navbar-brand" href="{% url 'website:homepage_view' %}">Tic-Tac-Toe</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="{% url 'website:homepage_view' %}">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#"></a>
+      </li>
+			<li class="nav-item">
+				<a class="nav-link" href="">Leader Board</a>
+			</li>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="#">Action</a>
+          <a class="dropdown-item" href="#">Another action</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="#">Something else here</a>
+        </div>
+      </li>
+    </ul>
+  </div>
+</nav>
 
 		<!-- CSS -->
 			<!-- Latest compiled and minified CSS -->
 			<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
-			<link rel="stylesheet" href="{% static 'website/css/style.css' %}"/>
 			<link rel="stylesheet" href="{% static 'website/css/bootstrap.min.css' %}">
 			<link rel="stylesheet" href="{% static 'website/css/animate.css' %}"/>
+			<link rel="stylesheet" href="{% static 'website/css/style.css' %}"/>
 			{% block custom_css %}
 			{% endblock custom_css %}
 
@@ -37,37 +64,6 @@
 
 	</head>
 	<body>
-		<nav class="navbar navbar-expand-sm navbar-light bg-danger">
-  <a class="navbar-brand" href="#">Navbar</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Link</a>
-      </li>
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Dropdown
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">Action</a>
-          <a class="dropdown-item" href="#">Another action</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">Something else here</a>
-        </div>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link disabled" href="#">Disabled</a>
-      </li>
-    </ul>
-  </div>
-</nav>
 		{% block content %}
 		{% endblock content %}
 

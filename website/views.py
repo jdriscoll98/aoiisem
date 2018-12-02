@@ -4,10 +4,6 @@ from django.http import JsonResponse
 from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.template.loader import render_to_string
-from .utils import get_employees, get_shifts
-from.forms import RequestTimeOffForm
-from django.views.generic.edit import FormView, CreateView
-from .models import PostShift, Employee, ScheduledShift
 import json
 
 #-------------------------------------------------------------------------------
@@ -17,4 +13,4 @@ import json
 def homepage_view(request):
     context = {
     }
-    return render(request, 'website/homepage.html', context)
+    return render(request, "website/homepage.html", context)
