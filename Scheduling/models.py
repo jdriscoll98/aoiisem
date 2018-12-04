@@ -16,7 +16,7 @@ class ShiftType(models.Model):
     end_time = models.TimeField()
     number_of_employees = models.IntegerField()
 
-    def _str__(self):
+    def __str__(self):
         return str(self.label)
 
 class Shift(models.Model):
@@ -26,7 +26,7 @@ class Shift(models.Model):
     date = models.DateField()
 
     def __str__(self):
-        return str(self.Employee) + ' | ' str(self.Type) + '| ' str(self.date)
+        return str(self.Employee) + ' | ' + str(self.Type) + '| ' + str(self.date)
 
 class Availability(models.Model):
     ShiftType = models.ForeignKey(ShiftType, on_delete=models.CASCADE)
@@ -34,4 +34,4 @@ class Availability(models.Model):
     employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
 
     def __str__(self):
-        return str(self.employee) + '|' str(self.ShiftType)
+        return str(self.employee) + '|' + str(self.ShiftType)

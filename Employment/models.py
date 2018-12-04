@@ -10,7 +10,7 @@ class Employee(models.Model):
     pay_rate = models.IntegerField()
 
     def __str__(self):
-        return str(self.user.name)
+        return str(self.user.first_name) + ' ' + str(self.user.last_name)
 
 class Manager(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
