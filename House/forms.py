@@ -1,5 +1,6 @@
 from django import forms
 from .models import House
+from django.forms.widgets import TextInput
 from django.forms import ModelForm
 
 
@@ -8,6 +9,6 @@ class HouseForm(ModelForm):
         model = House
         fields = '__all__'
         widgets = {
-            'Primary_color': TextInput(attrs={'type': 'color'}),
+            'primary_color': TextInput(attrs={'type': 'color'}),
             'secondary_color': TextInput(attrs={'type': 'color'})
         }

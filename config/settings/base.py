@@ -48,7 +48,7 @@ INSTALLED_APPS = [
 	'Employment',
 	'House',
 	'Scheduling',
-	'SetUP'
+	'SetUP',
 ]
 
 MIDDLEWARE = [
