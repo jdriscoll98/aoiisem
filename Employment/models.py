@@ -9,7 +9,13 @@ class Employee(models.Model):
     email = models.EmailField()
     pay_rate = models.IntegerField()
 
+    def __str__(self):
+        return str(self.user.name)
+
 class Manager(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
     email = models.EmailField()
+
+    def __str__(self):
+        return str(self.name)

@@ -8,3 +8,6 @@ class House(models.Model):
     name = models.CharField(max_length=100)
     primary_color = models.CharField(max_length=7)
     secondary_color = models.CharField(max_length=7)
+
+    def __str__(self):
+        return str(self.name)

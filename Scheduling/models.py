@@ -4,7 +4,10 @@ from House.models import House
 from Employment.models import Employee
 
 class Days(models.Model):
-    day = models.CharField(max_length=8)
+    day = models.CharField(max_length=10)
+
+    def __str__(self):
+        return str(self.day)
 
 class ShiftType(models.Model):
     house = models.ForeignKey(House, on_delete=models.CASCADE)
@@ -13,13 +16,22 @@ class ShiftType(models.Model):
     end_time = models.TimeField()
     number_of_employees = models.IntegerField()
 
+    def _str__(self):
+        return str(self.label)
+
 class Shift(models.Model):
     Type = models.ForeignKey(ShiftType, on_delete=models.CASCADE)
     up_for_trade = models.BooleanField(default=False)
     Employee = models.OneToOneField(Employee, on_delete=models.CASCADE)
     date = models.DateField()
 
+    def __str__(self):
+        return str(self.Employee) + ' | ' str(self.Type) + '| ' str(self.date)
+
 class Availability(models.Model):
     ShiftType = models.ForeignKey(ShiftType, on_delete=models.CASCADE)
     days = models.ManyToManyField(Days)
-    emplyoee = models.ForeignKey(Employee, on_delete=models.CASCADE)
+    employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return str(self.employee) + '|' str(self.ShiftType)
