@@ -4,6 +4,10 @@ from .forms import HouseForm
 
 @admin.register(House)
 class HouseAdmin(admin.ModelAdmin):
+    def House(self, obj):
+        return obj.name
+
+    list_display = ('House', 'manager')
     form = HouseForm
     fieldsets = (
         (None, {
