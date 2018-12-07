@@ -1,4 +1,8 @@
 from django.contrib import admin
 from Application.models import Applicant
+from Application.forms import ApplicantForm
 
-admin.site.register(Applicant)
+@admin.register(Applicant)
+class ApplicantAdmin(admin.ModelAdmin):
+    form = ApplicantForm
+    fields = ('name', 'email', 'date_submitted', 'statement_of_interest')
