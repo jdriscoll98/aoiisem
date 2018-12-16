@@ -12,6 +12,5 @@ class Applicant(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     date_submitted = models.DateField()
     Grade = models.CharField(max_length=2, choices=YEAR_IN_SCHOOL_CHOICES)
-    Resume = models.FileField()
-    class_schedule = models.FileField()
+    Resume = models.FileField(upload_to='resumes', default='resumes/resume.pdf')
     statement_of_interest = models.TextField()

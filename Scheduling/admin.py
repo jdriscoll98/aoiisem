@@ -1,11 +1,15 @@
 from django.contrib import admin
-from Scheduling.models import Days, ShiftType, Shift, Availability
+from Scheduling.models import Days, ShiftType, Shift, Availability, SchedulePeriod
 from Scheduling.forms import AvailabilityForm
 
 admin.site.register(Days)
 
 @admin.register(ShiftType)
 class ShiftTypeAdmin(admin.ModelAdmin):
+    pass
+
+@admin.register(SchedulePeriod)
+class SchedulePeriodAdmin(admin.ModelAdmin):
     pass
 
 @admin.register(Shift)

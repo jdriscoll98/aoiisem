@@ -1,0 +1,25 @@
+{% extends 'website/base.html' %}
+
+{% block custom_css %}
+{% endblock custom_css %}
+
+{% block content %}
+{% include 'website/server_messages.html' %}
+<html>
+  <body>
+      <form method="POST">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <input type="submit" value="Save" />
+  </form>
+  </body>
+</html>
+{% endblock content %}
+
+{% block js %}
+<script>
+  $(document).ready(function() {
+     $('.datepicker').datepicker();
+   });
+</script>
+{% endblock js %}

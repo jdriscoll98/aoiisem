@@ -1,5 +1,5 @@
 from django import forms
-from Scheduling.models import ShiftType, Shift, Availability
+from Scheduling.models import ShiftType, Shift, Availability, SchedulePeriod
 from django.forms import CheckboxSelectMultiple
 from django.forms import ModelForm
 
@@ -20,3 +20,21 @@ class AvailabilityForm(ModelForm):
         widgets = {
             'days' : CheckboxSelectMultiple
         }
+
+class SchedulePeriodForm(ModelForm):
+    class Meta:
+        model = SchedulePeriod
+        fields = '__all__'
+        widgets = {
+            'start_date': forms.DateInput(attrs={'class':'datepicker'}),
+            'end_date': forms.DateInput(attrs={'class':'datepicker'})
+        }
+
+    def clean(self):
+        cleaned_data = super(SchedulePeriodForm, self).clean()
+        start_date, end_date= cleaned_data['start_date'], cleaned_data['end_date']
+        if end_date > start_date:
+            pass
+        else:
+            raise forms.ValidationError('The end date must be after the start date')
+        return cleaned_data
