@@ -1,21 +1,38 @@
 {% extends 'website/base.html' %}
 
 {% block custom_css %}
+<style>
+  table, th, td {
+  border: 1px solid black;
+  padding: 15px;
+}
+tr {
+  color: #FF0000;
+}
+</style>
 {% endblock custom_css %}
 
 {% block content %}
 {% include 'website/server_messages.html' %}
-<html>
-  <body>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col">
+    </div>
+    <div class="col-5 text-center">
       <form method="POST">
-      {% csrf_token %}
-      {{ form.as_p }}
-      <input type="submit" value="Criar" />
-  </form>
-  </body>
-</html>
+          <table class="text-left">
+        {% csrf_token %}
+        {{ form.as_table }}
+          </table>
+        <br/>
+        <input type="submit" value="Register House" />
+      </form>
+    </div>
+    <div class="col">
+    </div>
+  </div>
+</div>
 {% endblock content %}
-
 {% block js %}
 <script>
 </script>

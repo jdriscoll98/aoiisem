@@ -55,6 +55,7 @@ class SchedulePeriodForm(FormView):
         return super(SchedulePeriodForm, self).form_valid(form)
 
 class ShiftTypes(CreateView):
+    template_name = 'setUP/ShiftTypesForm.html'
     model = ShiftType
     fields = '__all__'
 
