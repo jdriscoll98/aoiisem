@@ -2,6 +2,7 @@ from django import forms
 from Scheduling.models import ShiftType, Shift, Availability, SchedulePeriod
 from django.forms import CheckboxSelectMultiple
 from django.forms import ModelForm
+from Employment.models import Employee
 
 class ShiftTypeForm(ModelForm):
     class Meta:
@@ -12,6 +13,16 @@ class ShiftForm(ModelForm):
     class Meta:
         model = Shift
         fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        super(ShiftForm, self).__init__(*args, **kwargs)
+        instance = getattr(self, 'instance', None)
+        if instance and instance.pk:
+            self.fields['Type'].disabled = True
+            self.fields['Employee'].required = False
+            self.fields['Employee'].widget.attrs['disabled'] = 'disabled'
+            self.fields['up_for_trade'].disabled = True
+            self.fields['date'].disabled = True
 
 class AvailabilityForm(ModelForm):
     class Meta:

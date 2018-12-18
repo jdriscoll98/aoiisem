@@ -43,10 +43,10 @@
   <div class="row">
     <div class="col text-center first">
     <table>
-      <th>Shifts</th>
+      <th>Shifts Today</th>
     {% if shifts %}
       {% for shift in shifts %}
-        <tr><td>{{ shift }} | {{ shift.date }}</td></tr>
+        <tr><td>{{ shift }}</td></tr>
       {% endfor %}
     {% else %}
         <tr><td>No Shifts Today!</td></tr>
@@ -55,10 +55,15 @@
     </div>
     <div class="col text-center middle">
       <table>
-        <th>Availabile Shifts</th>
+        <th colspan="2">Availabile Shifts</th>
         {% if available %}
           {% for shift in available %}
-            <tr><td>{{ shift }} | {{ shift.date }}</td></tr>
+            <tr><td>{{ shift }} | {{ shift.date }}</td>
+            <td>
+              <a href="{% url 'Scheduling:PickUpShift' shift.pk %}"
+       class="btn btn-primary btn-sm"
+       role="button">Pick Up</a>
+            </td></tr>
           {% endfor %}
         {% else %}
           <tr><td>No shifts up for grabs!</td></tr>
@@ -90,6 +95,12 @@
     <div class="col text-center">
       <strong>Post a message</strong>
     </div>
+  </div>
+  <br/>
+  <div class="row">
+    <div class="col text-center">
+      <strong>View Timesheet data / Estimated Pay</strong>
+      </div>
   </div>
   <br/>
   <br/>

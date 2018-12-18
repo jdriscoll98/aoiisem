@@ -41,11 +41,10 @@ class EmployeeHomePage(TemplateView):
     def get_context_data(self, **kwargs):
         employee = Employee.objects.get(user=self.request.user)
         today = datetime.date.today()
-        end_of_week = today + timedelta(days=7)
         context = super(EmployeeHomePage, self).get_context_data(**kwargs)
         context = {
             'employee': self.request.user,
-            'shifts': Shift.objects.filter(Employee=employee, date__gte=today, date__lt=end_of_week),
+            'shifts': Shift.objects.filter(Employee=employee, date=today),
             'date': str(calendar.day_name[today.weekday()]) + ',' + ' ' + today.strftime('%b, %d'),
             'available': Shift.objects.filter(up_for_trade=True).exclude(Employee=employee),
             'posted': Shift.objects.filter(up_for_trade=True, Employee=employee)
