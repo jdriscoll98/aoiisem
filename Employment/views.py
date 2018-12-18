@@ -10,9 +10,14 @@ from django.views.generic.edit import FormView
 from django.urls import reverse_lazy
 
 from Employment.models import Employee
-from Scheduling.models import Availability
+from Application.models import Applicant
+from Scheduling.models import Availability, Shift
 from Scheduling.forms import AvailabilityForm
 import json
+
+import datetime
+from datetime import timedelta
+import calendar
 
 #-------------------------------------------------------------------------------
 # Page Views
@@ -24,7 +29,9 @@ class ManagerHomePage(TemplateView):
         context = super(ManagerHomePage, self).get_context_data(**kwargs)
         context = {
             'employees': Employee.objects.all,
-            'manager': self.request.user
+            'manager': self.request.user,
+            'applicants': Applicant.objects.all,
+        #    'clocked': get_clocked_in()
         }
         return context
 
@@ -32,9 +39,16 @@ class EmployeeHomePage(TemplateView):
     template_name = 'Employment/EmployeeHomePage.html'
 
     def get_context_data(self, **kwargs):
+        employee = Employee.objects.get(user=self.request.user)
+        today = datetime.date.today()
+        end_of_week = today + timedelta(days=7)
         context = super(EmployeeHomePage, self).get_context_data(**kwargs)
         context = {
-            'employee': self.request.user
+            'employee': self.request.user,
+            'shifts': Shift.objects.filter(Employee=employee, date__gte=today, date__lt=end_of_week),
+            'date': str(calendar.day_name[today.weekday()]) + ',' + ' ' + today.strftime('%b, %d'),
+            'available': Shift.objects.filter(up_for_trade=True).exclude(Employee=employee),
+            'posted': Shift.objects.filter(up_for_trade=True, Employee=employee)
         }
         return context
 

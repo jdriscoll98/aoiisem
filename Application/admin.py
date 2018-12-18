@@ -5,4 +5,4 @@ from Application.forms import ApplicantForm
 @admin.register(Applicant)
 class ApplicantAdmin(admin.ModelAdmin):
     form = ApplicantForm
-    fields = ('name', 'email', 'date_submitted', 'statement_of_interest')
+    fields = ('first_name','last_name', 'email', 'date_submitted', 'statement_of_interest')

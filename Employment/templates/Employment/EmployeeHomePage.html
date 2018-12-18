@@ -1,13 +1,99 @@
 {% extends 'website/base.html' %}
 
 {% block custom_css %}
+<style>
+    table, th, td {
+    border: 1px solid black;
+    padding: 15px;
+    margin-left: auto;
+    margin-right: auto;
+
+  }
+  .last {
+  border-left: 2px solid black;
+  padding: 15px;
+}
+.middle {
+  border-left: 2px solid black;
+  border-right: 2px solid black;
+  padding: 15px;
+}
+.first {
+  border-right: 2px solid black;
+  padding: 15px;
+}
+  </style>
 {% endblock custom_css %}
 
 {% block content %}
 {% include 'website/server_messages.html' %}
 
-<h1>Welcome {{ employee }}</h1>
-<a href="{% url 'Employment:SubmitAvailability' %}">Submit Availability</a>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col text-center">
+      <h1>Employee Home Page</h1>
+      <br/>
+      <h3>Welcome, {{ employee.first_name }}</h3>
+      <br/>
+      <h3>{{ date }}<h3>
+    </div>
+  </div>
+  <br/>
+  <br/>
+  <div class="row">
+    <div class="col text-center first">
+    <table>
+      <th>Shifts</th>
+    {% if shifts %}
+      {% for shift in shifts %}
+        <tr><td>{{ shift }} | {{ shift.date }}</td></tr>
+      {% endfor %}
+    {% else %}
+        <tr><td>No Shifts Today!</td></tr>
+    {% endif %}
+    </table>
+    </div>
+    <div class="col text-center middle">
+      <table>
+        <th>Availabile Shifts</th>
+        {% if available %}
+          {% for shift in available %}
+            <tr><td>{{ shift }} | {{ shift.date }}</td></tr>
+          {% endfor %}
+        {% else %}
+          <tr><td>No shifts up for grabs!</td></tr>
+        {% endif %}
+      </table>
+    </div>
+    <div class="col text-center last">
+      <table>
+        <th>Your posted shifts</th>
+      {% if posted %}
+        {% for shift in posted %}
+          <tr><td>{{ shift }} | {{ shift.date }}</td></tr>
+        {% endfor %}
+      {% else %}
+          <tr><td>You have no shifts posted!</td></tr>
+      {% endif %}
+      </table>
+    </div>
+  </div>
+  <br/>
+  <br/>
+  <div class="row">
+    <div class="col text-center">
+      <strong>Edit information</strong>
+    </div>
+    <div class="col text-center">
+      <strong>Submit Availability</strong>
+    </div>
+    <div class="col text-center">
+      <strong>Post a message</strong>
+    </div>
+  </div>
+  <br/>
+  <br/>
+</div>
 {% endblock content %}
 
 {% block js %}

@@ -26,11 +26,11 @@ class ShiftType(models.Model):
 class Shift(models.Model):
     Type = models.ForeignKey(ShiftType, on_delete=models.CASCADE)
     up_for_trade = models.BooleanField(default=False)
-    Employee = models.OneToOneField(Employee, on_delete=models.CASCADE)
+    Employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
     date = models.DateField()
 
     def __str__(self):
-        return str(self.Employee) + ' | ' + str(self.Type) + '| ' + str(self.date)
+        return str(self.Type) 
 
 class Availability(models.Model):
     ShiftType = models.ForeignKey(ShiftType, on_delete=models.CASCADE)

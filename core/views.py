@@ -6,6 +6,7 @@ from django.core.exceptions import SuspiciousOperation
 
 from .utils import recaptcha_validation
 
+from Employment.models import Employee, Manager
 # Application Views
 
 # Login
@@ -19,8 +20,14 @@ def login(request):
 				raw_password = form.cleaned_data.get('password')
 				user = auth_authenticate(username=username, password=raw_password)
 				auth_login(request, user)
-				next_page = request.GET.get('next', 'website:homepage_view')
-				return redirect(next_page)
+				# add in if statemnent to redirect to different homepages
+				if Manager.objects.filter(user=user).exists():
+					return redirect('Employment:ManagerHomePage')
+				elif Employee.objects.filter(user=user).exists():
+					return redirect('Employment:EmployeeHomePage')
+				else:
+					return redirect('website:homepage_view')
+
 		else:
 			raise SuspiciousOperation()
 	else:
