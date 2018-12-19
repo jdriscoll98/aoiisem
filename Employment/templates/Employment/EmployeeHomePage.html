@@ -33,7 +33,7 @@
     <div class="col text-center">
       <h1>Employee Home Page</h1>
       <br/>
-      <h3>Welcome, {{ employee.first_name }}</h3>
+      <h3>Welcome, {{ employee.user.first_name }}</h3>
       <br/>
       <h3>{{ date }}<h3>
     </div>
@@ -43,10 +43,13 @@
   <div class="row">
     <div class="col text-center first">
     <table>
-      <th>Shifts Today</th>
+      <th colspan="2">Shifts Today</th>
     {% if shifts %}
       {% for shift in shifts %}
-        <tr><td>{{ shift }}</td></tr>
+        <tr><td>{{ shift }}</td>
+        <td><a href="{% url 'Scheduling:UpdateShift' shift.pk %}"
+ class="btn btn-primary btn-sm"
+ role="button">Post</a></td></tr>
       {% endfor %}
     {% else %}
         <tr><td>No Shifts Today!</td></tr>
@@ -60,7 +63,7 @@
           {% for shift in available %}
             <tr><td>{{ shift }} | {{ shift.date }}</td>
             <td>
-              <a href="{% url 'Scheduling:PickUpShift' shift.pk %}"
+              <a href="{% url 'Scheduling:UpdateShift' shift.pk %}"
        class="btn btn-primary btn-sm"
        role="button">Pick Up</a>
             </td></tr>
@@ -72,13 +75,20 @@
     </div>
     <div class="col text-center last">
       <table>
-        <th>Your posted shifts</th>
+        <th colspan="1">Your posted shifts</th>
+        <td><a href="{% url 'Scheduling:PostShift' pk=employee.pk %}"
+ class="fa fa-plus"
+ role="button">
+  </td>
       {% if posted %}
         {% for shift in posted %}
-          <tr><td>{{ shift }} | {{ shift.date }}</td></tr>
+          <tr><td>{{ shift }} | {{ shift.date }}</td>
+            <td><a href="{% url 'Scheduling:UpdateShift' shift.pk %}"
+     class="btn btn-primary btn-sm"
+     role="button">Remove</a></td></tr>
         {% endfor %}
       {% else %}
-          <tr><td>You have no shifts posted!</td></tr>
+          <tr><td colspan="2">You have no shifts posted!</td></tr>
       {% endif %}
       </table>
     </div>
@@ -87,10 +97,14 @@
   <br/>
   <div class="row">
     <div class="col text-center">
-      <strong>Edit information</strong>
+      <a href="{% url 'Employment:EmployeeUpdate' employee.pk %}"
+class="btn btn-primary btn-sm"
+role="button">Edit Contact Information</a>
     </div>
     <div class="col text-center">
-      <strong>Submit Availability</strong>
+      <a href="{% url 'Employment:SubmitAvailability' %}"
+class="btn btn-primary btn-sm"
+role="button">Submit Availability</a>
     </div>
     <div class="col text-center">
       <strong>Post a message</strong>

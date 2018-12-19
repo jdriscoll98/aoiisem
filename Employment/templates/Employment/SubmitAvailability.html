@@ -1,19 +1,40 @@
 {% extends 'website/base.html' %}
 
 {% block custom_css %}
+<style>
+  table, th, td {
+  border: 1px solid black;
+  padding: 15px;
+}
+tr {
+  color: #FF0000;
+}
+</style>
 {% endblock custom_css %}
 
 {% block content %}
 {% include 'website/server_messages.html' %}
-<html>
-  <body>
-      <form method="POST">
-      {% csrf_token %}
-      {{ form.as_p }}
-      <input type="submit" value="Submit" />
-  </form>
-  </body>
-</html>
+<form method="post" action="{% url 'Employment:SubmitAvailability' %}">
+        {% csrf_token %}
+          <fieldset>
+          <legend class="text-center">Shift Availability</legend>
+
+          <div class="container-fluid">
+            <div class="row">
+            {{ availability_form.management_form }}
+            {% for availability in availability_form %}
+                  <div class="col">
+                    <table>
+                      {{ availability.as_table }}
+                    </table>
+                  </div>
+            {% endfor %}
+            </div<
+          </div>
+
+        </fieldset>
+        <input type="submit" value="Submit Availability" />
+        </form>
 {% endblock content %}
 
 {% block js %}

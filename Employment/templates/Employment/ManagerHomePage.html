@@ -50,17 +50,25 @@
     <div class="col text-center middle">
       <table>
         <th>Applicants</th>
-      {% for employee in employees %}
-        <tr><td>{{ employee }}</td></tr>
+        {% if applicants %}
+      {% for applicant in applicants %}
+        <tr><td>{{ applicant }}</td></tr>
       {% endfor %}
+        {% else %}
+          <tr><td>No applicants at the moment!</td></tr>
+        {% endif %}
       </table>
     </div>
     <div class="col text-center last">
       <table>
         <th>Scheduled Today</th>
-      {% for employee in employees %}
-        <tr><td>{{ employee }}</td></tr>
-      {% endfor %}
+        {% if scheduled %}
+          {% for shift in scheduled %}
+            <tr><td>{{ shift.Employee }} | {{ shift.Type }}</td></tr>
+          {% endfor %}
+        {% else %}
+          <tr><td>No one scheduled today!</td></tr>
+        {% endif %}
       </table>
     </div>
   </div>

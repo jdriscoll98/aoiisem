@@ -24,6 +24,29 @@ class ShiftForm(ModelForm):
             self.fields['up_for_trade'].disabled = True
             self.fields['date'].disabled = True
 
+class PostShiftForm(ModelForm):
+    class Meta:
+        model = Shift
+        fields = '__all__'
+        widgets = {
+            'date': forms.DateInput(attrs={'class':'datepicker'}),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super(PostShiftForm, self).__init__(*args, **kwargs)
+        self.fields['Employee'].widget.attrs['readonly'] = 'readonly'
+        self.fields['up_for_trade'].initial = True
+        self.fields['up_for_trade'].widget = forms.HiddenInput()
+
+    def clean(self):
+        cleaned_data = super(PostShiftForm, self).clean()
+        try:
+            shift = Shift.objects.get(Type=cleaned_data['Type'], Employee=cleaned_data['Employee'], date=cleaned_data['date'])
+        except Shift.DoesNotExist:
+            raise forms.ValidationError('You do not have a shift on this date')
+        return cleaned_data
+
+
 class AvailabilityForm(ModelForm):
     class Meta:
         model = Availability
@@ -31,6 +54,14 @@ class AvailabilityForm(ModelForm):
         widgets = {
             'days' : CheckboxSelectMultiple
         }
+
+    def clean(self):
+        cleaned_data = super(AvailabilityForm, self).clean()
+        if Availability.objects.filter(ShiftType=cleaned_data['ShiftType'], employee=cleaned_data['employee']).exists():
+            raise forms.ValidationError('You already have an availability for this shift type')
+        else:
+            pass
+        return cleaned_data
 
 class SchedulePeriodForm(ModelForm):
     class Meta:
