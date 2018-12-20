@@ -8,4 +8,13 @@ class ApplicantForm(ModelForm):
     email = forms.EmailField()
     class Meta:
         model = Applicant
-        exclude = ['user']
+        exclude = ['user', 'date_submitted']
+        fields = ['first_name', 'last_name', 'email', 'Grade', 'statement_of_interest']
+
+    def __init__(self, *args, **kwargs):
+        super(ApplicantForm, self).__init__(*args, **kwargs)
+        instance = getattr(self, 'instance', None)
+        if instance and instance.pk:
+            self.fields['user'].required = False
+            self.fields['user'].widget.attrs['disabled'] = True
+            self.fields['date_submitted'].disabled = True

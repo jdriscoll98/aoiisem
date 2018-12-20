@@ -1,0 +1,63 @@
+{% extends 'website/base.html' %}
+
+{% block custom_css %}
+<style>
+  table, th, td {
+  border: 1px solid black;
+  padding: 15px;
+  margin-left:auto;
+  margin-right:auto;
+}
+
+</style>
+{% endblock custom_css %}
+
+{% block content %}
+{% include 'website/server_messages.html' %}
+<div class="container-fluid">
+  <div class="row">
+    <div class="col text-center">
+        <h1>Welcome, {{ applicant }}</h1>
+    </div>
+  </div>
+  <br/>
+  <div class="row">
+    <div class="col text-left">
+      <table>
+        <th colspan="2">Applicant Information</th>
+          <tr>
+            <td><strong>Name</strong></td>
+            <td>{{ applicant.user.first_name }} {{ applicant.user.last_name }}</td>
+            </tr>
+          <tr>
+            <td><strong>Grade</strong></td>
+            <td>{{ applicant.Grade }}</td>
+          </tr>
+          <tr>
+            <td><strong>email</strong></td>
+            <td>{{ applicant.user.email }}</td>
+          </tr>
+          <tr>
+            <td><strong>Statement of Interest</strong></td>
+            <td>{{ applicant.statement_of_interest }}</td>
+          </tr>
+      </table>
+      </div>
+      </div>
+      <br/>
+      <div class="row">
+        <div class="col text-center">
+          <a href="{% url 'Application:UpdateApplication' applicant.pk %}"
+          class="btn btn-primary btn-sm "
+          role="button">Update Application</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}
+
+{% block js %}
+<script>
+</script>
+{% endblock js %}

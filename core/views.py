@@ -26,7 +26,7 @@ def login(request):
 				elif Employee.objects.filter(user=user).exists():
 					return redirect('Employment:EmployeeHomePage')
 				else:
-					return redirect('website:homepage_view')
+					return redirect('Application:ApplicationHomePage')
 
 		else:
 			raise SuspiciousOperation()

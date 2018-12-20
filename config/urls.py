@@ -23,4 +23,5 @@ urlpatterns = [
 	url(r'^setUP/', include('SetUP.urls')),
 	url(r'^Employment/', include('Employment.urls')),
 	url(r'^Scheduling/', include('Scheduling.urls')),
+	url(r'^Application/', include('Application.urls')),
 ]

@@ -82,17 +82,3 @@ class SubmitAvailability(View):
                   'availability_form':self.Availability_FormSet(),
                   }
         return render(request,self.template_name,context)
-# class SubmitAvailability(View):
-#     template_name = 'Employment/SubmitAvailability.html'
-#     form_class = AvailabilityForm
-#     success_url = reverse_lazy('Employment:EmployeeHomePage')
-#
-#     def form_valid(self, form):
-#         data = form.cleaned_data
-#         days = data['days']
-#         availability = Availability.objects.create(
-#             ShiftType = data['ShiftType'],
-#             employee = self.request.user.employee
-#         )
-#         availability.days.add(*days)
-#         return super(SubmitAvailability, self).form_valid(form)
