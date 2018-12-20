@@ -52,7 +52,8 @@ class AvailabilityForm(ModelForm):
         model = Availability
         fields = '__all__'
         widgets = {
-            'days' : CheckboxSelectMultiple
+            'days' : CheckboxSelectMultiple,
+            'employee': forms.HiddenInput()
         }
 
     def clean(self):

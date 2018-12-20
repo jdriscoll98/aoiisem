@@ -1,5 +1,5 @@
 from django.contrib import admin
-from Employment.models import Employee, Manager
+from Employment.models import Employee, Manager, Clock
 
 @admin.register(Employee)
 class EmployeeAdmin(admin.ModelAdmin):
@@ -13,4 +13,8 @@ class EmployeeAdmin(admin.ModelAdmin):
 
 @admin.register(Manager)
 class ManagerAdmin(admin.ModelAdmin):
+    pass
+
+@admin.register(Clock)
+class ClockAdmin(admin.ModelAdmin):
     pass

@@ -32,3 +32,15 @@ class ManagerForm(ModelForm):
     class Meta:
         model = Manager
         fields = '__all__'
+
+class ClockForm(forms.Form):
+    Employee_Number = forms.CharField(max_length=4, min_length=4)
+
+    def clean(self):
+        cleaned_data = super(ClockForm, self).clean()
+        Employee_Number = cleaned_data['Employee_Number']
+        try:
+            employee = Employee.objects.get(Employee_Number=Employee_Number)
+        except Employee.DoesNotExist:
+            raise forms.ValidationError('No employee with that number')
+        return cleaned_data

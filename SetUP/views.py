@@ -38,6 +38,7 @@ class RegisterHouse(FormView):
             primary_color = data['primary_color'],
             secondary_color = data['secondary_color']
         )
+        messages.success(self.request, 'House Registered Successfully')
         return super(RegisterHouse, self).form_valid(form)
 
 class SchedulePeriodForm(FormView):
@@ -52,6 +53,7 @@ class SchedulePeriodForm(FormView):
             start_date = data['start_date'],
             end_date = data['end_date']
             )
+            messages.success(self.request, 'Schedule Period Created Successfully')
         return super(SchedulePeriodForm, self).form_valid(form)
 
 class ShiftTypes(CreateView):
@@ -67,6 +69,8 @@ class CurrentEmployees(FormView):
     def form_valid(self, form):
         data = form.cleaned_data
         password = BaseUserManager.make_random_password(self)
+        phone_number = str(date['phone_number'])
+        code = int(phone_number[-4:])
         user = User.objects.create_user(
             username=data['first_name'],
             first_name = data['first_name'],
@@ -76,9 +80,10 @@ class CurrentEmployees(FormView):
         )
         employee = Employee.objects.create(
             user=user,
-            phone_number=data['phone_number'],
+            phone_number=phone_number,
             email = user.email,
-            pay_rate = data['pay_rate']
+            pay_rate = data['pay_rate'],
+            Employee_Number = code,
         )
         return super(CurrentEmployees, self).form_valid(form)
 

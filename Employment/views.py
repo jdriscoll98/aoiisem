@@ -4,14 +4,16 @@ from django.http import JsonResponse, HttpResponseRedirect
 from django.contrib import messages
 from django.shortcuts import render, redirect
 from django.template.loader import render_to_string
+from django.contrib.messages.views import SuccessMessageMixin
 
 from django.views.generic import TemplateView, View
 from django.views.generic.edit import FormView, UpdateView
 from django.urls import reverse_lazy, reverse
 
-from Employment.models import Employee
+from Employment.models import Employee, Clock
+from Employment.forms import ClockForm
 from Application.models import Applicant
-from Scheduling.models import Availability, Shift
+from Scheduling.models import Availability, Shift, ShiftType
 from Scheduling.forms import AvailabilityForm
 from django.forms import formset_factory
 import json
@@ -53,32 +55,66 @@ class EmployeeHomePage(TemplateView):
         }
         return context
 
-class EmployeeUpdate(UpdateView):
+class EmployeeUpdate(SuccessMessageMixin, UpdateView):
     template_name = 'Employment/employee_update_form.html'
     model = Employee
-    fields = ('phone_number', 'email')
+    fields = ('phone_number', 'email', 'Employee_Number')
+    success_message = 'Employee Information Updated Successfully'
     success_url = reverse_lazy('Employment:EmployeeHomePage')
 
 class SubmitAvailability(View):
-    Availability_FormSet = formset_factory(AvailabilityForm, extra=3)
+    availability_FormSet = formset_factory(AvailabilityForm, max_num=len(ShiftType.objects.all()))
     template_name = 'Employment/SubmitAvailability.html'
-    success_url = 'Employment:EmployeeHomePage'
+    success_url = reverse_lazy('Employment:EmployeeHomePage')
 
     def get(self,request,*args,**kwargs):
+        employee=Employee.objects.get(user=self.request.user)
         context={
-            'availability_form':self.Availability_FormSet(),
+            'availability_form': self.availability_FormSet(initial=[
+            {
+                'ShiftType': Type,
+                'employee': employee
+                }
+                for Type in ShiftType.objects.all()])
             }
         return render(request,self.template_name,context)
 
     def post(self,request,*args,**kwargs):
-        availability_FormSet=self.Availability_FormSet(self.request.POST)
-
+        availability_FormSet=self.availability_FormSet(self.request.POST)
         if availability_FormSet.is_valid():
             for availability in availability_FormSet:
-              availability.save()
+                availability.save()
+            messages.success(self.request, 'Availability Submitted Successfully')
             return HttpResponseRedirect(reverse_lazy('Employment:EmployeeHomePage'))
         else:
             context={
                   'availability_form':self.Availability_FormSet(),
                   }
         return render(request,self.template_name,context)
+
+class ClockView(FormView):
+    template_name = 'Employment/Clock.html'
+    form_class = ClockForm
+    success_url = reverse_lazy('Employment:Clock')
+
+    def form_valid(self, form):
+        data = form.cleaned_data
+        user = self.request.user
+        employee = Employee.objects.get(Employee_Number=data['Employee_Number'])
+        if employee.clocked_in:
+            employee.clocked_in = False
+            messages.success(self.request, '{0} clocked in successfully'.format(employee))
+        else:
+            messages.success(self.request, '{0} clocked out successfully'.format(employee))
+            employee.clocked_in = True
+        employee.save()
+        Clock.objects.create(
+            employee=employee,
+            time = datetime.datetime.now().time(),
+            day = datetime.date.today()
+        )
+        return super(ClockView, self).form_valid(form)
+
+    def form_invalid(self,form):
+        print('invalid')
+        return super(ClockView, self).form_invalid(form)

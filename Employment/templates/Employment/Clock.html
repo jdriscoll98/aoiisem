@@ -17,21 +17,24 @@ tr {
 <div class="container-fluid">
   <div class="row">
     <div class="col text-center">
-      <h1>Update Application</h1>
+      <h1>Clock in / Clock Out</h1>
+      </div>
     </div>
   </div>
-  <br/>
+</div>
+</br>
+<div class="container-fluid">
   <div class="row">
     <div class="col">
     </div>
-    <div class="col text-center">
+    <div class="col-5 text-center">
       <form method="POST">
           <table class="text-left">
         {% csrf_token %}
         {{ form.as_table }}
           </table>
         <br/>
-        <input class="btn btn-primary" type="submit" value="Submit Application" />
+        <input type="submit" value="Enter" />
       </form>
     </div>
     <div class="col">

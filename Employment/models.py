@@ -8,6 +8,8 @@ class Employee(models.Model):
     phone_number = models.CharField(validators=[phone_regex], max_length=17, blank=True)
     email = models.EmailField()
     pay_rate = models.IntegerField()
+    Employee_Number = models.IntegerField()
+    clocked_in = models.BooleanField(default=False)
 
     def __str__(self):
         return str(self.user.first_name) + ' ' + str(self.user.last_name)
@@ -19,3 +21,11 @@ class Manager(models.Model):
 
     def __str__(self):
         return str(self.name)
+
+class Clock(models.Model):
+    employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
+    time = models.TimeField()
+    day = models.DateField()
+
+    def __str__(self):
+        return str(self.employee) + ' | ' + str(self.day) + ' | ' + str(self.time)

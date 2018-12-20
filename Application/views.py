@@ -6,6 +6,7 @@ from django.shortcuts import render, redirect
 from django.template.loader import render_to_string
 from django.contrib.auth.base_user import BaseUserManager
 from django.core import serializers
+from django.contrib.messages.views import SuccessMessageMixin
 
 from django.views.generic import TemplateView, View
 from django.views.generic.edit import FormView, UpdateView
@@ -52,11 +53,13 @@ class NewApplication(FormView):
             Grade = data['Grade'],
             statement_of_interest = data['statement_of_interest']
         )
+        messages.success(self.request, 'Application Created Successfully')
         return super().form_valid(form)
 
-class UpdateApplication(UpdateView):
+class UpdateApplication(SuccessMessageMixin, UpdateView):
     template_name = 'Application/UpdateApplicationPage.html'
     model = Applicant
     fields = '__all__'
+    success_message = 'Application Updated Successfully'
     def get_success_url(self):
-        return reverse_lazy('Application:ApplicantHomePage')
+        return reverse_lazy('Application:ApplicationHomePage')
