@@ -1,0 +1,67 @@
+{% extends 'website/base.html' %}
+
+{% block custom_css %}
+<style>
+table, th, td {
+border: 1px solid black;
+padding: 15px;
+margin-left: auto;
+margin-right: auto;
+
+}
+
+.section {
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+  padding: 15px;
+}
+.labels {
+  font-weight:bold;
+}
+</style>
+{% endblock custom_css %}
+
+{% block content %}
+{% include 'website/server_messages.html' %}
+
+<div class="container-fluid">
+  <div class= "row">
+    <div class="col text-center">
+      <h1>Employee Details: {{ employee }}</h1>
+    </div>
+  </div>
+  <br/>
+  <div class="row section">
+    <div class="col">
+      <table>
+        <th colspan="2">Employee Information</th>
+          <tr><td class="labels">Name</td><td>{{ employee }}</td>
+          <tr><td class="labels">Phone Number</td><td>{{ employee.phone_number }}</td>
+          <tr><td class="labels">emaiil</td><td>{{ employee.email }}</td>
+      </table>
+      </div>
+    <div class="col">
+      <table>
+        <th colspan="2">Employee Shifts</th>
+        {% for shift in shifts %}
+          <tr><td class="labels">{{ shift.Type }}</td><td>{{ shift.date }}</td>
+        {% endfor %}
+      </table>
+    </div>
+    </div>
+    <br/>
+    <br/>
+    <div class="row">
+      <div class="col text-center">
+        <a class="btn btn-primary" href="">Send Message</a>
+      </div>
+  </div>
+</div>
+
+
+{% endblock content %}
+
+{% block js %}
+<script>
+</script>
+{% endblock js %}

@@ -11,6 +11,7 @@ from django.views.generic.edit import FormView, UpdateView
 from django.urls import reverse_lazy, reverse
 
 from Employment.models import Employee, Clock
+
 from Employment.forms import ClockForm
 from Application.models import Applicant
 from Scheduling.models import Availability, Shift, ShiftType
@@ -52,6 +53,19 @@ class EmployeeHomePage(TemplateView):
             'date': str(calendar.day_name[today.weekday()]) + ',' + ' ' + today.strftime('%b, %d'),
             'available': Shift.objects.filter(up_for_trade=True).exclude(Employee=employee),
             'posted': Shift.objects.filter(up_for_trade=True, Employee=employee)
+        }
+        return context
+
+class EmployeeDetails(TemplateView):
+    template_name = 'Employment/EmployeeDetails.html'
+
+    def get_context_data(self, **kwargs):
+        employee = Employee.objects.get(pk=kwargs['pk'])
+        today = datetime.date.today()
+        end_of_week = today + timedelta(days=7)
+        context = {
+            'employee': employee,
+            'shifts': Shift.objects.filter(Employee=employee, date__gte=today, date__lte=end_of_week)
         }
         return context
 

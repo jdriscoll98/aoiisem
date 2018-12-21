@@ -1,5 +1,4 @@
 {% extends 'website/base.html' %}
-
 {% block custom_css %}
 <style>
     table, th, td {
@@ -34,6 +33,8 @@
     <h1>Manager Home Page</h1>
     <br/>
     <h3>Welcome, {{ manager }}</h3>
+    <br/>
+    <h3 id="clock"></h3>
     </div>
   </div>
   <br/>
@@ -43,7 +44,7 @@
     <table>
       <th>Employees</th>
     {% for employee in employees %}
-      <tr><td>{{ employee }}</td></tr>
+      <tr><td><a class="btn btn-primary" href="{% url 'Employment:EmployeeDetails' employee.pk %}">{{ employee }}</a></td></tr>
     {% endfor %}
     </table>
     </div>
@@ -61,10 +62,10 @@
     </div>
     <div class="col text-center last">
       <table>
-        <th>Scheduled Today</th>
+        <th>Scheduled Today</th><th>Status?</th>
         {% if scheduled %}
           {% for shift in scheduled %}
-            <tr><td>{{ shift.Employee }} | {{ shift.Type }}</td></tr>
+            <tr><td>{{ shift.Employee }} | {{ shift.Type }}</td><td>{{ employee.clocked_in|yesno:"In, Out" }}</tr>
           {% endfor %}
         {% else %}
           <tr><td>No one scheduled today!</td></tr>
@@ -97,5 +98,23 @@
 
 {% block js %}
 <script>
+  var div = document.getElementById('clock');
+
+  function time() {
+    var d = new Date();
+    var s = d.getSeconds();
+    var m = d.getMinutes();
+    var h = d.getHours();
+    if (h > 12) {
+      h = h - 12
+      div.textContent = h + ":" + m + " pm";
+    }
+    else {
+      div.textContent = h + ":" + m + " am";
+    }
+
+  }
+
+  setInterval(time, 1000);
 </script>
 {% endblock js %}
