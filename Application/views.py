@@ -80,11 +80,14 @@ class AcceptApplicant(SuccessMessageMixin, UpdateView):
     success_message = 'Application Accepted Successfully'
     success_url = reverse_lazy('Employment:ManagerHomePage')
 
+    def get_initial(self):
+        initial = super(AcceptApplicant, self).get_initial()
+        initial['old'] = True
+        return initial
+
     def form_valid(self, form):
         data = form.cleaned_data
         user = data['user']
-        applicant = Applicant.objects.get(user=user)
-        applicant.old = True
         password = BaseUserManager.make_random_password(self)
         phone_number = str(data['phone_number'])
         code = int(phone_number[-4:])
