@@ -63,3 +63,17 @@ class UpdateApplication(SuccessMessageMixin, UpdateView):
     success_message = 'Application Updated Successfully'
     def get_success_url(self):
         return reverse_lazy('Application:ApplicationHomePage')
+
+class ApplicantDetails(TemplateView):
+    template_name = 'Application/ApplicantDetails.html'
+    def get_context_data(self, **kwargs):
+        context = {
+        'applicant': Applicant.objects.get(pk = kwargs['pk'])
+        }
+        return context
+
+class AcceptApplicant(UpdateView):
+    template_name='Application/AcceptApplicant.html'
+    model = Applicant
+    fields = '__all__'
+    success_url = reverse_lazy('Employment:ManagerHomePage')

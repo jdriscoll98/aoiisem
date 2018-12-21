@@ -1,0 +1,71 @@
+{% extends 'website/base.html' %}
+
+{% block custom_css %}
+<style>
+table, th, td {
+border: 1px solid black;
+padding: 15px;
+margin-left: auto;
+margin-right: auto;
+
+}
+
+.section {
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+  padding: 15px;
+}
+.labels {
+  font-weight:bold;
+}
+</style>
+{% endblock custom_css %}
+
+{% block content %}
+{% include 'website/server_messages.html' %}
+<div class = "container-fluid">
+  <div class="row">
+    <div class="col text-center">
+      <h1> Applicant Details: {{ applicant }} </h1>
+      <table>
+        <th colspan = "2"> Applicant Details </th>
+        <tr>
+          <td class = "labels"> Name </td>
+          <td> {{ applicant }} </td>
+          </tr>
+          <tr>
+            <td class = "labels"> Grade </td>
+            <td> {{ applicant.Grade }} </td>
+            </tr>
+          <tr>
+            <td class = "labels"> Date Submitted </td>
+            <td> {{ applicant.date_submitted }} </td>
+            </tr>
+          <tr>
+            <td class = "labels"> Email </td>
+            <td> {{ applicant.user.email }} </td>
+            </tr>
+          <tr>
+            <td class = "labels"> Statement of Interest </td>
+            <td> {{ applicant.statement_of_interest }} </td>
+            </tr>
+        </table>
+    </div>
+    </div>
+    <br/>
+    <br/>
+    <div class="row">
+      <div class="col text-right">
+        <a href="{% url 'Application:AcceptApplicant'  applicant.pk %}" class="btn btn-success">Accept</a>
+      </div>
+      <div class="col text-left">
+        <a class="btn btn-danger" >Decline</a>
+      </div>
+    </div>
+  </div>
+{% endblock content %}
+
+{% block js %}
+<script>
+</script>
+{% endblock js %}

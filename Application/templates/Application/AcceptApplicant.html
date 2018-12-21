@@ -1,0 +1,40 @@
+{% extends 'website/base.html' %}
+
+{% block custom_css %}
+<style>
+  table, th, td {
+  border: 1px solid black;
+  padding: 15px;
+  margin-left:auto;
+  margin-right:auto;
+}
+tr {
+  color: #FF0000;
+}
+</style>
+{% endblock custom_css %}
+
+{% block content %}
+{% include 'website/server_messages.html' %}
+<div class="container-fluid">
+  <div class="row">
+    <div class="col text-center">
+      <h1>Accept Applicant?</h1>
+      <br/>
+      <form method="POST">
+          <table class="text-left">
+        {% csrf_token %}
+        {{ form.as_table }}
+          </table>
+        <br/>
+        <input type="submit" value="Accept Applicant" />
+      </form>
+    </div>
+    </div>
+</div>
+{% endblock content %}
+
+{% block js %}
+<script>
+</script>
+{% endblock js %}

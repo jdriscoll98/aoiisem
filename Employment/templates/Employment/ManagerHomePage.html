@@ -53,7 +53,7 @@
         <th>Applicants</th>
         {% if applicants %}
       {% for applicant in applicants %}
-        <tr><td>{{ applicant }}</td></tr>
+        <tr><td><a class="btn btn-primary" href = "{% url 'Application:ApplicantDetails' applicant.pk %}"> {{ applicant }}</a></td></tr>
       {% endfor %}
         {% else %}
           <tr><td>No applicants at the moment!</td></tr>
