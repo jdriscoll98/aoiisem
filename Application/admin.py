@@ -5,5 +5,5 @@ from Application.forms import ApplicantForm
 @admin.register(Applicant)
 class ApplicantAdmin(admin.ModelAdmin):
     model = Applicant
-    fields = ('user', 'Grade', 'statement_of_interest')
+    fields = ('user', 'Grade', 'phone_number', 'statement_of_interest', 'date_submitted')
     list_display = ('user', 'date_submitted', 'Grade')

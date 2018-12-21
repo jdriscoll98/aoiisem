@@ -14,6 +14,7 @@ from django.urls import reverse_lazy
 
 from Application.models import Applicant
 from Application.forms import ApplicantForm
+from Employment.models import Employee
 
 import datetime
 import json
@@ -72,11 +73,27 @@ class ApplicantDetails(TemplateView):
         }
         return context
 
-class AcceptApplicant(UpdateView):
+class AcceptApplicant(SuccessMessageMixin, UpdateView):
     template_name='Application/AcceptApplicant.html'
     model = Applicant
     fields = '__all__'
+    success_message = 'Application Accepted Successfully'
     success_url = reverse_lazy('Employment:ManagerHomePage')
+
+    def form_valid(self, form):
+        data = form.cleaned_data
+        user = data['user']
+        password = BaseUserManager.make_random_password(self)
+        phone_number = str(data['phone_number'])
+        code = int(phone_number[-4:])
+        employee = Employee.objects.create(
+            user=user,
+            phone_number=phone_number,
+            email = user.email,
+            pay_rate = int(8),
+            Employee_Number = code,
+        )
+        return super().form_valid(form)
 
 class DeleteApplicant(DeleteView):
     template_name='Application/DeleteApplicant.html'
