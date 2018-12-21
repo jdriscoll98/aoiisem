@@ -17,6 +17,7 @@ class Applicant(models.Model):
     Grade = models.CharField(max_length=2, choices=YEAR_IN_SCHOOL_CHOICES)
 #    Resume = models.FileField(upload_to='resumes', default='resumes/resume.pdf')
     statement_of_interest = models.TextField()
+    old = models.BooleanField(default=False)
 
     def __str__(self):
         return str(self.user.first_name) + ' ' + str(self.user.last_name)

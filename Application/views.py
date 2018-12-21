@@ -83,6 +83,8 @@ class AcceptApplicant(SuccessMessageMixin, UpdateView):
     def form_valid(self, form):
         data = form.cleaned_data
         user = data['user']
+        applicant = Applicant.objects.get(user=user)
+        applicant.old = True
         password = BaseUserManager.make_random_password(self)
         phone_number = str(data['phone_number'])
         code = int(phone_number[-4:])
