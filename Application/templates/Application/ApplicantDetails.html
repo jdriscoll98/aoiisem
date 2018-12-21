@@ -59,7 +59,7 @@ margin-right: auto;
         <a href="{% url 'Application:AcceptApplicant'  applicant.pk %}" class="btn btn-success">Accept</a>
       </div>
       <div class="col text-left">
-        <a class="btn btn-danger" >Decline</a>
+        <a href="{% url 'Application:DeleteApplicant' applicant.pk %}" class="btn btn-danger" >Decline</a>
       </div>
     </div>
   </div>
