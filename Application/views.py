@@ -9,7 +9,7 @@ from django.core import serializers
 from django.contrib.messages.views import SuccessMessageMixin
 
 from django.views.generic import TemplateView, View
-from django.views.generic.edit import FormView, UpdateView
+from django.views.generic.edit import FormView, UpdateView,DeleteView
 from django.urls import reverse_lazy
 
 from Application.models import Applicant
@@ -94,3 +94,9 @@ class AcceptApplicant(SuccessMessageMixin, UpdateView):
             Employee_Number = code,
         )
         return super().form_valid(form)
+
+class DeleteApplicant(DeleteView):
+    template_name='Application/DeleteApplicant.html'
+    model = Applicant
+    fields = '__all__'
+    success_url = reverse_lazy('Employment:ManagerHomePage')
