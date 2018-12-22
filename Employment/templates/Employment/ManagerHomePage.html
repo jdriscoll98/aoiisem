@@ -68,7 +68,7 @@
             <tr><td>{{ shift.Employee }} | {{ shift.Type }}</td><td>{{ employee.clocked_in|yesno:"In, Out" }}</tr>
           {% endfor %}
         {% else %}
-          <tr><td>No one scheduled today!</td></tr>
+          <tr><td colspan = '2'>No one scheduled today!</td></tr>
         {% endif %}
       </table>
     </div>
