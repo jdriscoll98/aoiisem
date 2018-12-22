@@ -26,3 +26,4 @@ __pycache__/
 !.elasticbeanstalk/*.global.yml
 
 # 2018.06.01-DEA
+*.sqlite3

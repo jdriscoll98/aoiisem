@@ -35,7 +35,7 @@ class ManagerHomePage(TemplateView):
             'employees': Employee.objects.all,
             'scheduled': Shift.objects.filter(date=datetime.date.today()),
             'manager': self.request.user,
-            'applicants': Applicant.objects.all,
+            'applicants': Applicant.objects.filter(old=False),
         #    'clocked': get_clocked_in()
         }
         return context
