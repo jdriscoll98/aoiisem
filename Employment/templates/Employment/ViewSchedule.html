@@ -9,6 +9,13 @@
   margin-right: auto;
 
   }
+  table {
+    border: 3px solid black;
+  }
+.divider {
+    border-bottom: 3px solid black;
+  }
+
 </style>
 {% endblock custom_css %}
 
@@ -24,16 +31,42 @@
   {% for day in days %}
   <th>{{ day }}</th>
   {% endfor %}
-  {% for type in ShiftTypes %}
-    <tr>
-      <td>{{ type }}</td>
-      {% for shift in shifts %}
-        {% if shift.Type == type %}
-          <td>{{ shift.Employee }}</td>
-        {% endif %}
-      {% endfor %}
-      </tr>
-      {% endfor %}
+  <tr class="divider">
+    <td>Breakfast</td>
+    {% for shift in shifts|slice:":5" %}
+    <td >{{ shift.Employee }}</td>
+    {% endfor %}
+  </tr>
+  <tr>
+    <td>Lunch</td>
+    {% for shift in shifts|slice:"5:10" %}
+    <td>{{ shift.Employee }}</td>
+    {% endfor %}
+  </tr>
+  <tr class="divider">
+    <td>Lunch</td>
+    {% for shift in shifts|slice:"10:15" %}
+    <td>{{ shift.Employee }}</td>
+    {% endfor %}
+  </tr>
+  <tr>
+    <td>Dinner</td>
+    {% for shift in shifts|slice:"15:20" %}
+    <td>{{ shift.Employee }}</td>
+    {% endfor %}
+  </tr>
+  <tr>
+    <td>Dinner</td>
+    {% for shift in shifts|slice:"20:25" %}
+    <td>{{ shift.Employee }}</td>
+    {% endfor %}
+  </tr>
+  <tr class="divider">
+    <td >Dinner</td>
+    {% for shift in shifts|slice:"25:30" %}
+    <td>{{ shift.Employee }}</td>
+    {% endfor %}
+  </tr>
 </table>
 </div>
 </div>

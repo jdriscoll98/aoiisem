@@ -60,17 +60,11 @@ class ViewSchedule(TemplateView):
     template_name = 'Employment/ViewSchedule.html'
 
     def get_context_data(self, **kwargs):
-        shifts = Shift.objects.all()
-        shiftdays = []
-        for shift in shifts:
-            day = shift.date.weekday()
-            shiftdays.append(day)
-        print(shiftdays)
+        Types = ShiftType.objects.all()
         context = {
-            'shifts': shifts,
-            'ShiftTypes': ShiftType.objects.all(),
+            'shifts': Shift.objects.all(),
+            'ShiftTypes': Types,
             'days': Days.objects.all(),
-            'shiftdays': shiftdays
         }
         return context
 
