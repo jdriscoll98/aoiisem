@@ -14,6 +14,11 @@
 
 {% block content %}
 {% include 'website/server_messages.html' %}
+<div class="container">
+  <div class="row">
+    <div class="col text-center">
+      <h1>Current Schedule</h1>
+      <br/>
 <table>
   <th>Shift</th>
   {% for day in days %}
@@ -24,13 +29,15 @@
       <td>{{ type }}</td>
       {% for shift in shifts %}
         {% if shift.Type == type %}
-          {% for }
           <td>{{ shift.Employee }}</td>
         {% endif %}
       {% endfor %}
       </tr>
       {% endfor %}
 </table>
+</div>
+</div>
+</div>
 {% endblock content %}
 
 {% block js %}

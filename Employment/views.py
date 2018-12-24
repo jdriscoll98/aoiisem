@@ -68,7 +68,7 @@ class ViewSchedule(TemplateView):
         print(shiftdays)
         context = {
             'shifts': shifts,
-        #    'ShiftTypes': ShiftType.objects.all(),
+            'ShiftTypes': ShiftType.objects.all(),
             'days': Days.objects.all(),
             'shiftdays': shiftdays
         }
