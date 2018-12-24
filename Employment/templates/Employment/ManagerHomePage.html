@@ -1,13 +1,6 @@
 {% extends 'website/base.html' %}
 {% block custom_css %}
 <style>
-    table, th, td {
-    border: 1px solid black;
-    padding: 15px;
-    margin-left: auto;
-    margin-right: auto;
-
-  }
   .last {
   border-left: 2px solid black;
   padding: 15px;
@@ -32,7 +25,7 @@
     <div class="col text-center">
     <h1>Manager Home Page</h1>
     <br/>
-    <h3>Welcome, {{ manager }}</h3>
+    <h3>Welcome, {{ manager.first_name }}</h3>
     <br/>
     <h3 id="clock"></h3>
     </div>
@@ -44,7 +37,7 @@
     <table>
       <th>Employees</th>
     {% for employee in employees %}
-      <tr><td><a class="btn btn-primary" href="{% url 'Employment:EmployeeDetails' employee.pk %}">{{ employee }}</a></td></tr>
+      <tr><td><a class="btn btn-primary" href="{% url 'Employment:EmployeeDetails' employee.pk %}"><i class="fa fa-user"></i> {{ employee }}</a></td></tr>
     {% endfor %}
     </table>
     </div>
@@ -101,18 +94,19 @@
   var div = document.getElementById('clock');
 
   function time() {
-    var d = new Date();
-    var s = d.getSeconds();
-    var m = d.getMinutes();
-    var h = d.getHours();
-    if (h > 12) {
-      h = h - 12
-      div.textContent = h + ":" + m + " pm";
-    }
-    else {
-      div.textContent = h + ":" + m + " am";
-    }
-
+    var now    = new Date();
+     var hour   = now.getHours();
+     var minute = now.getMinutes();
+     var second = now.getSeconds();
+     var ap = "AM";
+     if (hour   > 11) { ap = "PM";             }
+     if (hour   > 12) { hour = hour - 12;      }
+     if (hour   == 0) { hour = 12;             }
+     if (hour   < 10) { hour   = "0" + hour;   }
+     if (minute < 10) { minute = "0" + minute; }
+     if (second < 10) { second = "0" + second; }
+     var timeString = hour + ':' + minute + ':' + second + " " + ap;
+    div.textContent = timeString;
   }
 
   setInterval(time, 1000);

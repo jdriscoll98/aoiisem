@@ -1,5 +1,23 @@
+<style>
 :root {
   --main-color: black;
   --secondary-color: #08f;
   --container-corner-radius: 10px;
 }
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Corben', Georgia, Times, serif;
+}
+p, div {
+    font-family: 'Nobile', Helvetica, Arial, sans-serif;
+}
+body {
+    background: url("../images/full-bloom.png") repeat 0 0;
+}
+table, th, td {
+border: 1px solid black;
+padding: 15px;
+margin-left: auto;
+margin-right: auto;
+
+}
+</style>
