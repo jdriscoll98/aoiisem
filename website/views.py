@@ -6,11 +6,17 @@ from django.shortcuts import render, redirect
 from django.template.loader import render_to_string
 import json
 
+from Employment.models import Employee, Manager
+
 #-------------------------------------------------------------------------------
 # Page Views
 #-------------------------------------------------------------------------------
 @login_required
 def homepage_view(request):
-    context = {
-    }
-    return render(request, "website/homepage.html", context)
+    user = request.user
+    if Manager.objects.filter(user=user).exists():
+        return redirect('Employment:ManagerHomePage')
+    elif Employee.objects.filter(user=user).exists():
+        return redirect('Employment:EmployeeHomePage')
+    else:
+        return redirect('Application:ApplicationHomePage')

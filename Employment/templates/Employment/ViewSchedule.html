@@ -26,48 +26,52 @@
     <div class="col text-center">
       <h1>Current Schedule</h1>
       <br/>
-<table>
-  <th>Shift</th>
-  {% for day in days %}
-  <th>{{ day }}</th>
-  {% endfor %}
-  <tr class="divider">
-    <td>Breakfast</td>
-    {% for shift in shifts|slice:":5" %}
-    <td >{{ shift.Employee }}</td>
-    {% endfor %}
-  </tr>
-  <tr>
-    <td>Lunch</td>
-    {% for shift in shifts|slice:"5:10" %}
-    <td>{{ shift.Employee }}</td>
-    {% endfor %}
-  </tr>
-  <tr class="divider">
-    <td>Lunch</td>
-    {% for shift in shifts|slice:"10:15" %}
-    <td>{{ shift.Employee }}</td>
-    {% endfor %}
-  </tr>
-  <tr>
-    <td>Dinner</td>
-    {% for shift in shifts|slice:"15:20" %}
-    <td>{{ shift.Employee }}</td>
-    {% endfor %}
-  </tr>
-  <tr>
-    <td>Dinner</td>
-    {% for shift in shifts|slice:"20:25" %}
-    <td>{{ shift.Employee }}</td>
-    {% endfor %}
-  </tr>
-  <tr class="divider">
-    <td >Dinner</td>
-    {% for shift in shifts|slice:"25:30" %}
-    <td>{{ shift.Employee }}</td>
-    {% endfor %}
-  </tr>
-</table>
+      {% if full_schedule %}
+        <table>
+          <th>Shift</th>
+          {% for day in days %}
+          <th>{{ day }}</th>
+          {% endfor %}
+          <tr class="divider">
+            <td>Breakfast</td>
+            {% for shift in shifts|slice:":5" %}
+            <td>{{ shift.Employee }}</td>
+            {% endfor %}
+          </tr>
+          <tr>
+            <td>Lunch</td>
+            {% for shift in shifts|slice:"5:10" %}
+            <td>{{ shift.Employee }}</td>
+            {% endfor %}
+          </tr>
+          <tr class="divider">
+            <td>Lunch</td>
+            {% for shift in shifts|slice:"10:15" %}
+            <td>{{ shift.Employee }}</td>
+            {% endfor %}
+          </tr>
+          <tr>
+            <td>Dinner</td>
+            {% for shift in shifts|slice:"15:20" %}
+            <td>{{ shift.Employee }}</td>
+            {% endfor %}
+          </tr>
+          <tr>
+            <td>Dinner</td>
+            {% for shift in shifts|slice:"20:25" %}
+            <td>{{ shift.Employee }}</td>
+            {% endfor %}
+          </tr>
+          <tr class="divider">
+            <td >Dinner</td>
+            {% for shift in shifts|slice:"25:30" %}
+            <td>{{ shift.Employee }}</td>
+            {% endfor %}
+          </tr>
+        </table>
+      {% else %}
+        <h1>Schedule has not been created yet, please check back!</h1>
+      {% endif %}
 </div>
 </div>
 </div>

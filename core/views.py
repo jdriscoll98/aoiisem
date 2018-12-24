@@ -20,7 +20,6 @@ def login(request):
 				raw_password = form.cleaned_data.get('password')
 				user = auth_authenticate(username=username, password=raw_password)
 				auth_login(request, user)
-				# add in if statemnent to redirect to different homepages
 				if Manager.objects.filter(user=user).exists():
 					return redirect('Employment:ManagerHomePage')
 				elif Employee.objects.filter(user=user).exists():
