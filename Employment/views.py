@@ -14,7 +14,7 @@ from Employment.models import Employee, Clock
 
 from Employment.forms import ClockForm
 from Application.models import Applicant
-from Scheduling.models import Availability, Shift, ShiftType
+from Scheduling.models import Availability, Shift, ShiftType, Days
 from Scheduling.forms import AvailabilityForm
 from django.forms import formset_factory
 import json
@@ -52,7 +52,25 @@ class EmployeeHomePage(TemplateView):
             'shifts': Shift.objects.filter(Employee=employee, date=today),
             'date': str(calendar.day_name[today.weekday()]) + ',' + ' ' + today.strftime('%b, %d'),
             'available': Shift.objects.filter(up_for_trade=True).exclude(Employee=employee),
-            'posted': Shift.objects.filter(up_for_trade=True, Employee=employee)
+            'posted': Shift.objects.filter(up_for_trade=True, Employee=employee, date__gte=today)
+        }
+        return context
+
+class ViewSchedule(TemplateView):
+    template_name = 'Employment/ViewSchedule.html'
+
+    def get_context_data(self, **kwargs):
+        shifts = Shift.objects.all()
+        shiftdays = []
+        for shift in shifts:
+            day = shift.date.weekday()
+            shiftdays.append(day)
+        print(shiftdays)
+        context = {
+            'shifts': shifts,
+            'ShiftTypes': ShiftType.objects.all(),
+            'days': Days.objects.all(),
+            'shiftdays': shiftdays
         }
         return context
 
@@ -111,23 +129,30 @@ class ClockView(FormView):
     form_class = ClockForm
     success_url = reverse_lazy('Employment:Clock')
 
-    def form_valid(self, form):
-        data = form.cleaned_data
-        user = self.request.user
-        employee = Employee.objects.get(Employee_Number=data['Employee_Number'])
-        if employee.clocked_in:
-            employee.clocked_in = False
-            messages.success(self.request, '{0} clocked in successfully'.format(employee))
+    def post(self, request, *args, **kwargs):
+        form_class = self.get_form_class()
+        form = self.get_form(form_class)
+        if form.is_valid():
+            data = form.cleaned_data
+            employee = Employee.objects.get(Employee_Number=data['Employee_Number'])
+            data = form.cleaned_data
+            user = self.request.user
+            employee = Employee.objects.get(Employee_Number=data['Employee_Number'])
+            if employee.clocked_in:
+                employee.clocked_in = False
+                messages.success(self.request, '{0} clocked out successfully'.format(employee))
+            else:
+                employee.clocked_in = True
+                messages.success(self.request, '{0} clocked in successfully'.format(employee))
+            employee.save()
+            Clock.objects.create(
+                employee=employee,
+                time = datetime.datetime.now().time(),
+                day = datetime.date.today()
+            )
+            return self.form_valid(form)
         else:
-            messages.success(self.request, '{0} clocked out successfully'.format(employee))
-            employee.clocked_in = True
-        employee.save()
-        Clock.objects.create(
-            employee=employee,
-            time = datetime.datetime.now().time(),
-            day = datetime.date.today()
-        )
-        return super(ClockView, self).form_valid(form)
+            return self.form_invalid(form)
 
     def form_invalid(self,form):
         print('invalid')
