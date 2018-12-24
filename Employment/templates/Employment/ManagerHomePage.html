@@ -65,7 +65,7 @@
         <th>Scheduled Today</th><th>Status?</th>
         {% if scheduled %}
           {% for shift in scheduled %}
-            <tr><td>{{ shift.Employee }} | {{ shift.Type }}</td><td>{{ employee.clocked_in|yesno:"In, Out" }}</tr>
+            <tr><td>{{ shift.Employee }} | {{ shift.Type }}</td><td>{{ shift.Employee.clocked_in|yesno:"In, Out" }}</tr>
           {% endfor %}
         {% else %}
           <tr><td colspan="2">No one scheduled today!</td></tr>
