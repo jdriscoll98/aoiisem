@@ -14,7 +14,7 @@ from Employment.models import Employee, Clock
 
 from Employment.forms import ClockForm
 from Application.models import Applicant
-from Scheduling.models import Availability, Shift, ShiftType
+from Scheduling.models import Availability, Shift, ShiftType, Days
 from Scheduling.forms import AvailabilityForm
 from django.forms import formset_factory
 import json
@@ -52,7 +52,25 @@ class EmployeeHomePage(TemplateView):
             'shifts': Shift.objects.filter(Employee=employee, date=today),
             'date': str(calendar.day_name[today.weekday()]) + ',' + ' ' + today.strftime('%b, %d'),
             'available': Shift.objects.filter(up_for_trade=True).exclude(Employee=employee),
-            'posted': Shift.objects.filter(up_for_trade=True, Employee=employee)
+            'posted': Shift.objects.filter(up_for_trade=True, Employee=employee, date__gte=today)
+        }
+        return context
+
+class ViewSchedule(TemplateView):
+    template_name = 'Employment/ViewSchedule.html'
+
+    def get_context_data(self, **kwargs):
+        shifts = Shift.objects.all()
+        shiftdays = []
+        for shift in shifts:
+            day = shift.date.weekday()
+            shiftdays.append(day)
+        print(shiftdays)
+        context = {
+            'shifts': shifts,
+        #    'ShiftTypes': ShiftType.objects.all(),
+            'days': Days.objects.all(),
+            'shiftdays': shiftdays
         }
         return context
 
@@ -77,7 +95,7 @@ class EmployeeUpdate(SuccessMessageMixin, UpdateView):
     success_url = reverse_lazy('Employment:EmployeeHomePage')
 
 class SubmitAvailability(View):
-    availability_FormSet = formset_factory(AvailabilityForm, max_num=len(ShiftType.objects.all()))
+    availability_FormSet = formset_factory(AvailabilityForm, max_num=3)
     template_name = 'Employment/SubmitAvailability.html'
     success_url = reverse_lazy('Employment:EmployeeHomePage')
 

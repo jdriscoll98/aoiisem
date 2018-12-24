@@ -1,0 +1,39 @@
+{% extends 'website/base.html' %}
+
+{% block custom_css %}
+<style>
+  table, th, td {
+  border: 1px solid black;
+  padding: 15px;
+  margin-left: auto;
+  margin-right: auto;
+
+  }
+</style>
+{% endblock custom_css %}
+
+{% block content %}
+{% include 'website/server_messages.html' %}
+<table>
+  <th>Shift</th>
+  {% for day in days %}
+  <th>{{ day }}</th>
+  {% endfor %}
+  {% for type in ShiftTypes %}
+    <tr>
+      <td>{{ type }}</td>
+      {% for shift in shifts %}
+        {% if shift.Type == type %}
+          {% for }
+          <td>{{ shift.Employee }}</td>
+        {% endif %}
+      {% endfor %}
+      </tr>
+      {% endfor %}
+</table>
+{% endblock content %}
+
+{% block js %}
+<script>
+</script>
+{% endblock js %}
