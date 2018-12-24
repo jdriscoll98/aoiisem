@@ -29,7 +29,7 @@
 [    0.000000] MTRR: Disabled
 [    0.000000] x86/PAT: MTRRs disabled, skipping PAT initialization too.
 [    0.000000] CPU MTRRs all blank - virtualized system.
-[    0.000000] x86/PAT: Configuration [0-7]: WB  WT  UC- UC  WB  WT  UC- UC  
+[    0.000000] x86/PAT: Configuration [0-7]: WB  WT  UC- UC  WB  WT  UC- UC
 [    0.000000] found SMP MP-table at [mem 0x0009fff0-0x0009ffff] mapped at [ffff88000009fff0]
 [    0.000000] Scanning 1 areas for low memory corruption
 [    0.000000] RAMDISK: [mem 0x3630c000-0x3717dfff]
@@ -700,7 +700,7 @@ ubuntu-xenial login: [   37.268374] cloud-init[1463]: Generating locales (this m
 [   40.956798] cloud-init[1463]: Generation complete.
 [   43.213795] cloud-init[1463]: Cloud-init v. 18.3-9-g2e62cb8a-0ubuntu1~16.04.2 running 'modules:config' at Sun, 23 Dec 2018 23:35:05 +0000. Up 36.80 seconds.
 ci-info: no authorized ssh keys fingerprints found for user ubuntu.
-<14>Dec 23 23:35:13 ec2: 
+<14>Dec 23 23:35:13 ec2:
 <14>Dec 23 23:35:13 ec2: #############################################################
 <14>Dec 23 23:35:13 ec2: -----BEGIN SSH HOST KEY FINGERPRINTS-----
 <14>Dec 23 23:35:13 ec2: 1024 SHA256:eQmJtnycz10HY4KkK2i9FnLRMTM7qKk5bD+ueK13yHg root@ubuntu-xenial (DSA)
