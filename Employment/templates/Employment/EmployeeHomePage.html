@@ -112,8 +112,15 @@ role="button">Submit Availability</a>
   </div>
   <br/>
   <div class="row">
-    <div class="col text-center">
-      <strong>View Timesheet data / Estimated Pay</strong>
+    <div class="col text-center lower" >
+      <a href="{% url 'Employment:SubmitAvailability' %}"
+class="btn btn-primary btn-sm"
+role="button">View Timesheet Data</a>
+      </div>
+      <div class="col text-center lower" >
+        <a href="{% url 'Employment:ViewSchedule' %}"
+  class="btn btn-primary btn-sm"
+  role="button">View Schedule</a>
       </div>
   </div>
   <br/>

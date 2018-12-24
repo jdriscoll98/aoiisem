@@ -77,7 +77,7 @@ class EmployeeUpdate(SuccessMessageMixin, UpdateView):
     success_url = reverse_lazy('Employment:EmployeeHomePage')
 
 class SubmitAvailability(View):
-    availability_FormSet = formset_factory(AvailabilityForm, max_num=len(ShiftType.objects.all()))
+    availability_FormSet = formset_factory(AvailabilityForm, max_num=3)
     template_name = 'Employment/SubmitAvailability.html'
     success_url = reverse_lazy('Employment:EmployeeHomePage')
 
