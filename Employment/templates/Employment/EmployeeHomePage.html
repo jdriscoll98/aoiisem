@@ -61,6 +61,15 @@
        role="button">Pick Up</a>
             </td></tr>
           {% endfor %}
+        {% endif %}
+        {% if vacant %}
+          {% for shift in vacant %}
+          <tr><td><strong>VACANT</strong> {{ shift }} | {{ shift.date }}</td>
+          <td>
+            <a href="{% url 'Scheduling:PickUpVacant' shift.pk %}"
+     class="btn btn-primary btn-sm"
+     role="button">Pick Up</a>
+          {% endfor %}
         {% else %}
           <tr><td>No shifts up for grabs!</td></tr>
         {% endif %}

@@ -1,5 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django import http
 from django.http import JsonResponse
 from django.contrib import messages
 from django.shortcuts import render, redirect
@@ -7,15 +8,19 @@ from django.template.loader import render_to_string
 from django.urls import reverse_lazy
 
 from django.views.generic import TemplateView
+from django.views.generic.base import RedirectView
 from django.views.generic.edit import FormView, CreateView, UpdateView
 
-from Scheduling.models import Shift
+from House.models import House
+from Scheduling.models import Shift, SchedulePeriod
 from Scheduling.forms import ShiftForm, PostShiftForm
 from Employment.models import Employee
 
 from Scheduling.utils import create_schedule
 import json
 
+import datetime
+from datetime import timedelta
 
 #-------------------------------------------------------------------------------
 # Page Views
@@ -61,6 +66,43 @@ class PostShift(FormView):
 
 class CreateSchedulePage(TemplateView):
     template_name = 'Scheduling/CreateSchedulePage.html'
+
+class PickUpVacant(RedirectView):
+    permenant = True
+    url = reverse_lazy('Employment:EmployeeHomePage')
+
+    def get(self, request, *args, **kwargs):
+        employee = Employee.objects.get(user=request.user)
+        try:
+            shift = Shift.objects.get(pk=kwargs['pk'])
+            shift.Employee = employee
+            shift.save()
+        except Shift.DoesNotExist:
+            return http.HttpResponsePermanentRedirect(url)
+        date = shift.date
+        shift_date = date + timedelta(days = 7)
+        scheduleperiod = SchedulePeriod.objects.get(House=House.objects.get(name='AOpi'))
+        end_date = scheduleperiod.end_date
+        while shift_date < end_date:
+            shift = Shift.objects.create(
+                Type = shift.Type,
+                Employee = employee,
+                date = shift_date
+            )
+            shift_date += timedelta(days = 7)
+        if self.url:
+            if self.permanent:
+                return http.HttpResponsePermanentRedirect(self.url)
+            else:
+                return http.HttpResponseRedirect(self.url)
+        else:
+            logger.warning('Gone: %s', self.request.path,
+                        extra={
+                            'status_code': 410,
+                            'request': self.request
+                        })
+            return http.HttpResponseGone()
+
 
 def CreateSchedule(request):
     if Manager.objects.get(user=user).exists():

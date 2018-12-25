@@ -59,6 +59,8 @@ class EmployeeHomePage(UserPassesTestMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         employee = Employee.objects.get(user=self.request.user)
+        default = User.objects.get(username='default')
+        default_employee = Employee.objects.get(user=default)
         today = datetime.date.today()
         context = super(EmployeeHomePage, self).get_context_data(**kwargs)
         context = {
@@ -66,7 +68,8 @@ class EmployeeHomePage(UserPassesTestMixin, TemplateView):
             'shifts': Shift.objects.filter(Employee=employee, date=today),
             'date': str(calendar.day_name[today.weekday()]) + ',' + ' ' + today.strftime('%b, %d'),
             'available': Shift.objects.filter(up_for_trade=True).exclude(Employee=employee),
-            'posted': Shift.objects.filter(up_for_trade=True, Employee=employee, date__gte=today)
+            'posted': Shift.objects.filter(up_for_trade=True, Employee=employee, date__gte=today),
+            'vacant': Shift.objects.filter(Employee=default_employee)
         }
         return context
 
