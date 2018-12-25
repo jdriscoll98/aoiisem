@@ -1,0 +1,31 @@
+{% extends 'website/base.html' %}
+
+{% block custom_css %}
+{% endblock custom_css %}
+
+{% block content %}
+{% include 'website/server_messages.html' %}
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col text-center">
+      <h1>Click confirm if you would like to create a new schedule</h1>
+      <h2>(This will delete the current schedule)</h2>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col text-center">
+        <a class="btn btn-primary" href="{% url 'Scheduling:create_schedule' %}">Confirm</a>
+    </div>
+    <div class="col text-center">
+      <a class="btn btn-danger" href="{% url 'Employment:ManagerHomePage' %}">Go Back></a>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}
+
+{% block js %}
+<script>
+</script>
+{% endblock js %}

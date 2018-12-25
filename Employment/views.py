@@ -10,8 +10,11 @@ from django.views.generic import TemplateView, View
 from django.views.generic.edit import FormView, UpdateView
 from django.urls import reverse_lazy, reverse
 
-from Employment.models import Employee, Clock
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import UserPassesTestMixin
 
+
+from Employment.models import Employee, Clock, Manager
 from Employment.forms import ClockForm
 from Application.models import Applicant
 from Scheduling.models import Availability, Shift, ShiftType, Days
@@ -26,22 +29,32 @@ import calendar
 #-------------------------------------------------------------------------------
 # Page Views
 #-------------------------------------------------------------------------------
-class ManagerHomePage(TemplateView):
+class ManagerHomePage(UserPassesTestMixin, TemplateView):
     template_name = 'Employment/ManagerHomePage.html'
+
+    def test_func(self):
+        return Manager.objects.filter(user=self.request.user).exists()
 
     def get_context_data(self, **kwargs):
         context = super(ManagerHomePage, self).get_context_data(**kwargs)
+        scheduled = []
+        for shift in  Shift.objects.filter(date=datetime.date.today()):
+            if shift.Type.end_time > datetime.datetime.now().time():
+                scheduled.append(shift)
         context = {
             'employees': Employee.objects.all,
-            'scheduled': Shift.objects.filter(date=datetime.date.today()),
+            'scheduled': scheduled,
             'manager': self.request.user,
             'applicants': Applicant.objects.filter(old=False),
         #    'clocked': get_clocked_in()
         }
         return context
 
-class EmployeeHomePage(TemplateView):
+class EmployeeHomePage(UserPassesTestMixin, TemplateView):
     template_name = 'Employment/EmployeeHomePage.html'
+
+    def test_func(self):
+        return Employee.objects.filter(user=self.request.user).exists()
 
     def get_context_data(self, **kwargs):
         employee = Employee.objects.get(user=self.request.user)
@@ -56,7 +69,7 @@ class EmployeeHomePage(TemplateView):
         }
         return context
 
-class ViewSchedule(TemplateView):
+class ViewSchedule(LoginRequiredMixin, TemplateView):
     template_name = 'Employment/ViewSchedule.html'
 
     def get_context_data(self, **kwargs):
@@ -75,8 +88,11 @@ class ViewSchedule(TemplateView):
         }
         return context
 
-class EmployeeDetails(TemplateView):
+class EmployeeDetails(UserPassesTestMixin, TemplateView):
     template_name = 'Employment/EmployeeDetails.html'
+
+    def test_func(self):
+        return Manager.objects.filter(user=self.request.user).exists()
 
     def get_context_data(self, **kwargs):
         employee = Employee.objects.get(pk=kwargs['pk'])
@@ -88,14 +104,22 @@ class EmployeeDetails(TemplateView):
         }
         return context
 
-class EmployeeUpdate(SuccessMessageMixin, UpdateView):
+class EmployeeUpdate(UserPassesTestMixin, SuccessMessageMixin, UpdateView):
     template_name = 'Employment/employee_update_form.html'
+
+    def test_func(self):
+        return Employee.objects.filter(user=self.request.user).exists()
+
     model = Employee
-    fields = ('phone_number', 'email', 'Employee_Number')
+    fields = ('phone_number', 'email', 'Employee_Number', 'min_hours', 'max_hours')
     success_message = 'Employee Information Updated Successfully'
     success_url = reverse_lazy('Employment:EmployeeHomePage')
 
-class SubmitAvailability(View):
+class SubmitAvailability(UserPassesTestMixin, View):
+
+    def test_func(self):
+        return Employee.objects.filter(user=self.request.user).exists()
+
     availability_FormSet = formset_factory(AvailabilityForm, max_num=3)
     template_name = 'Employment/SubmitAvailability.html'
     success_url = reverse_lazy('Employment:EmployeeHomePage')

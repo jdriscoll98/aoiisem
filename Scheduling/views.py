@@ -12,6 +12,8 @@ from django.views.generic.edit import FormView, CreateView, UpdateView
 from Scheduling.models import Shift
 from Scheduling.forms import ShiftForm, PostShiftForm
 from Employment.models import Employee
+
+from Scheduling.utils import create_schedule
 import json
 
 
@@ -56,3 +58,14 @@ class PostShift(FormView):
         shift.up_for_trade = True
         shift.save()
         return super(PostShift, self).form_valid(form)
+
+class CreateSchedulePage(TemplateView):
+    template_name = 'Scheduling/CreateSchedulePage.html'
+
+def CreateSchedule(request):
+    user = request.User
+    if Manager.objects.get(user=user).exists():
+        create_schedule()
+        return render('Employment:ViewSchedule')
+    else:
+        return redriect('website:homepage_view')

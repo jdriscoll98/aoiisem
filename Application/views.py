@@ -15,6 +15,7 @@ from django.urls import reverse_lazy
 from Application.models import Applicant
 from Application.forms import ApplicantForm
 from Employment.models import Employee
+from django.core.mail import send_mail
 
 import datetime
 import json
@@ -88,7 +89,6 @@ class AcceptApplicant(SuccessMessageMixin, UpdateView):
     def form_valid(self, form):
         data = form.cleaned_data
         user = data['user']
-        password = BaseUserManager.make_random_password(self)
         phone_number = str(data['phone_number'])
         code = int(phone_number[-4:])
         employee = Employee.objects.create(
@@ -97,6 +97,12 @@ class AcceptApplicant(SuccessMessageMixin, UpdateView):
             email = user.email,
             pay_rate = int(8),
             Employee_Number = code,
+        )
+        send_mail(
+            ('You have been accetepted as a new employee! Employee number = {0}'.format(code)),
+            'AOii@do-not-reply.com',
+            ['{0}'.format(user.email)],
+            fail_silently=False,
         )
         return super().form_valid(form)
 

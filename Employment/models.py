@@ -10,6 +10,9 @@ class Employee(models.Model):
     pay_rate = models.IntegerField()
     Employee_Number = models.IntegerField()
     clocked_in = models.BooleanField(default=False)
+    min_hours = models.IntegerField(default=0)
+    max_hours = models.IntegerField(default=0)
+    num_hours = models.IntegerField(default=0)
 
     def __str__(self):
         return str(self.user.first_name) + ' ' + str(self.user.last_name)

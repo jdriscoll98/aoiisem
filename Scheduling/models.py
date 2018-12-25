@@ -30,7 +30,7 @@ class Shift(models.Model):
     date = models.DateField()
 
     def __str__(self):
-        return str(self.Type) 
+        return str(self.Type)
 
 class Availability(models.Model):
     ShiftType = models.ForeignKey(ShiftType, on_delete=models.CASCADE)
@@ -43,3 +43,4 @@ class Availability(models.Model):
 class SchedulePeriod(models.Model):
     start_date = models.DateField()
     end_date = models.DateField()
+    House = models.ForeignKey(House, default=1, on_delete=models.CASCADE)
