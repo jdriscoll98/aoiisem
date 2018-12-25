@@ -1,5 +1,6 @@
 from Scheduling.models import Shift, SchedulePeriod, Availability, ShiftType
 from House.models import House
+from Employment.models import Employee
 import datetime
 from datetime import timedelta
 from django.shortcuts import render, redirect
@@ -13,6 +14,9 @@ def create_schedule(request):
     house = House.objects.get(manager=user)
     scheduleperiod = SchedulePeriod.objects.get(House=house)
     date = scheduleperiod.start_date
+    for employee in Employee.objects.all():
+        employee.num_hours = 0
+        employee.save()
     for i in range(30):
         print(i)
         day = date.strftime('%A')
@@ -79,11 +83,14 @@ def create_shifts(day, date, scheduleperiod, type):
     for employee in elligible_employees:
         employee_list.append(employee)
     employee_list.sort(key=lambda x: x.employee.num_hours)
-    if not (Shift.objects.filter(Type=type, date=date, Employee = employee_list[0].employee).exists() or ( not
-    Shift.objects.filter(Type=ShiftType.objects.get(label='Breakfast'), date=date, Employee= employee_list[0].employee).exists() and not Shift.objects.filter(Type=ShiftType.objects.get(label='Lunch'), date=date, Employee= employee_list[0].employee).exists())):
+    print(employee_list)
+    employee = employee_list[0].employee
+    if get_already_scheduled(type, date, employee) and get_triple_shift(date, employee):
         employee = employee_list[0].employee
-    else:
+    elif get_already_scheduled(type, date, employee_list[1].employee) and get_triple_shift(date, employee_list[1].employee):
         employee = employee_list[1].employee
+    else:
+        employee = employee_list[2].employee
     end_date = scheduleperiod.end_date
     while shift_date <= end_date:
         shift = Shift.objects.create(
@@ -99,3 +106,16 @@ def create_shifts(day, date, scheduleperiod, type):
         employee.num_hours += 3
         employee.save()
     return True
+
+def get_already_scheduled(type, date, employee):
+    if (Shift.objects.filter(Type=type, date=date, Employee = employee).exists()):
+        return False
+    else:
+        return True
+
+def get_triple_shift(date, employee):
+    if (Shift.objects.filter(Type=ShiftType.objects.get(label='Breakfast'), date=date, Employee= employee).exists()
+    and Shift.objects.filter(Type=ShiftType.objects.get(label='Lunch'), date=date, Employee= employee).exists()):
+        return False
+    else:
+        return True
