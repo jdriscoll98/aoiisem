@@ -22,9 +22,4 @@ class ShiftAdmin(admin.ModelAdmin):
 
 @admin.register(Availability)
 class AvailabiltyAdmin(admin.ModelAdmin):
-    form = AvailabilityForm
-    fieldsets = (
-        (None, {
-            'fields': ('ShiftType', 'days', 'employee')
-            }),
-        )
+    pass

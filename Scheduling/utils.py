@@ -20,7 +20,6 @@ def create_schedule(request):
         employee.num_hours = 0
         employee.save()
     for i in range(30):
-        print(i)
         day = date.strftime('%A')
         if i  < 5:
             type = ShiftType.objects.get(label='Breakfast')
@@ -76,6 +75,19 @@ def create_schedule(request):
             type = ShiftType.objects.get(label='Dinner')
             create_shifts(day,  date, scheduleperiod, type)
             date = date + timedelta(days=1)
+    default_user = User.objects.get(username='default')
+    default = Employee.objects.get(user=default_user)
+    for shift in Shift.objects.exclude(Employee=default):
+        date = shift.date
+        shift_date = date + timedelta(7)
+        end_date = scheduleperiod.end_date
+        while shift_date < end_date:
+            shift = Shift.objects.create(
+                Type = shift.Type,
+                Employee = shift.Employee,
+                date = shift_date
+            )
+            shift_date += timedelta(7)
     return redirect('Employment:ViewSchedule')
 
 def create_shifts(day, date, scheduleperiod, type):
@@ -86,14 +98,11 @@ def create_shifts(day, date, scheduleperiod, type):
         employee_list.append(employee)
     employee_list.sort(key=lambda x: x.employee.num_hours)
     employee = get_employee(employee_list, type, day, date, scheduleperiod)
-    end_date = scheduleperiod.end_date
-    while shift_date <= end_date:
-        shift = Shift.objects.create(
-            Type = type,
-            Employee = employee,
-            date = shift_date
-        )
-        shift_date += timedelta(days=7)
+    shift = Shift.objects.create(
+        Type = type,
+        Employee = employee,
+        date = shift_date
+    )
     if type == 'Breakfast':
         employee.num_hours += 1
         employee.save()
