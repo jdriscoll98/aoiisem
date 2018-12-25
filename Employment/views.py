@@ -38,11 +38,12 @@ class ManagerHomePage(UserPassesTestMixin, TemplateView):
     def get_context_data(self, **kwargs):
         context = super(ManagerHomePage, self).get_context_data(**kwargs)
         scheduled = []
+        default = User.objects.get(username='default')
         for shift in  Shift.objects.filter(date=datetime.date.today()):
             if shift.Type.end_time > datetime.datetime.now().time():
                 scheduled.append(shift)
         context = {
-            'employees': Employee.objects.all,
+            'employees': Employee.objects.exclude(user=default),
             'scheduled': scheduled,
             'manager': self.request.user,
             'applicants': Applicant.objects.filter(old=False),

@@ -4,6 +4,8 @@ from Employment.models import Employee
 import datetime
 from datetime import timedelta
 from django.shortcuts import render, redirect
+from django.contrib.auth.models import User
+
 
 
 def create_schedule(request):
@@ -83,14 +85,7 @@ def create_shifts(day, date, scheduleperiod, type):
     for employee in elligible_employees:
         employee_list.append(employee)
     employee_list.sort(key=lambda x: x.employee.num_hours)
-    print(employee_list)
-    employee = employee_list[0].employee
-    if get_already_scheduled(type, date, employee) and get_triple_shift(date, employee):
-        employee = employee_list[0].employee
-    elif get_already_scheduled(type, date, employee_list[1].employee) and get_triple_shift(date, employee_list[1].employee):
-        employee = employee_list[1].employee
-    else:
-        employee = employee_list[2].employee
+    employee = get_employee(employee_list, type, day, date, scheduleperiod)
     end_date = scheduleperiod.end_date
     while shift_date <= end_date:
         shift = Shift.objects.create(
@@ -119,3 +114,25 @@ def get_triple_shift(date, employee):
         return False
     else:
         return True
+
+def get_employee(employee_list, type, day, date, scheduleperiod):
+    try:
+        employee = employee_list[0].employee
+    except:
+        employee = Employee.objects.get(user=User.objects.get(username='default'))
+    if (employee.user.username != 'default') and len(employee_list) >= 2:
+        if get_already_scheduled(type, date, employee) and get_triple_shift(date, employee):
+            employee = employee_list[0].employee
+        elif get_already_scheduled(type, date, employee_list[1].employee) and get_triple_shift(date, employee_list[1].employee):
+            employee = employee_list[1].employee
+        else:
+            try:
+                employee = employee_list[2].employee
+            except:
+                employee = Employee.objects.get(user=User.objects.get(username='default'))
+    else:
+        if (employee.user.username != 'default') and get_already_scheduled(type, date, employee) and get_triple_shift(date, employee):
+            employee = employee_list[0].employee
+        else:
+            employee = Employee.objects.get(user=User.objects.get(username='default'))
+    return employee
