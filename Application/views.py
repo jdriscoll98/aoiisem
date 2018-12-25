@@ -99,6 +99,7 @@ class AcceptApplicant(SuccessMessageMixin, UpdateView):
             Employee_Number = code,
         )
         send_mail(
+            'Congratulations!',
             ('You have been accetepted as a new employee! Employee number = {0}'.format(code)),
             'AOii@do-not-reply.com',
             ['{0}'.format(user.email)],
