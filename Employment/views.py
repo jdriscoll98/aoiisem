@@ -58,13 +58,14 @@ class EmployeeHomePage(UserPassesTestMixin, TemplateView):
         return Employee.objects.filter(user=self.request.user).exists()
 
     def get_context_data(self, **kwargs):
+        user = self.request.user
         employee = Employee.objects.get(user=self.request.user)
         default = User.objects.get(username='default')
         default_employee = Employee.objects.get(user=default)
         today = datetime.date.today()
         context = super(EmployeeHomePage, self).get_context_data(**kwargs)
         context = {
-            'employee': self.request.user.employee,
+            'employee': employee,
             'shifts': Shift.objects.filter(Employee=employee, date=today),
             'date': str(calendar.day_name[today.weekday()]) + ',' + ' ' + today.strftime('%b, %d'),
             'available': Shift.objects.filter(up_for_trade=True).exclude(Employee=employee),
@@ -164,9 +165,7 @@ class ClockView(FormView):
         if form.is_valid():
             data = form.cleaned_data
             employee = Employee.objects.get(Employee_Number=data['Employee_Number'])
-            data = form.cleaned_data
             user = self.request.user
-            employee = Employee.objects.get(Employee_Number=data['Employee_Number'])
             if employee.clocked_in:
                 employee.clocked_in = False
                 messages.success(self.request, '{0} clocked out successfully'.format(employee))
