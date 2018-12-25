@@ -63,9 +63,7 @@ class CreateSchedulePage(TemplateView):
     template_name = 'Scheduling/CreateSchedulePage.html'
 
 def CreateSchedule(request):
-    user = request.User
     if Manager.objects.get(user=user).exists():
-        create_schedule()
-        return render('Employment:ViewSchedule')
+         create_schedule(request)
     else:
         return redriect('website:homepage_view')
