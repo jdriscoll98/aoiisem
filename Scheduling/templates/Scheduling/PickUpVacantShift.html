@@ -1,0 +1,35 @@
+{% extends 'website/base.html' %}
+
+{% block custom_css %}
+{% endblock custom_css %}
+
+{% block content %}
+{% include 'website/server_messages.html' %}
+<div class="container">
+  <div class="row">
+    <div class="col text-center">
+      <h1>Pick Up a Vacant Shift</h1>
+      <table>
+        <tr>
+          <th>Shift Day</th>
+          <th>Shift Type</th>
+        </tr>
+        <tr>
+          <th>{{ day }}</th>
+          <th>{{ shift.Type }}</th>
+        </tr>
+        </table>
+        <br/>
+        <form action="{% url 'Scheduling:PickUpVacant' shift.pk %}" method="post">
+          {% csrf_token %}
+          <button type="submit" value="Confirm" class="btn btn-primary">Confirm</button>
+        </form>
+    </div>
+  </div>
+</div>
+{% endblock content %}
+
+{% block js %}
+<script>
+</script>
+{% endblock js %}

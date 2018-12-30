@@ -66,7 +66,7 @@
           {% for shift in vacant %}
           <tr><td><strong>VACANT</strong> {{ shift }} | {{ shift.date }}</td>
           <td>
-            <a href="{% url 'Scheduling:PickUpVacant' shift.pk %}"
+            <a href="{% url 'Scheduling:PickUpVacantPage' shift.pk %}"
      class="btn btn-primary btn-sm"
      role="button">Pick Up</a>
           {% endfor %}

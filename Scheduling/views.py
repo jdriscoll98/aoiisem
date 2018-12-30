@@ -67,18 +67,29 @@ class PostShift(FormView):
 class CreateSchedulePage(TemplateView):
     template_name = 'Scheduling/CreateSchedulePage.html'
 
+class PickUpVacantPage(TemplateView):
+    template_name = 'Scheduling/PickUpVacantShift.html'
+
+    def get_context_data(self, *args, **kwargs):
+        shift = Shift.objects.get(pk=kwargs['pk'])
+        context = {
+            'shift': shift,
+            'day': shift.date.strftime('%A')
+        }
+        return context
+
 class PickUpVacant(RedirectView):
     permenant = True
     url = reverse_lazy('Employment:EmployeeHomePage')
 
-    def get(self, request, *args, **kwargs):
-        employee = Employee.objects.get(user=request.user)
+    def post(self, *args, **kwargs):
+        employee = Employee.objects.get(user=self.request.user)
         try:
             shift = Shift.objects.get(pk=kwargs['pk'])
             shift.Employee = employee
             shift.save()
         except Shift.DoesNotExist:
-            return http.HttpResponsePermanentRedirect(url)
+            return http.HttpResponsePermanentRedirect(self.url)
         date = shift.date
         shift_date = date + timedelta(days = 7)
         scheduleperiod = SchedulePeriod.objects.get(House=House.objects.get(name='AOpi'))
@@ -90,19 +101,7 @@ class PickUpVacant(RedirectView):
                 date = shift_date
             )
             shift_date += timedelta(days = 7)
-        if self.url:
-            if self.permanent:
-                return http.HttpResponsePermanentRedirect(self.url)
-            else:
-                return http.HttpResponseRedirect(self.url)
-        else:
-            logger.warning('Gone: %s', self.request.path,
-                        extra={
-                            'status_code': 410,
-                            'request': self.request
-                        })
-            return http.HttpResponseGone()
-
+        return self.get(self, *args, **kwargs)
 
 def CreateSchedule(request):
     if Manager.objects.get(user=user).exists():
