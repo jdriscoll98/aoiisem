@@ -1,1 +1,1 @@
-web: gunicorn aoiisem:application
+web: gunicorn aoiisem.config.wsgi:application --log-file
