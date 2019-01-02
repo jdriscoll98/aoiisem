@@ -1,12 +1,13 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django import http
 from django.http import JsonResponse, HttpResponseRedirect
 from django.contrib import messages
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, HttpResponse
 from django.template.loader import render_to_string
 from django.contrib.messages.views import SuccessMessageMixin
 
-from django.views.generic import TemplateView, View
+from django.views.generic import TemplateView, View, RedirectView
 from django.views.generic.edit import FormView, UpdateView
 from django.urls import reverse_lazy, reverse
 
@@ -22,12 +23,41 @@ from Scheduling.forms import AvailabilityForm
 from django.forms import formset_factory
 import json
 
+from Employment.utils import get_total_hours
 import datetime
 from datetime import timedelta
 import calendar
+import csv
 
 #-------------------------------------------------------------------------------
 # Page Views
+def DownloadTimeSheet(request):
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="aoiitimesheet.csv"'
+    writer = csv.writer(response)
+    employee_list = Employee.objects.all().exclude(Employee_Number=0000).order_by('user')
+    for employee in employee_list:
+        total_hours = get_total_hours(employee)
+        try:
+            clock_in = Clock.objects.filter(in_out = 'in', employee=employee)
+            in_data = ['IN']
+            for time in clock_in:
+                in_data.append(time.time.strftime('%H:%M:%S'))
+        except:
+            clock_in = []
+        try:
+            clock_out = Clock.objects.filter(in_out = 'out', employee=employee)
+            out_data = ['OUT']
+            for time in clock_out:
+                out_data.append(time.time.strftime('%H:%M:%S'))
+        except:
+            clock_out = []
+        writer.writerow([employee])
+        writer.writerow(in_data)
+        writer.writerow(out_data)
+        writer.writerow(['Total:', total_hours])
+        writer.writerow(' ')
+    return response
 #-------------------------------------------------------------------------------
 class ManagerHomePage(UserPassesTestMixin, TemplateView):
     template_name = 'Employment/ManagerHomePage.html'
@@ -68,8 +98,8 @@ class EmployeeHomePage(UserPassesTestMixin, TemplateView):
             'employee': employee,
             'shifts': Shift.objects.filter(Employee=employee, date=today),
             'date': str(calendar.day_name[today.weekday()]) + ',' + ' ' + today.strftime('%b, %d'),
-            'available': Shift.objects.filter(up_for_trade=True).exclude(Employee=employee),
-            'posted': Shift.objects.filter(up_for_trade=True, Employee=employee, date__gte=today),
+            'available': Shift.objects.filter(is_posted=True).exclude(Employee=employee),
+            'posted': Shift.objects.filter(is_posted=True, Employee=employee, date__gte=today),
             'vacant': Shift.objects.filter(Employee=default_employee)
         }
         return context
@@ -89,7 +119,9 @@ class ViewSchedule(LoginRequiredMixin, TemplateView):
             'shifts': shifts,
             'ShiftTypes': Types,
             'days': Days.objects.all(),
-            'full_schedule': full_schedule
+            'full_schedule': full_schedule,
+            'default': User.objects.get(username='default'),
+            'self': User.objects.get(username=self.request.user.username)
         }
         return context
 
@@ -168,15 +200,17 @@ class ClockView(FormView):
             user = self.request.user
             if employee.clocked_in:
                 employee.clocked_in = False
+                in_out = 'out'
                 messages.success(self.request, '{0} clocked out successfully'.format(employee))
             else:
                 employee.clocked_in = True
+                in_out = 'in'
                 messages.success(self.request, '{0} clocked in successfully'.format(employee))
             employee.save()
             Clock.objects.create(
                 employee=employee,
-                time = datetime.datetime.now().time(),
-                day = datetime.date.today()
+                time = datetime.datetime.now(),
+                in_out = in_out
             )
             return self.form_valid(form)
         else:

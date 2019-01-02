@@ -21,7 +21,7 @@ class ShiftForm(ModelForm):
             self.fields['Type'].disabled = True
             self.fields['Employee'].required = False
             self.fields['Employee'].widget.attrs['disabled'] = 'disabled'
-            self.fields['up_for_trade'].disabled = True
+            self.fields['is_posted'].disabled = True
             self.fields['date'].disabled = True
 
 class PostShiftForm(ModelForm):
@@ -35,8 +35,8 @@ class PostShiftForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super(PostShiftForm, self).__init__(*args, **kwargs)
         self.fields['Employee'].widget.attrs['readonly'] = 'readonly'
-        self.fields['up_for_trade'].initial = True
-        self.fields['up_for_trade'].widget = forms.HiddenInput()
+        self.fields['is_posted'].initial = True
+        self.fields['is_posted'].widget = forms.HiddenInput()
 
     def clean(self):
         cleaned_data = super(PostShiftForm, self).clean()

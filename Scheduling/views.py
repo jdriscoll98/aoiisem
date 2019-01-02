@@ -10,6 +10,7 @@ from django.urls import reverse_lazy
 from django.views.generic import TemplateView
 from django.views.generic.base import RedirectView
 from django.views.generic.edit import FormView, CreateView, UpdateView
+from django.views.generic.detail import DetailView
 
 from House.models import House
 from Scheduling.models import Shift, SchedulePeriod
@@ -36,10 +37,10 @@ class UpdateShift(UpdateView):
     def form_valid(self, form):
         employee = Employee.objects.get(user=self.request.user)
         shift = self.object
-        if shift.up_for_trade:
-            shift.up_for_trade = False
+        if shift.is_posted:
+            shift.is_posted = False
         else:
-            shift.up_for_trade = True
+            shift.is_posted = True
         shift.Employee = employee
         shift.save()
         return super(UpdateShift, self).form_valid(form)
@@ -60,7 +61,7 @@ class PostShift(FormView):
     def form_valid(self, form):
         data = form.cleaned_data
         shift = Shift.objects.get(Employee=data['Employee'], date=data['date'], Type=data['Type'])
-        shift.up_for_trade = True
+        shift.is_posted = True
         shift.save()
         return super(PostShift, self).form_valid(form)
 
@@ -101,6 +102,24 @@ class PickUpVacant(RedirectView):
                 date = shift_date
             )
             shift_date += timedelta(days = 7)
+        return self.get(self, *args, **kwargs)
+
+class TradeShiftPage(DetailView):
+    model = Shift
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['self'] = Employee.objects.get(user=self.request.user)
+        return context
+
+class PutUpForTrade(RedirectView):
+    permenant = True
+    url = reverse_lazy('Employment:EmployeeHomePage')
+
+    def post(self, **kwargs):
+        shift = Shift.objects.get(pk=kwargs['pk'])
+        shift.up_for_trade = True
+        shift.save()
         return self.get(self, *args, **kwargs)
 
 def CreateSchedule(request):

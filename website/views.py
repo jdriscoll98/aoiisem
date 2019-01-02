@@ -7,6 +7,7 @@ from django.template.loader import render_to_string
 import json
 
 from Employment.models import Employee, Manager
+from Application.models import Applicant
 
 #-------------------------------------------------------------------------------
 # Page Views
@@ -18,5 +19,7 @@ def homepage_view(request):
         return redirect('Employment:ManagerHomePage')
     elif Employee.objects.filter(user=user).exists():
         return redirect('Employment:EmployeeHomePage')
-    else:
+    elif Applicant.objects.filter(user=user).exists():
         return redirect('Application:ApplicationHomePage')
+    else:
+        return redirect('website:logout')

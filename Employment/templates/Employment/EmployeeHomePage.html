@@ -54,7 +54,7 @@
         <th colspan="2">Availabile Shifts</th>
         {% if available %}
           {% for shift in available %}
-            <tr><td>{{ shift }} | {{ shift.date }}</td>
+            <tr><td>{{ shift }} | {{ shift.date|date:"l" }}</td>
             <td>
               <a href="{% url 'Scheduling:UpdateShift' shift.pk %}"
        class="btn btn-primary btn-sm"
@@ -64,7 +64,7 @@
         {% endif %}
         {% if vacant %}
           {% for shift in vacant %}
-          <tr><td><strong>VACANT</strong> {{ shift }} | {{ shift.date }}</td>
+          <tr><td><strong>VACANT</strong> {{ shift }} | {{ shift.date|date:"l" }}</td>
           <td>
             <a href="{% url 'Scheduling:PickUpVacantPage' shift.pk %}"
      class="btn btn-primary btn-sm"

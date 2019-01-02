@@ -70,7 +70,10 @@
   <br/>
   <div class="row">
     <div class="col text-center">
-      <strong>View/Export Time Sheet Data</strong>
+      <form action="{% url 'Employment:DownloadTimeSheet' %}" method="post">
+        {% csrf_token %}
+        <button type="submit" value="Confirm" class="btn btn-primary">Download TimeSheet</button>
+      </form>
     </div>
     <div class="col text-center">
       <a class="btn btn-primary" href="{% url 'Scheduling:CreateSchedulePage' %}">Create Schedule</a>

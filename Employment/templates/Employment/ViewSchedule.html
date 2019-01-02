@@ -16,6 +16,9 @@
     border-bottom: 3px solid black;
   }
 
+.lunch {
+  background: lightgray
+}
 </style>
 {% endblock custom_css %}
 
@@ -35,37 +38,61 @@
           <tr class="divider">
             <td>Breakfast</td>
             {% for shift in shifts|slice:":5" %}
-            <td>{{ shift.Employee }}</td>
+            {% if default == shift.Employee.user %}
+              <td><a href="{% url 'Scheduling:PickUpVacantPage' shift.pk %}">Vacant</a></td>
+            {% else %}
+              <td><a href="{% url 'Scheduling:TradeShiftPage' shift.pk %}">{{ shift.Employee }}</a></td>
+          {% endif %}
             {% endfor %}
           </tr>
           <tr>
-            <td>Lunch</td>
+            <td class="lunch">Lunch</td>
             {% for shift in shifts|slice:"5:10" %}
-            <td>{{ shift.Employee }}</td>
+            {% if default == shift.Employee.user %}
+              <td class="lunch"><a href="{% url 'Scheduling:PickUpVacantPage' shift.pk %}">Vacant</a></td>
+            {% else %}
+            <td><a href="{% url 'Scheduling:TradeShiftPage' shift.pk %}">{{ shift.Employee }}</a></td>
+          {% endif %}
             {% endfor %}
           </tr>
           <tr class="divider">
-            <td>Lunch</td>
+            <td class="lunch">Lunch</td>
             {% for shift in shifts|slice:"10:15" %}
-            <td>{{ shift.Employee }}</td>
+              {% if default == shift.Employee.user %}
+                <td class="lunch"><a href="{% url 'Scheduling:PickUpVacantPage' shift.pk %}">Vacant</a></td>
+              {% else %}
+                <td class="lunch">{{ shift.Employee }}</td>
+            {% endif %}
             {% endfor %}
           </tr>
           <tr>
             <td>Dinner</td>
             {% for shift in shifts|slice:"15:20" %}
-            <td>{{ shift.Employee }}</td>
+              {% if default == shift.Employee.user %}
+                <a href="{% url 'Sccheduling:PickUpVacantPage' shift.pk %}">{{ shift.Employee }}</a>
+              {% else %}
+                <td>{{ shift.Employee }}</td>
+              {% endif %}
             {% endfor %}
           </tr>
           <tr>
             <td>Dinner</td>
             {% for shift in shifts|slice:"20:25" %}
-            <td>{{ shift.Employee }}</td>
+            {% if default == shift.Employee.user %}
+              <td><a href="{% url 'Scheduling:PickUpVacantPage' shift.pk %}">Vacant</a></td>
+            {% else %}
+              <td>{{ shift.Employee }}</td>
+          {% endif %}
             {% endfor %}
           </tr>
           <tr class="divider">
             <td >Dinner</td>
             {% for shift in shifts|slice:"25:30" %}
-            <td>{{ shift.Employee }}</td>
+            {% if default == shift.Employee.user %}
+              <td><a href="{% url 'Scheduling:PickUpVacantPage' shift.pk %}">Vacant</a></td>
+            {% else %}
+              <td>{{ shift.Employee }}</td>
+          {% endif %}
             {% endfor %}
           </tr>
         </table>

@@ -1,0 +1,44 @@
+{% extends 'website/base.html' %}
+
+{% block custom_css %}
+{% endblock custom_css %}
+
+{% block content %}
+{% include 'website/server_messages.html' %}
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-5 text-center">
+      <table>
+        <th>Shift</th>
+        <tr>
+          <td>{{ object.Employee }}</td>
+        </tr>
+        <tr>
+          <td>{{ object }}</td>
+        </tr>
+        <tr>
+          <td>{{ object.date|date:"l" }}</td>
+        </tr>
+      </table>
+      {% if object.Employee == self %}
+        {% if object.up_for_trade %}
+          <button>Undo post</button>
+        {% else %}
+          <button>Put up for trade/post</button>
+        {% endif %}
+      {% else %}
+        {% if object.up_for_trade %}
+          <button>Pick up</button>
+        {% else %}
+          <strong>Not up for trade</strong>
+        {% endif %}
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock content %}
+
+{% block js %}
+<script>
+</script>
+{% endblock js %}

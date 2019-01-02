@@ -25,6 +25,7 @@ class ShiftType(models.Model):
 
 class Shift(models.Model):
     Type = models.ForeignKey(ShiftType, on_delete=models.CASCADE)
+    is_posted = models.BooleanField(default=False)
     up_for_trade = models.BooleanField(default=False)
     Employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
     date = models.DateField()

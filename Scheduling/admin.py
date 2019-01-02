@@ -14,7 +14,7 @@ class SchedulePeriodAdmin(admin.ModelAdmin):
 
 @admin.register(Shift)
 class ShiftAdmin(admin.ModelAdmin):
-    list_display = ('employee_first_name', 'Type', 'date', 'up_for_trade')
+    list_display = ('employee_first_name', 'Type', 'date', 'is_posted')
     def employee_first_name(self, obj):
         return obj.Employee.user.first_name
 

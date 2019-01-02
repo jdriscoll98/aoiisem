@@ -20,12 +20,7 @@ def login(request):
 				raw_password = form.cleaned_data.get('password')
 				user = auth_authenticate(username=username, password=raw_password)
 				auth_login(request, user)
-				if Manager.objects.filter(user=user).exists():
-					return redirect('Employment:ManagerHomePage')
-				elif Employee.objects.filter(user=user).exists():
-					return redirect('Employment:EmployeeHomePage')
-				else:
-					return redirect('Application:ApplicationHomePage')
+				return redirect('website:homepage_view')
 
 		else:
 			raise SuspiciousOperation()

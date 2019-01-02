@@ -134,23 +134,3 @@ def get_employee(employee_list, type, day, date, scheduleperiod):
     else:
          employee = employee = Employee.objects.get(user=User.objects.get(username='default'))
     return employee
-
-    # try:
-    #     employee = employee_list[0].employee
-    # except:
-    #     employee = Employee.objects.get(user=User.objects.get(username='default'))
-    # if (employee.user.username != 'default') and len(employee_list) >= 2:
-    #     if get_already_scheduled(type, date, employee) and get_triple_shift(date, employee):
-    #         employee = employee_list[0].employee
-    #     elif get_already_scheduled(type, date, employee_list[1].employee) and get_triple_shift(date, employee_list[1].employee):
-    #         employee = employee_list[1].employee
-    #     else:
-    #         try:
-    #             employee = employee_list[2].employee
-    #         except:
-    #             employee = Employee.objects.get(user=User.objects.get(username='default'))
-    # else:
-    #     if (employee.user.username != 'default') and get_already_scheduled(type, date, employee) and get_triple_shift(date, employee):
-    #         employee = employee_list[0].employee
-    #     else:
-    #         employee = Employee.objects.get(user=User.objects.get(username='default')
