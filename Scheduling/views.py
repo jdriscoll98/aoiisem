@@ -12,9 +12,11 @@ from django.views.generic.base import RedirectView
 from django.views.generic.edit import FormView, CreateView, UpdateView
 from django.views.generic.detail import DetailView
 
+from core.mixins import ManagerRequired, EmployeeRequired
+
 from House.models import House
 from Scheduling.models import Shift, SchedulePeriod
-from Scheduling.forms import ShiftForm, PostShiftForm
+from Scheduling.forms import ShiftForm, PostShiftForm, SchedulePeriodForm
 from Employment.models import Employee
 
 from Scheduling.utils import create_schedule
@@ -26,7 +28,7 @@ from datetime import timedelta
 #-------------------------------------------------------------------------------
 # Page Views
 #-------------------------------------------------------------------------------
-class UpdateShift(UpdateView):
+class UpdateShift(EmployeeRequired, UpdateView):
     model = Shift
     form_class = ShiftForm
     template_name = 'Scheduling/shift_update_form.html'
@@ -45,7 +47,7 @@ class UpdateShift(UpdateView):
         shift.save()
         return super(UpdateShift, self).form_valid(form)
 
-class PostShift(FormView):
+class PostShift(EmployeeRequired, FormView):
     model = Shift
     form_class = PostShiftForm
     template_name = 'Scheduling/shift_update_form.html'
@@ -65,10 +67,10 @@ class PostShift(FormView):
         shift.save()
         return super(PostShift, self).form_valid(form)
 
-class CreateSchedulePage(TemplateView):
+class CreateSchedulePage(ManagerRequired, TemplateView):
     template_name = 'Scheduling/CreateSchedulePage.html'
 
-class PickUpVacantPage(TemplateView):
+class PickUpVacantPage(EmployeeRequired ,TemplateView):
     template_name = 'Scheduling/PickUpVacantShift.html'
 
     def get_context_data(self, *args, **kwargs):
@@ -79,7 +81,7 @@ class PickUpVacantPage(TemplateView):
         }
         return context
 
-class PickUpVacant(RedirectView):
+class PickUpVacant(EmployeeRequired, RedirectView):
     permenant = True
     url = reverse_lazy('Employment:EmployeeHomePage')
 
@@ -104,7 +106,7 @@ class PickUpVacant(RedirectView):
             shift_date += timedelta(days = 7)
         return self.get(self, *args, **kwargs)
 
-class TradeShiftPage(DetailView):
+class TradeShiftPage(EmployeeRequired, DetailView):
     model = Shift
 
     def get_context_data(self, **kwargs):
@@ -112,7 +114,7 @@ class TradeShiftPage(DetailView):
         context['self'] = Employee.objects.get(user=self.request.user)
         return context
 
-class TradeShift(RedirectView):
+class TradeShift(EmployeeRequired, RedirectView):
     permenant = True
     url = reverse_lazy('Employment:EmployeeHomePage')
 
@@ -125,7 +127,7 @@ class TradeShift(RedirectView):
         shift.save()
         return self.get(self, *args, **kwargs)
 
-class PickUpPermenantShift(RedirectView):
+class PickUpPermenantShift(EmployeeRequired, RedirectView):
     permenant = True
     url = reverse_lazy('Employment:EmployeeHomePage')
 
@@ -137,6 +139,11 @@ class PickUpPermenantShift(RedirectView):
         up_for_trade=False
         )
         return self.get(self, *args, **kwargs)
+
+class UpdateSchedulePeriod(ManagerRequired, UpdateView):
+    model = SchedulePeriod
+    form_class = SchedulePeriodForm
+    template_name = 'Scheduling/UpdateSchedulePeriod.html'
 
 
 def CreateSchedule(request):

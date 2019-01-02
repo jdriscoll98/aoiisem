@@ -29,7 +29,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 # Media Files
 
 MEDIA_ROOT =  os.path.dirname(os.path.abspath(__file__))
-MEDIA_URL = '/logos/'
+MEDIA_URL = '/resumes/'
 # Email Backend
 
 EMAIL_HOST = 'smtp-relay.gmail.com'

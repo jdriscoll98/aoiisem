@@ -7,6 +7,7 @@ from django.template.loader import render_to_string
 from django.contrib.auth.base_user import BaseUserManager
 from django.core import serializers
 from django.contrib.messages.views import SuccessMessageMixin
+from core.mixins import ManagerRequired, ApplicantRequired, ModelFormWidgetMixin
 
 from django.views.generic import TemplateView, View
 from django.views.generic.edit import FormView, UpdateView,DeleteView
@@ -17,13 +18,15 @@ from Application.forms import ApplicantForm
 from Employment.models import Employee
 from django.core.mail import send_mail
 
+from django import forms
+
 import datetime
 import json
 
 #-------------------------------------------------------------------------------
 # Page Views
 #-------------------------------------------------------------------------------
-class ApplicationHomePage(TemplateView):
+class ApplicationHomePage(ApplicantRequired, TemplateView):
     template_name = 'Application/ApplicationHomePage.html'
 
     def get_context_data(self, **kwargs):
@@ -37,7 +40,7 @@ class ApplicationHomePage(TemplateView):
 class NewApplication(FormView):
     template_name = 'Application/NewApplicationPage.html'
     form_class = ApplicantForm
-    success_url = reverse_lazy('Application:ApplicantHomePage')
+    success_url = reverse_lazy('website:homepage_view')
 
     def form_valid(self, form):
         data = form.cleaned_data
@@ -58,15 +61,18 @@ class NewApplication(FormView):
         messages.success(self.request, 'Application Created Successfully')
         return super().form_valid(form)
 
-class UpdateApplication(SuccessMessageMixin, UpdateView):
+class UpdateApplication(ApplicantRequired, ModelFormWidgetMixin, SuccessMessageMixin, UpdateView):
     template_name = 'Application/UpdateApplicationPage.html'
     model = Applicant
     fields = '__all__'
+    widgets = {
+        'old': forms.HiddenInput(),
+    }
     success_message = 'Application Updated Successfully'
     def get_success_url(self):
         return reverse_lazy('Application:ApplicationHomePage')
 
-class ApplicantDetails(TemplateView):
+class ApplicantDetails(ManagerRequired, TemplateView):
     template_name = 'Application/ApplicantDetails.html'
     def get_context_data(self, **kwargs):
         context = {
@@ -74,10 +80,13 @@ class ApplicantDetails(TemplateView):
         }
         return context
 
-class AcceptApplicant(SuccessMessageMixin, UpdateView):
+class AcceptApplicant(ManagerRequired, ModelFormWidgetMixin, SuccessMessageMixin, UpdateView):
     template_name='Application/AcceptApplicant.html'
     model = Applicant
     fields = '__all__'
+    widgets = {
+        'old': forms.HiddenInput(),
+    }
     success_message = 'Application Accepted Successfully'
     success_url = reverse_lazy('Employment:ManagerHomePage')
 
@@ -107,7 +116,7 @@ class AcceptApplicant(SuccessMessageMixin, UpdateView):
         )
         return super().form_valid(form)
 
-class DeleteApplicant(DeleteView):
+class DeleteApplicant(ManagerRequired, DeleteView):
     template_name='Application/DeleteApplicant.html'
     model = Applicant
     fields = '__all__'

@@ -39,7 +39,10 @@ margin-right: auto;
           <tr><td class="labels">Phone Number</td><td>{{ employee.phone_number }}</td>
           <tr><td class="labels">emaiil</td><td>{{ employee.email }}</td>
       </table>
-      </div>
+      <br/>
+      <a href="{% url 'Employment:DeleteEmployee' employee.pk %}" class="btn btn-danger">Delete Employee</a>
+      <a href="{% url 'Employment:ManagerHomePage' %}" class="btn btn-primary">Go back</a>
+    </div>
     <div class="col">
       <table>
         <th colspan="2">Employee Shifts</th>
@@ -49,13 +52,6 @@ margin-right: auto;
       </table>
     </div>
     </div>
-    <br/>
-    <br/>
-    <div class="row">
-      <div class="col text-center">
-        <a class="btn btn-primary" href="">Send Message</a>
-      </div>
-  </div>
 </div>
 
 

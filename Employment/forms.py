@@ -7,7 +7,8 @@ class EmployeeForm(ModelForm):
     last_name = forms.CharField(max_length = 100)
     class Meta:
         model = Employee
-        exclude = ['user']
+        exclude = ['user', 'pay_rate', 'Employee_Number', 'clocked_in', 'min_hours', 'max_hours', 'num_hours']
+        fields_order = ['first_name', 'last_name', 'phone_number', 'email']
 
     def clean(self):
         cleaned_data = super(EmployeeForm, self).clean()

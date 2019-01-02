@@ -9,7 +9,7 @@ class ApplicantForm(ModelForm):
     class Meta:
         model = Applicant
         exclude = ['user', 'date_submitted']
-        fields = ['first_name', 'last_name', 'email', 'Grade', 'statement_of_interest']
+        fields = ['first_name', 'last_name', 'phone_number', 'email', 'Grade', 'statement_of_interest']
 
     def __init__(self, *args, **kwargs):
         super(ApplicantForm, self).__init__(*args, **kwargs)
@@ -18,3 +18,4 @@ class ApplicantForm(ModelForm):
             self.fields['user'].required = False
             self.fields['user'].widget.attrs['disabled'] = True
             self.fields['date_submitted'].disabled = True
+            self.fields['old'].widget = forms.HiddenInput()

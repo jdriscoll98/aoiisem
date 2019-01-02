@@ -115,22 +115,13 @@ role="button">Edit Employee Information</a>
 class="btn btn-primary btn-sm"
 role="button">Submit Availability</a>
     </div>
-  </div>
   <br/>
-  <div class="row">
-    <div class="col text-center lower" >
-      <a href="{% url 'Employment:SubmitAvailability' %}"
-class="btn btn-primary btn-sm"
-role="button">View Timesheet Data</a>
-      </div>
-      <div class="col text-center lower" >
+      <div class="col text-center" >
         <a href="{% url 'Employment:ViewSchedule' %}"
   class="btn btn-primary btn-sm"
   role="button">View Schedule</a>
       </div>
-  </div>
-  <br/>
-  <br/>
+    </div>
 </div>
 {% endblock content %}
 

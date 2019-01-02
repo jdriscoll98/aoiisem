@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from House.models import House
 from Employment.models import Employee
 from django.urls import reverse_lazy
+from general.utils import get_default_employee
 
 class Days(models.Model):
     day = models.CharField(max_length=10)
