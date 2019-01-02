@@ -1,1 +1,1 @@
-web: gunicorn aoiisem.config:app
+web: gunicorn aoiisem.config:application
