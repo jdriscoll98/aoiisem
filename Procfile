@@ -1,1 +1,1 @@
-web: gunicorn aoiisem.config.wsgi:application 
+web: gunicorn config.wsgi:application 
