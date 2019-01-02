@@ -1,5 +1,5 @@
 from .base import *
-import django_heroku
+
 import json
 
 from django.core.exceptions import ImproperlyConfigured
@@ -69,5 +69,3 @@ EMAIL_USE_TLS = True
 RECAPTCHA_SECRET_KEY = get_secret('RECAPTCHA_SECRET_KEY')
 
 RECAPTCHA_SITE_KEY = get_secret('RECAPTCHA_SITE_KEY')
-
-django_heroku.settings(locals())
