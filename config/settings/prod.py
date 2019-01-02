@@ -5,7 +5,7 @@ import json
 from django.core.exceptions import ImproperlyConfigured
 
 # JSON-based secrets module
-with open(os.path.join(BASE_DIR, 'secrets.json')) as f:
+with open(os.path.join(BASE_DIR, 'local-secrets.json')) as f:
 	secrets = json.loads(f.read())
 
 def get_secret(setting, secrets=secrets):
@@ -22,6 +22,30 @@ DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
+INSTALLED_APPS = [
+	'django.contrib.admin',
+	'django.contrib.auth',
+	'django.contrib.contenttypes',
+	'django.contrib.sessions',
+	'django.contrib.messages',
+	'django.contrib.staticfiles',
+	'core',
+	'website',
+	'Application',
+	'Employment',
+	'House',
+	'Scheduling',
+	'SetUP',
+]
+
+DATABASES = {
+	'default': {
+		'ENGINE': 'django.db.backends.sqlite3',
+		'NAME': os.path.join(BASE_DIR, 'data', 'db.sqlite3'),
+	}
+}
+
+LOGIN_URL = 'core:login'
 # Static Files
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')

@@ -51,7 +51,7 @@ if [ ! $? -eq 0 ]; then
   exit 1
 fi
 echo "Done"
-python manage.py loaddata config/fixtures/*.json
+python manage.py loaddata config/fixtures/development/*.json
 if [ ! $? -eq 0 ]; then
   exit 1
 fi

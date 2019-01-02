@@ -19,7 +19,7 @@ fi
 echo
 
 echo "Checking Secrets ..."
-if [ ! -f secrets.json ]; then
+if [ ! -f local-secrets.json ]; then
   echo "[ERROR] Missing secrets.json! Aborting ..."; echo; exit 1
 fi
 echo "Done"

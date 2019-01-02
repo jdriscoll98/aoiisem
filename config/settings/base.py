@@ -27,14 +27,24 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__fil
 # SECURITY WARNING: don't run with debug turned on in production!
 # [See custom settings]
 #DEBUG = True
-
+#DEBUG = bool(os.environ.get('DJANGO_DEBUG', True)
 # [See custom settings]
 #ALLOWED_HOSTS = []
-
+# with open(os.path.join(BASE_DIR, 'local-secrets.json')) as f:
+# 	secrets = json.loads(f.read())
+#
+# def get_secret(setting, secrets=secrets):
+# 	'''Get the secret variable or return explicit exception.'''
+# 	try:
+# 		return secrets[setting]
+# 	except KeyError:
+# 		error_msg = 'Set the {0} environment variable'.format(setting)
+# 		raise ImproperlyConfigured(error_msg)
+#
+# SECRET_KEY = get_secret('SECRET_KEY')
 
 # Application definition
 
-# [Added 'website']
 INSTALLED_APPS = [
 	'django.contrib.admin',
 	'django.contrib.auth',
