@@ -54,7 +54,7 @@
         <th colspan="2">Availabile Shifts</th>
         {% if available %}
           {% for shift in available %}
-            <tr><td>{{ shift }} | {{ shift.date|date:"l" }}</td>
+            <tr><td>{{ shift }} | {{ shift.date|date:"l" }} | {{ shift.employee }}</td>
             <td>
               <a href="{% url 'Scheduling:UpdateShift' shift.pk %}"
        class="btn btn-primary btn-sm"
@@ -70,8 +70,15 @@
      class="btn btn-primary btn-sm"
      role="button">Pick Up</a>
           {% endfor %}
-        {% else %}
-          <tr><td>No shifts up for grabs!</td></tr>
+        {% endif %}
+        {% if trade %}
+          {% for shift in trade %}
+          <tr><td><strong>PERMENANT</strong> {{ shift }} | {{ shift.date|date:"l" }} | {{ shift.Employee }}</td>
+          <td>
+            <a
+     class="btn btn-primary btn-sm"
+     role="button">Pick Up</a>
+          {% endfor %}
         {% endif %}
       </table>
     </div>

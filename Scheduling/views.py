@@ -112,15 +112,32 @@ class TradeShiftPage(DetailView):
         context['self'] = Employee.objects.get(user=self.request.user)
         return context
 
-class PutUpForTrade(RedirectView):
+class TradeShift(RedirectView):
     permenant = True
     url = reverse_lazy('Employment:EmployeeHomePage')
 
-    def post(self, **kwargs):
+    def post(self, request, *args, **kwargs):
         shift = Shift.objects.get(pk=kwargs['pk'])
-        shift.up_for_trade = True
+        if shift.up_for_trade == True:
+            shift.up_for_trade = False
+        else:
+            shift.up_for_trade = True
         shift.save()
         return self.get(self, *args, **kwargs)
+
+class PickUpPermenantShift(RedirectView):
+    permenant = True
+    url = reverse_lazy('Employment:EmployeeHomePage')
+
+    def post(self, request, *args, **kwargs):
+        shift = Shift.objects.get(pk=kwargs['pk'])
+        employee = Employee.objects.get(user=self.request.user)
+        Shift.objects.filter(Employee=shift.Employee, Type=shift.Type).update(
+        Employee=employee,
+        up_for_trade=False
+        )
+        return self.get(self, *args, **kwargs)
+
 
 def CreateSchedule(request):
     if Manager.objects.get(user=user).exists():

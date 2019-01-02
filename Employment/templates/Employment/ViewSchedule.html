@@ -19,6 +19,10 @@
 .lunch {
   background: lightgray
 }
+
+.label {
+  font-weight: bold;
+}
 </style>
 {% endblock custom_css %}
 
@@ -36,62 +40,62 @@
           <th>{{ day }}</th>
           {% endfor %}
           <tr class="divider">
-            <td>Breakfast</td>
+            <td class="label">Breakfast</td>
             {% for shift in shifts|slice:":5" %}
             {% if default == shift.Employee.user %}
-              <td><a href="{% url 'Scheduling:PickUpVacantPage' shift.pk %}">Vacant</a></td>
+              <td><a class="btn btn-danger" href="{% url 'Scheduling:PickUpVacantPage' shift.pk %}">Vacant</a></td>
             {% else %}
-              <td><a href="{% url 'Scheduling:TradeShiftPage' shift.pk %}">{{ shift.Employee }}</a></td>
+              <td><a class="btn btn-primary" href="{% url 'Scheduling:TradeShiftPage' shift.pk %}">{{ shift.Employee }}</a></td>
           {% endif %}
             {% endfor %}
           </tr>
           <tr>
-            <td class="lunch">Lunch</td>
+            <td class="lunch label">Lunch</td>
             {% for shift in shifts|slice:"5:10" %}
             {% if default == shift.Employee.user %}
-              <td class="lunch"><a href="{% url 'Scheduling:PickUpVacantPage' shift.pk %}">Vacant</a></td>
+              <td class="lunch"><a class="btn btn-danger"  href="{% url 'Scheduling:PickUpVacantPage' shift.pk %}">Vacant</a></td>
             {% else %}
-            <td><a href="{% url 'Scheduling:TradeShiftPage' shift.pk %}">{{ shift.Employee }}</a></td>
+            <td class="lunch"><a class="btn btn-primary" href="{% url 'Scheduling:TradeShiftPage' shift.pk %}">{{ shift.Employee }}</a></td>
           {% endif %}
             {% endfor %}
           </tr>
           <tr class="divider">
-            <td class="lunch">Lunch</td>
+            <td class="lunch label">Lunch</td>
             {% for shift in shifts|slice:"10:15" %}
               {% if default == shift.Employee.user %}
-                <td class="lunch"><a href="{% url 'Scheduling:PickUpVacantPage' shift.pk %}">Vacant</a></td>
+                <td class="lunch"><a class="btn btn-danger"  href="{% url 'Scheduling:PickUpVacantPage' shift.pk %}">Vacant</a></td>
               {% else %}
-                <td class="lunch">{{ shift.Employee }}</td>
+                <td class="lunch"><a class="btn btn-primary" href="{% url 'Scheduling:TradeShiftPage' shift.pk %}">{{ shift.Employee }}</a></td>
             {% endif %}
             {% endfor %}
           </tr>
           <tr>
-            <td>Dinner</td>
+            <td class="label">Dinner</td>
             {% for shift in shifts|slice:"15:20" %}
               {% if default == shift.Employee.user %}
-                <a href="{% url 'Sccheduling:PickUpVacantPage' shift.pk %}">{{ shift.Employee }}</a>
+                <a class="btn btn-danger"  href="{% url 'Sccheduling:PickUpVacantPage' shift.pk %}">{{ shift.Employee }}</a>
               {% else %}
-                <td>{{ shift.Employee }}</td>
+              <td><a class="btn btn-primary" href="{% url 'Scheduling:TradeShiftPage' shift.pk %}">{{ shift.Employee }}</a></td>
               {% endif %}
             {% endfor %}
           </tr>
           <tr>
-            <td>Dinner</td>
+            <td class="label">Dinner</td>
             {% for shift in shifts|slice:"20:25" %}
             {% if default == shift.Employee.user %}
-              <td><a href="{% url 'Scheduling:PickUpVacantPage' shift.pk %}">Vacant</a></td>
+              <td><a class="btn btn-danger" href="{% url 'Scheduling:PickUpVacantPage' shift.pk %}">Vacant</a></td>
             {% else %}
-              <td>{{ shift.Employee }}</td>
+              <td><a class="btn btn-primary" href="{% url 'Scheduling:TradeShiftPage' shift.pk %}">{{ shift.Employee }}</a></td>
           {% endif %}
             {% endfor %}
           </tr>
           <tr class="divider">
-            <td >Dinner</td>
+            <td class="label" >Dinner</td>
             {% for shift in shifts|slice:"25:30" %}
             {% if default == shift.Employee.user %}
-              <td><a href="{% url 'Scheduling:PickUpVacantPage' shift.pk %}">Vacant</a></td>
+              <td><a class="btn btn-danger" href="{% url 'Scheduling:PickUpVacantPage' shift.pk %}">Vacant</a></td>
             {% else %}
-              <td>{{ shift.Employee }}</td>
+              <td><a class="btn btn-primary" href="{% url 'Scheduling:TradeShiftPage' shift.pk %}">{{ shift.Employee }}</a></td>
           {% endif %}
             {% endfor %}
           </tr>

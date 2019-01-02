@@ -7,7 +7,7 @@
 {% include 'website/server_messages.html' %}
 <div class="container-fluid">
   <div class="row">
-    <div class="col-5 text-center">
+    <div class="col text-center">
       <table>
         <th>Shift</th>
         <tr>
@@ -20,15 +20,25 @@
           <td>{{ object.date|date:"l" }}</td>
         </tr>
       </table>
+      <br/>
       {% if object.Employee == self %}
         {% if object.up_for_trade %}
-          <button>Undo post</button>
+        <form action="{% url 'Scheduling:TradeShift' object.pk %}" method="post">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-danger">Undo Post</button>
+        </form>
         {% else %}
-          <button>Put up for trade/post</button>
+        <form action="{% url 'Scheduling:TradeShift' object.pk %}" method="post">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-primary">Put up Shift for Trade</button>
+        </form>
         {% endif %}
       {% else %}
         {% if object.up_for_trade %}
-          <button>Pick up</button>
+        <form action="{% url 'Scheduling:PickUpPermenantShift' object.pk %}" method="post">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-primary">Pick Up</button>
+        </form>
         {% else %}
           <strong>Not up for trade</strong>
         {% endif %}

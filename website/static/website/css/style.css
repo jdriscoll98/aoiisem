@@ -6,6 +6,7 @@
 }
 h1, h2, h3, h4, h5, h6 {
     font-family: 'Thasadith', sans-serif;
+    color: white
 }
 p, div {
     /* font-family: 'Noto Serif', serif; */
@@ -13,7 +14,7 @@ p, div {
 
 }
 body {
-    background: url("../images/full-bloom.png") repeat 0 0;
+    background: url("../images/grey_wash_wall_@2x.png") repeat 0 0;
 }
 
 table, th, td {
@@ -21,6 +22,7 @@ border: 1px solid black;
 padding: 15px;
 margin-left: auto;
 margin-right: auto;
+background-color: rgba(255,255, 255, .1)
 
 }
 </style>
