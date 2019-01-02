@@ -1,1 +1,1 @@
-web: gunicorn SororityEmployeeManagement.wsgi --log-file -
+web: gunicorn aoiisem.wsgi --log-file -

@@ -1,8 +1,9 @@
 from .base import *
-
+import django_heroku
 import json
 
 from django.core.exceptions import ImproperlyConfigured
+import dj_database_url
 
 # JSON-based secrets module
 with open(os.path.join(BASE_DIR, 'local-secrets.json')) as f:
@@ -45,6 +46,9 @@ DATABASES = {
 	}
 }
 
+db_from_env = dj_database_url.config(conn_max_age=500)
+DATABASES['default'].update(db_from_env)
+
 LOGIN_URL = 'core:login'
 # Static Files
 
@@ -65,3 +69,5 @@ EMAIL_USE_TLS = True
 RECAPTCHA_SECRET_KEY = get_secret('RECAPTCHA_SECRET_KEY')
 
 RECAPTCHA_SITE_KEY = get_secret('RECAPTCHA_SITE_KEY')
+
+django_heroku.settings(locals())
