@@ -16,6 +16,7 @@ from django.contrib.auth.mixins import UserPassesTestMixin
 
 from core.mixins import ManagerRequired, EmployeeRequired
 
+from django.utils.timezone import now
 from django.contrib.auth.base_user import BaseUserManager
 
 from Employment.models import Employee, Clock, Manager
@@ -202,6 +203,7 @@ class ClockView(FormView):
             employee.save()
             Clock.objects.create(
                 employee=employee,
+                time = now,
                 in_out = in_out
             )
             return self.form_valid(form)

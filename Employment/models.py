@@ -28,7 +28,7 @@ class Manager(models.Model):
 
 class Clock(models.Model):
     employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
-    time = models.DateTimeField(default=now,  editable=False, blank=True)
+    time = models.DateTimeField(null=True)
     in_out = models.CharField(max_length=3, blank=True)
 
     def __str__(self):
