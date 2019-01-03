@@ -18,7 +18,7 @@ def login(request):
 			if form.is_valid():
 				username = form.cleaned_data.get('username')
 				raw_password = form.cleaned_data.get('password')
-				user = auth_authenticate(username__iexact=username, password=raw_password)
+				user = auth_authenticate(username=username, password=raw_password)
 				auth_login(request, user)
 				return redirect('website:homepage_view')
 
