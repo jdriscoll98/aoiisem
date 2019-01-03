@@ -22,4 +22,4 @@ def homepage_view(request):
     elif Applicant.objects.filter(user=user).exists():
         return redirect('Application:ApplicationHomePage')
     else:
-        return redirect('website:logout')
+        return redirect('website:login')
