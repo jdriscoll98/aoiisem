@@ -55,6 +55,7 @@ class NewApplication(FormView):
         Applicant.objects.create(
             user= user,
             date_submitted = datetime.date.today(),
+            phone_number = data['phone_number'],
             Grade = data['Grade'],
             statement_of_interest = data['statement_of_interest']
         )
@@ -106,13 +107,6 @@ class AcceptApplicant(ManagerRequired, ModelFormWidgetMixin, SuccessMessageMixin
             email = user.email,
             pay_rate = int(8),
             Employee_Number = code,
-        )
-        send_mail(
-            'Congratulations!',
-            ('You have been accetepted as a new employee! Employee number = {0}'.format(code)),
-            'AOii@do-not-reply.com',
-            ['{0}'.format(user.email)],
-            fail_silently=False,
         )
         return super().form_valid(form)
 
