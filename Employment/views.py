@@ -194,11 +194,11 @@ class ClockView(FormView):
             user = self.request.user
             if employee.clocked_in:
                 employee.clocked_in = False
-                inout = str(out)
+                inout = 'out'
                 messages.success(self.request, '{0} clocked out successfully'.format(employee))
             else:
                 employee.clocked_in = True
-                inout = str(in)
+                inout = 'in'
                 messages.success(self.request, '{0} clocked in successfully'.format(employee))
             employee.save()
             Clock.objects.create(
