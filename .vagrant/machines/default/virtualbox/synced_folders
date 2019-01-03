@@ -1,1 +1,5 @@
+<<<<<<< HEAD
+{"virtualbox":{"/vagrant":{"guestpath":"/vagrant","hostpath":"C:/Users/colep/Documents/GitHub/BetterDevelopment","disabled":false,"__vagrantfile":true}}}
+=======
 {"virtualbox":{"/vagrant":{"guestpath":"/vagrant","hostpath":"C:/Users/jdris/Documents/GitHub/aoiisem","disabled":false,"__vagrantfile":true}}}
+>>>>>>> 35d22498d746df7bb0dfee9bb6f78cf9160c0ef3
