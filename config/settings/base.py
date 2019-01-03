@@ -57,6 +57,7 @@ INSTALLED_APPS = [
 	'House',
 	'Scheduling',
 	'SetUP',
+	'raven.contrib.django.raven_compat',
 ]
 
 MIDDLEWARE = [
