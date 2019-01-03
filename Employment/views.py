@@ -203,7 +203,7 @@ class ClockView(FormView):
             employee.save()
             Clock.objects.create(
                 employee=employee,
-                time = now,
+                time = datetime.datetime.now(),
                 in_out = str(inout)
             )
             return self.form_valid(form)
