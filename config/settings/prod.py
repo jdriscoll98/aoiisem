@@ -63,4 +63,6 @@ EMAIL_HOST = 'smtp-relay.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 
-# Google ReCaptcha
+AUTHENTICATION_BACKENDS = (
+    ('django.contrib.auth.backends.ModelBackend'),
+)
