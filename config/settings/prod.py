@@ -40,18 +40,18 @@ INSTALLED_APPS = [
 	'SetUP',
 ]
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'db_name',
-        'USER': 'db_user',
-        'PASSWORD': 'db_user_password',
-        'HOST': '',
-        'PORT': 'db_port_number',
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'db_name',
+#         'USER': 'db_user',
+#         'PASSWORD': 'db_user_password',
+#         'HOST': '',
+#         'PORT': '',
+#     }
+# }
 
-db_from_env = dj_database_url.config(conn_max_age=500)
+db_from_env = dj_database_url.config(default='postgres://jhrculleivnrun:44e9949d06ffaa2fc0f7451e925c7ba5658f96e3f8214ce096b7b0240c1ca022@ec2-107-20-250-113.compute-1.amazonaws.com:5432/dciibotrihvmab', conn_max_age=600)
 DATABASES['default'].update(db_from_env)
 
 LOGIN_URL = 'core:login'
