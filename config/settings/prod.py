@@ -51,7 +51,7 @@ INSTALLED_APPS = [
 #     }
 # }
 
-db_from_env = dj_database_url.config(default='postgres://jhrculleivnrun:44e9949d06ffaa2fc0f7451e925c7ba5658f96e3f8214ce096b7b0240c1ca022@ec2-107-20-250-113.compute-1.amazonaws.com:5432/dciibotrihvmab', conn_max_age=600)
+db_from_env = dj_database_url.config(default='postgres://btpytwxgwccirz:4685fc197621261828ed92d3a8c6657c4685df735d40ba66ac1785dbab7bf034@ec2-23-21-200-100.compute-1.amazonaws.com:5432/d71is24rvij45u', conn_max_age=600)
 DATABASES['default'].update(db_from_env)
 
 LOGIN_URL = 'core:login'
