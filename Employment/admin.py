@@ -7,6 +7,8 @@ class EmployeeAdmin(admin.ModelAdmin):
         return obj.user.first_name +  ' ' + obj.user.last_name
 
     name.admin_order_field = 'user__first_name'
+    readonly_fields = ('id',)
+
 
     list_display = ('name', 'phone_number', 'email')
 
