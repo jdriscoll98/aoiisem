@@ -19,7 +19,7 @@ class Migration(migrations.Migration):
             name='Clock',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('time', models.DateTimeField()),
+                ('time', models.DateTimeField(null=True)),
                 ('in_out', models.CharField(blank=True, max_length=3)),
             ],
         ),
