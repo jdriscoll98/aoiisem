@@ -73,7 +73,7 @@
             <td class="label">Dinner</td>
             {% for shift in shifts|slice:"15:20" %}
               {% if default == shift.Employee.user %}
-                <a class="btn btn-danger"  href="{% url 'Scheduling:PickUpVacantPage' shift.pk %}">Vacant</a>
+                <td><a class="btn btn-danger"  href="{% url 'Scheduling:PickUpVacantPage' shift.pk %}">Vacant</a></td>
               {% else %}
               <td><a class="btn btn-primary" href="{% url 'Scheduling:TradeShiftPage' shift.pk %}">{{ shift.Employee }}</a></td>
               {% endif %}
