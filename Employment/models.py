@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.core.validators import RegexValidator
+from django.utils.timezone import now
 
 class Employee(models.Model):
     user = models.OneToOneField(User, default=1, on_delete=models.CASCADE)
@@ -27,7 +28,7 @@ class Manager(models.Model):
 
 class Clock(models.Model):
     employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
-    time = models.DateTimeField(auto_now=True)
+    time = models.DateTimeField(default=now,  editable=False, blank=True)
     in_out = models.CharField(max_length=3, blank=True)
 
     def __str__(self):
