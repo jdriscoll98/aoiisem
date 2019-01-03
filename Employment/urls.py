@@ -1,7 +1,8 @@
 from django.conf.urls import url, include
 from django.urls import path
 from Employment.views import (ManagerHomePage, EmployeeHomePage, SubmitAvailability,
-                                EmployeeUpdate, ClockView, EmployeeDetails, ViewSchedule, DownloadTimeSheet )
+                                EmployeeUpdate, ClockView, EmployeeDetails, ViewSchedule,
+                                 DownloadTimeSheet, DeleteEmployee, CreateEmployee)
 from . import views
 
 # Application Routes (URLs)
@@ -12,6 +13,8 @@ urlpatterns = [
     url(r'^ManagerHomePage/$',ManagerHomePage.as_view(), name='ManagerHomePage'),
     url(r'^EmployeeHomePage/$',EmployeeHomePage.as_view(), name='EmployeeHomePage'),
     url(r'^EmployeeDetails/(?P<pk>\d+)/$',EmployeeDetails.as_view(), name='EmployeeDetails'),
+    url(r'^DeleteEmployee/(?P<pk>\d+)/$',DeleteEmployee.as_view(), name='DeleteEmployee'),
+    url(r'^CreateEmployee/$',CreateEmployee.as_view(), name='CreateEmployee'),
     url(r'^ViewSchedule/$',ViewSchedule.as_view(), name='ViewSchedule'),
     url(r'^Clock/$',ClockView.as_view(), name='Clock'),
     url(r'^DownloadTimeSheet/$', views.DownloadTimeSheet, name='DownloadTimeSheet'),

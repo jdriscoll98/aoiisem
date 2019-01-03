@@ -45,10 +45,18 @@ margin-right: auto;
             <td class = "labels"> Email </td>
             <td> {{ applicant.user.email }} </td>
             </tr>
+            <tr>
+              <td class = "labels"> Phone Number </td>
+              <td> {{ applicant.phone_number }} </td>
+              </tr>
           <tr>
             <td class = "labels"> Statement of Interest </td>
             <td> {{ applicant.statement_of_interest }} </td>
             </tr>
+            <tr>
+              <td class = "labels"> Resume </td>
+              <td> {{ applicant.Resume.url }} </td>
+              </tr>
         </table>
     </div>
     </div>
@@ -61,6 +69,15 @@ margin-right: auto;
       <div class="col text-left">
         <a href="{% url 'Application:DeleteApplicant' applicant.pk %}" class="btn btn-danger" >Decline</a>
       </div>
+    </div>
+    <div class="row">
+      <div class="col text-center">
+        <br/>
+        <a href="{% url 'website:homepage_view' %}" class="btn btn-primary">Go back</a>
+
+
+      </div>
+
     </div>
   </div>
 {% endblock content %}

@@ -1,6 +1,8 @@
-from Employment.models import Clock
+from Employment.models import Clock, Employee
 from datetime import timedelta, datetime
 import datetime
+from django.http import HttpResponse
+import csv
 
 
 def export_timesheet_data():
@@ -29,8 +31,8 @@ def export_timesheet_data():
         writer.writerow(out_data)
         writer.writerow(['Total:', total_hours])
         writer.writerow(' ')
-        return response
-    
+    return response
+
 def get_total_hours(employee):
     clocks = Clock.objects.filter(employee=employee)
     total_time = 0

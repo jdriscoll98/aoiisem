@@ -8,15 +8,18 @@ from django.template.loader import render_to_string
 from django.contrib.messages.views import SuccessMessageMixin
 
 from django.views.generic import TemplateView, View, RedirectView
-from django.views.generic.edit import FormView, UpdateView
+from django.views.generic.edit import FormView, UpdateView, DeleteView, CreateView
 from django.urls import reverse_lazy, reverse
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.mixins import UserPassesTestMixin
 
+from core.mixins import ManagerRequired, EmployeeRequired
+
+from django.contrib.auth.base_user import BaseUserManager
 
 from Employment.models import Employee, Clock, Manager
-from Employment.forms import ClockForm
+from Employment.forms import ClockForm, EmployeeForm
 from Application.models import Applicant
 from Scheduling.models import Availability, Shift, ShiftType, Days
 from Scheduling.forms import AvailabilityForm
@@ -25,20 +28,15 @@ import json
 
 from Employment.utils import export_timesheet_data
 import datetime
-from datetime import timedelta
+from datetime import timedelta, date
 import calendar
 import csv
 
 #-------------------------------------------------------------------------------
 # Page Views
-def DownloadTimeSheet(request):
-    return export_timesheet_data()
 #-------------------------------------------------------------------------------
-class ManagerHomePage(UserPassesTestMixin, TemplateView):
+class ManagerHomePage(ManagerRequired, TemplateView):
     template_name = 'Employment/ManagerHomePage.html'
-
-    def test_func(self):
-        return Manager.objects.filter(user=self.request.user).exists()
 
     def get_context_data(self, **kwargs):
         context = super(ManagerHomePage, self).get_context_data(**kwargs)
@@ -52,15 +50,11 @@ class ManagerHomePage(UserPassesTestMixin, TemplateView):
             'scheduled': scheduled,
             'manager': self.request.user,
             'applicants': Applicant.objects.filter(old=False),
-        #    'clocked': get_clocked_in()
         }
         return context
 
-class EmployeeHomePage(UserPassesTestMixin, TemplateView):
+class EmployeeHomePage(EmployeeRequired, TemplateView):
     template_name = 'Employment/EmployeeHomePage.html'
-
-    def test_func(self):
-        return Employee.objects.filter(user=self.request.user).exists()
 
     def get_context_data(self, **kwargs):
         user = self.request.user
@@ -79,6 +73,37 @@ class EmployeeHomePage(UserPassesTestMixin, TemplateView):
             'trade': Shift.objects.filter(up_for_trade=True)
         }
         return context
+
+class DeleteEmployee(ManagerRequired, DeleteView):
+    template_name = 'Employment/DeleteEmployee.html'
+    model = Employee
+    success_url = reverse_lazy('Employment:ManagerHomePage')
+
+class CreateEmployee(ManagerRequired, FormView):
+    template_name = 'Employment/CreateEmployee.html'
+    form_class = EmployeeForm
+    success_url = reverse_lazy('Employment:ManagerHomePage')
+
+    def form_valid(self, form):
+        data = form.cleaned_data
+        password = BaseUserManager.make_random_password(self)
+        phone_number = str(data['phone_number'])
+        code = int(phone_number[-4:])
+        user = User.objects.create_user(
+            username=(str(data['first_name']) + '_' + str(data['last_name'])),
+            first_name = data['first_name'],
+            last_name = data['last_name'],
+            email = data['email'],
+            password = password
+        )
+        employee = Employee.objects.create(
+            user=user,
+            phone_number=phone_number,
+            email = user.email,
+            Employee_Number = code,
+        )
+        return super(CreateEmployee, self).form_valid(form)
+
 
 class ViewSchedule(LoginRequiredMixin, TemplateView):
     template_name = 'Employment/ViewSchedule.html'
@@ -101,11 +126,8 @@ class ViewSchedule(LoginRequiredMixin, TemplateView):
         }
         return context
 
-class EmployeeDetails(UserPassesTestMixin, TemplateView):
+class EmployeeDetails(ManagerRequired, TemplateView):
     template_name = 'Employment/EmployeeDetails.html'
-
-    def test_func(self):
-        return Manager.objects.filter(user=self.request.user).exists()
 
     def get_context_data(self, **kwargs):
         employee = Employee.objects.get(pk=kwargs['pk'])
@@ -117,21 +139,14 @@ class EmployeeDetails(UserPassesTestMixin, TemplateView):
         }
         return context
 
-class EmployeeUpdate(UserPassesTestMixin, SuccessMessageMixin, UpdateView):
+class EmployeeUpdate(EmployeeRequired, SuccessMessageMixin, UpdateView):
     template_name = 'Employment/employee_update_form.html'
-
-    def test_func(self):
-        return Employee.objects.filter(user=self.request.user).exists()
-
     model = Employee
     fields = ('phone_number', 'email', 'Employee_Number', 'min_hours', 'max_hours')
     success_message = 'Employee Information Updated Successfully'
     success_url = reverse_lazy('Employment:EmployeeHomePage')
 
-class SubmitAvailability(UserPassesTestMixin, View):
-
-    def test_func(self):
-        return Employee.objects.filter(user=self.request.user).exists()
+class SubmitAvailability(EmployeeRequired, View):
 
     availability_FormSet = formset_factory(AvailabilityForm, max_num=3)
     template_name = 'Employment/SubmitAvailability.html'
@@ -152,6 +167,8 @@ class SubmitAvailability(UserPassesTestMixin, View):
     def post(self,request,*args,**kwargs):
         availability_FormSet=self.availability_FormSet(self.request.POST)
         if availability_FormSet.is_valid():
+            employee = Employee.objects.get(user=request.user)
+            Availability.objects.filter(employee=employee).delete()
             for availability in availability_FormSet:
                 availability.save()
             messages.success(self.request, 'Availability Submitted Successfully')
@@ -195,3 +212,9 @@ class ClockView(FormView):
     def form_invalid(self,form):
         print('invalid')
         return super(ClockView, self).form_invalid(form)
+
+def DownloadTimeSheet(request):
+    if Manager.objects.filter(user=request.user).exists():
+        return export_timesheet_data()
+    else:
+        return redirect('website:homepage_view')

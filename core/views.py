@@ -29,7 +29,6 @@ def login(request):
 
 	context = {
 		'form': form,
-		'recaptcha_site_key': settings.RECAPTCHA_SITE_KEY,
 	}
 	return render(request, 'registration/login_page.html', context)
 

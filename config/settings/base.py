@@ -15,8 +15,6 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 # [Added extra level for custom settings]
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
@@ -27,14 +25,27 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__fil
 # SECURITY WARNING: don't run with debug turned on in production!
 # [See custom settings]
 #DEBUG = True
-
+#DEBUG = bool(os.environ.get('DJANGO_DEBUG', True)
 # [See custom settings]
 #ALLOWED_HOSTS = []
-
+# with open(os.path.join(BASE_DIR, 'local-secrets.json')) as f:
+# 	secrets = json.loads(f.read())
+#
+# def get_secret(setting, secrets=secrets):
+# 	'''Get the secret variable or return explicit exception.'''
+# 	try:
+# 		return secrets[setting]
+# 	except KeyError:
+# 		error_msg = 'Set the {0} environment variable'.format(setting)
+# 		raise ImproperlyConfigured(error_msg)
+#
+# SECRET_KEY = get_secret('SECRET_KEY')
 
 # Application definition
+AUTHENTICATION_BACKENDS = (
+('django.contrib.auth.backends.ModelBackend'),
+)
 
-# [Added 'website']
 INSTALLED_APPS = [
 	'django.contrib.admin',
 	'django.contrib.auth',
@@ -49,6 +60,7 @@ INSTALLED_APPS = [
 	'House',
 	'Scheduling',
 	'SetUP',
+	'raven.contrib.django.raven_compat',
 ]
 
 MIDDLEWARE = [
@@ -59,6 +71,7 @@ MIDDLEWARE = [
 	'django.contrib.auth.middleware.AuthenticationMiddleware',
 	'django.contrib.messages.middleware.MessageMiddleware',
 	'django.middleware.clickjacking.XFrameOptionsMiddleware',
+	'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -104,9 +117,6 @@ AUTH_PASSWORD_VALIDATORS = [
 		'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
 	},
 	{
-		'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-	},
-	{
 		'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
 	},
 ]
@@ -128,10 +138,9 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
-
+#STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 STATIC_URL = '/static/'
-
-
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 # Login Settings
 
 LOGIN_URL = 'core:login'

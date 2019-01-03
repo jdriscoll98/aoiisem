@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from House.models import House
 from Employment.models import Employee
 from django.urls import reverse_lazy
+from general.utils import get_default_employee
 
 class Days(models.Model):
     day = models.CharField(max_length=10)
@@ -35,7 +36,7 @@ class Shift(models.Model):
 
 class Availability(models.Model):
     ShiftType = models.ForeignKey(ShiftType, on_delete=models.CASCADE)
-    days = models.ManyToManyField(Days)
+    days = models.ManyToManyField(Days, blank=True)
     employee = models.ForeignKey(Employee, default=1, on_delete=models.CASCADE)
 
     def __str__(self):

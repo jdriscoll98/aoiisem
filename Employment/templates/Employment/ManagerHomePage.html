@@ -35,7 +35,7 @@
   <div class="row">
     <div class="col text-center first">
     <table>
-      <th>Employees</th>
+      <th>Employees    <a class="fa fa-plus" href="{% url 'Employment:CreateEmployee' %}"></a></th>
     {% for employee in employees %}
       <tr><td><a class="btn btn-primary" href="{% url 'Employment:EmployeeDetails' employee.pk %}"><i class="fa fa-user"></i> {{ employee }}</a></td></tr>
     {% endfor %}
@@ -75,8 +75,13 @@
         <button type="submit" value="Confirm" class="btn btn-primary">Download TimeSheet</button>
       </form>
     </div>
+    <a href="{% url 'Employment:ViewSchedule' %}"
+class="btn btn-primary">View Schedule</a>
     <div class="col text-center">
       <a class="btn btn-primary" href="{% url 'Scheduling:CreateSchedulePage' %}">Create Schedule</a>
+    </div>
+    <div class="col text-center">
+      <a class="btn btn-primary" href="{% url 'Scheduling:UpdateSchedulePeriod' pk=1 %}">Update Schedule Period</a>
     </div>
 </div>
 {% endblock content %}

@@ -22,8 +22,10 @@
         <br/>
         <form action="{% url 'Scheduling:PickUpVacant' shift.pk %}" method="post">
           {% csrf_token %}
-          <button type="submit" value="Confirm" class="btn btn-primary">Confirm</button>
+          <button type="submit" value="Confirm" class="btn btn-success">Confirm</button>
         </form>
+        <br/>
+        <a href="{% url 'website:homepage_view' %}" class="btn btn-primary">Go back</a>
     </div>
   </div>
 </div>

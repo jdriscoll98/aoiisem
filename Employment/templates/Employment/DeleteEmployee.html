@@ -1,0 +1,27 @@
+{% extends 'website/base.html' %}
+
+{% block custom_css %}
+{% endblock custom_css %}
+
+{% block content %}
+{% include 'website/server_messages.html' %}
+<div class="container">
+  <div class="row">
+    <div class="col text-center">
+      <form method="post">{% csrf_token %}
+        <h1>Are you sure you want to delete "{{ object }}"?</h1>
+        <input class="btn btn-danger" type="submit" value="Delete">
+      </form>
+      <br/>
+      <a class="btn btn-primary" href="{% url 'Employment:EmployeeDetails' object.pk %}">Go back</a>
+    </div>
+
+  </div>
+
+</div>
+{% endblock content %}
+
+{% block js %}
+<script>
+</script>
+{% endblock js %}

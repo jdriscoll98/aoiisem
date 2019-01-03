@@ -8,6 +8,8 @@ from django.urls import reverse_lazy
 from django.contrib.auth.base_user import BaseUserManager
 from django import forms
 
+from core.mixins import ManagerRequired
+
 from House.forms import HouseForm
 from Employment.forms import EmployeeForm
 from Scheduling.forms import SchedulePeriodForm
@@ -25,7 +27,7 @@ import json
 #-------------------------------------------------------------------------------
 
 
-class RegisterHouse(FormView):
+class RegisterHouse(ManagerRequired, FormView):
     template_name = 'setUP/HouseForm.html'
     form_class = HouseForm
     success_url = reverse_lazy('SetUP:SchedulePeriod')
@@ -41,7 +43,7 @@ class RegisterHouse(FormView):
         messages.success(self.request, 'House Registered Successfully')
         return super(RegisterHouse, self).form_valid(form)
 
-class SchedulePeriodForm(FormView):
+class SchedulePeriodForm(ManagerRequired, FormView):
     template_name = 'setUP/scheduleperiod_form.html'
     form_class = SchedulePeriodForm
     success_url = reverse_lazy('SetUP:ShiftTypes')
@@ -56,12 +58,12 @@ class SchedulePeriodForm(FormView):
             messages.success(self.request, 'Schedule Period Created Successfully')
         return super(SchedulePeriodForm, self).form_valid(form)
 
-class ShiftTypes(CreateView):
+class ShiftTypes(ManagerRequired, CreateView):
     template_name = 'setUP/ShiftTypesForm.html'
     model = ShiftType
     fields = '__all__'
 
-class CurrentEmployees(FormView):
+class CurrentEmployees(ManagerRequired, FormView):
     template_name = 'setUP/CurrentEmployeesForm.html'
     form_class = EmployeeForm
     success_url = reverse_lazy('SetUP:SetUpComplete')
@@ -87,8 +89,8 @@ class CurrentEmployees(FormView):
         )
         return super(CurrentEmployees, self).form_valid(form)
 
-class SetUpComplete(TemplateView):
+class SetUpComplete(ManagerRequired, TemplateView):
     template_name = 'setUP/SetUpComplete.html'
 
-class BeginSetUp(TemplateView):
+class BeginSetUp(ManagerRequired, TemplateView):
     template_name = 'setUP/BeginSetUp.html'

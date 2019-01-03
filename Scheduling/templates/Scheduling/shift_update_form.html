@@ -16,19 +16,17 @@ tr {
 {% include 'website/server_messages.html' %}
 <div class="container-fluid">
   <div class="row">
-    <div class="col">
-    </div>
-    <div class="col-5 text-center">
+    <div class="col text-center">
       <form method="POST">
           <table class="text-left">
         {% csrf_token %}
         {{ form.as_table }}
           </table>
         <br/>
-        <input type="submit" value="Confirm" />
+        <input class="btn btn-success" type="submit" value="Confirm" />
       </form>
-    </div>
-    <div class="col">
+      <br/>
+      <a href="{% url 'website:homepage_view' %}" class="btn btn-primary">Go back</a>
     </div>
   </div>
 </div>

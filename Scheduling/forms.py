@@ -21,7 +21,8 @@ class ShiftForm(ModelForm):
             self.fields['Type'].disabled = True
             self.fields['Employee'].required = False
             self.fields['Employee'].widget.attrs['disabled'] = 'disabled'
-            self.fields['is_posted'].disabled = True
+            self.fields['is_posted'].widget = forms.HiddenInput()
+            self.fields['up_for_trade'].widget = forms.HiddenInput()
             self.fields['date'].disabled = True
 
 class PostShiftForm(ModelForm):
@@ -55,14 +56,6 @@ class AvailabilityForm(ModelForm):
             'days' : CheckboxSelectMultiple,
             'employee': forms.HiddenInput()
         }
-
-    def clean(self):
-        cleaned_data = super(AvailabilityForm, self).clean()
-        if Availability.objects.filter(ShiftType=cleaned_data['ShiftType'], employee=cleaned_data['employee']).exists():
-            raise forms.ValidationError('You already have an availability for this shift type')
-        else:
-            pass
-        return cleaned_data
 
 class SchedulePeriodForm(ModelForm):
     class Meta:

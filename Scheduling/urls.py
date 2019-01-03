@@ -2,7 +2,7 @@ from django.conf.urls import url, include
 from django.urls import path
 from Scheduling.views import (UpdateShift, PostShift, CreateSchedulePage,
  							PickUpVacantPage, PickUpVacant, TradeShiftPage,
-							 TradeShift, PickUpPermenantShift)
+							 TradeShift, PickUpPermenantShift, UpdateSchedulePeriod)
 from . import views
 # Application Routes (URLs)
 
@@ -16,6 +16,7 @@ urlpatterns = [
 		url(r'^PickUpVacantShiftPage/(?P<pk>\d+)/$', PickUpVacantPage.as_view(), name='PickUpVacantPage'),
 		url(r'^PickUpPermenantShift/(?P<pk>\d+)/$', PickUpPermenantShift.as_view(), name='PickUpPermenantShift'),
 		url(r'^PickUpVacant/(?P<pk>\d+)/$', PickUpVacant.as_view(), name='PickUpVacant'),
+		url(r'^UpdateSchedulePeriod/(?P<pk>\d+)/$', UpdateSchedulePeriod.as_view(), name='UpdateSchedulePeriod'),
 		url(r'^CreateSchedulePage/$', CreateSchedulePage.as_view(), name='CreateSchedulePage'),
 		url(r'^CreateSchedule/$', views.create_schedule, name='create_schedule'),
     	# General Page Views
