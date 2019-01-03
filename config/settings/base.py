@@ -42,6 +42,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__fil
 # SECRET_KEY = get_secret('SECRET_KEY')
 
 # Application definition
+AUTHENTICATION_BACKENDS = (
+('django.contrib.auth.backends.ModelBackend'),
+)
 
 INSTALLED_APPS = [
 	'django.contrib.admin',

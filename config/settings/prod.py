@@ -1,3 +1,4 @@
+
 from .base import *
 
 import json
@@ -40,11 +41,16 @@ INSTALLED_APPS = [
 ]
 
 DATABASES = {
-	'default': {
-		'ENGINE': 'django.db.backends.sqlite3',
-		'NAME': os.path.join(BASE_DIR, 'data', 'db.sqlite3'),
-	}
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'db_name',
+        'USER': 'db_user',
+        'PASSWORD': 'db_user_password',
+        'HOST': '',
+        'PORT': 'db_port_number',
+    }
 }
+
 db_from_env = dj_database_url.config(conn_max_age=500)
 DATABASES['default'].update(db_from_env)
 
@@ -62,7 +68,3 @@ MEDIA_URL = '/resumes/'
 EMAIL_HOST = 'smtp-relay.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-
-AUTHENTICATION_BACKENDS = (
-    ('django.contrib.auth.backends.ModelBackend'),
-)
