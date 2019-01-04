@@ -12,7 +12,9 @@ p, div {
     font-family: 'Thasadith', sans-serif;
 
 }
-
+body {
+  background: url("images/full-bloom.png");
+}
 
 table, th, td, tr {
 border: 1px solid black;
