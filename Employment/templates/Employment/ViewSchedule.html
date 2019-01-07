@@ -102,7 +102,9 @@
         </table>
         <br/>
         <a href="{% url 'website:homepage_view' %}" class="btn btn-success">Go back</a>
-
+        <!-- {% for shift in shifts %}
+          <strong>{{ shift.Employee }} + {{ shift }}</strong>
+        {% endfor %} -->
       {% else %}
         <h1>Schedule has not been created yet, please check back!</h1>
         <a href="{% url 'website:homepage_view' %}" class="btn btn-primary">Go back</a>
