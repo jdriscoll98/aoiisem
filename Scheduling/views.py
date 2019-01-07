@@ -89,7 +89,7 @@ class PickUpVacant(EmployeeRequired, RedirectView):
         employee = Employee.objects.get(user=self.request.user)
         try:
             shift = Shift.objects.get(pk=kwargs['pk'])
-            print(shift + 'first object')
+            print(shift)
             default = shift.Employee
             shift.Employee = employee
             shift.save()
@@ -106,10 +106,10 @@ class PickUpVacant(EmployeeRequired, RedirectView):
                 date = shift_date,
             )
             shift = shifts[0]
-            print(shift + 'pre update')
+            print(shift)
             shift.Employee = employee
             shift.save()
-            print(shift + ' post update ')
+            print(shift)
             shift_date += timedelta(days = 7)
         return self.get(self, *args, **kwargs)
 
