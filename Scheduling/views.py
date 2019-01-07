@@ -108,6 +108,8 @@ class PickUpVacant(EmployeeRequired, RedirectView):
 
 class TradeShiftPage(EmployeeRequired, DetailView):
     model = Shift
+    template_name = 'Scheduling/shift_detail.html'
+    
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['self'] = Employee.objects.get(user=self.request.user)
