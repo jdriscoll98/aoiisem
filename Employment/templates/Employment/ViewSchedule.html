@@ -86,7 +86,7 @@
               <td><a class="btn btn-danger" href="{% url 'Scheduling:PickUpVacantPage' shift.pk %}">Vacant</a></td>
             {% else %}
               <td><a class="btn btn-primary" href="{% url 'Scheduling:TradeShiftPage' shift.pk %}">{{ shift.Employee }}</a></td>
-          {% endif %}
+              {% endif %}
             {% endfor %}
           </tr>
           <tr class="divider">
