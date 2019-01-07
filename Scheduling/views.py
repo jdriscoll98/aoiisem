@@ -89,26 +89,25 @@ class PickUpVacant(EmployeeRequired, RedirectView):
         employee = Employee.objects.get(user=self.request.user)
         try:
             shift = Shift.objects.get(pk=kwargs['pk'])
-            print(shift)
             default = shift.Employee
             shift.Employee = employee
             shift.save()
         except Shift.DoesNotExist:
             return http.HttpResponsePermanentRedirect(self.url)
-        date = shift.date
-        shift_date = date + timedelta(days = 7)
-        scheduleperiod = SchedulePeriod.objects.get(House=House.objects.get(name='Aoii'))
-        end_date = scheduleperiod.end_date
-        while shift_date < end_date:
-            shifts = Shift.objects.filter(
-                Type = shift.Type,
-                Employee = default,
-                date = shift_date,
-            )
-            shift = shifts[0]
-            shift.Employee = employee
-            shift.save()
-            shift_date += timedelta(days = 7)
+        # date = shift.date
+        # shift_date = date + timedelta(days = 7)
+        # scheduleperiod = SchedulePeriod.objects.get(House=House.objects.get(name='Aoii'))
+        # end_date = scheduleperiod.end_date
+        # while shift_date < end_date:
+        #     shifts = Shift.objects.filter(
+        #         Type = shift.Type,
+        #         Employee = default,
+        #         date = shift_date,
+        #     )
+        #     shift = shifts[0]
+        #     shift.Employee = employee
+        #     shift.save()
+        #     shift_date += timedelta(days = 7)
         return self.get(self, *args, **kwargs)
 
 class TradeShiftPage(EmployeeRequired, DetailView):
