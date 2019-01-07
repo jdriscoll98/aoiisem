@@ -71,7 +71,6 @@ class EmployeeHomePage(EmployeeRequired, TemplateView):
             'date': str(calendar.day_name[today.weekday()]) + ',' + ' ' + today.strftime('%b, %d'),
             'available': Shift.objects.filter(is_posted=True).exclude(Employee=employee),
             'posted': Shift.objects.filter(is_posted=True, Employee=employee, date__gte=today),
-            'vacant': Shift.objects.filter(Employee=default_employee),
             'trade': Shift.objects.filter(up_for_trade=True)
         }
         return context
