@@ -70,6 +70,7 @@ class EmployeeHomePage(EmployeeRequired, TemplateView):
             'shifts': Shift.objects.filter(Employee=employee, date=today),
             'date': str(calendar.day_name[today.weekday()]) + ',' + ' ' + today.strftime('%b, %d'),
             'available': Shift.objects.filter(is_posted=True).exclude(Employee=employee),
+            'vacant': Shift.objects.filter(Employee=default_employee),
             'posted': Shift.objects.filter(is_posted=True, Employee=employee, date__gte=today),
             'trade': Shift.objects.filter(up_for_trade=True)
         }
@@ -124,7 +125,6 @@ class ViewSchedule(LoginRequiredMixin, TemplateView):
             'days': Days.objects.all(),
             'full_schedule': full_schedule,
             'default': default,
-            'vacant': Shift.objects.get(Employee=Employee.objects.get(user=default)),
             'self': User.objects.get(username=self.request.user.username)
         }
         return context
