@@ -77,7 +77,7 @@ def create_schedule(request):
             date = date + timedelta(days=1)
     default_user = User.objects.get(username='default')
     default = Employee.objects.get(user=default_user)
-    for shift in Shift.objects.exclude(Employee=default):
+    for shift in Shift.objects.all():
         date = shift.date
         shift_date = date + timedelta(7)
         end_date = scheduleperiod.end_date
