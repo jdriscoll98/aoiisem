@@ -111,14 +111,13 @@ class ViewSchedule(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         Types = ShiftType.objects.all()
-        shifts = Shift.objects.all()
         if len(shifts) >= 30:
             full_schedule = True
         else:
             full_schedule = False
 
         context = {
-            'shifts': shifts,
+            'shifts': Shift.objects.all(),
             'ShiftTypes': Types,
             'days': Days.objects.all(),
             'full_schedule': full_schedule,
