@@ -95,7 +95,7 @@ class PickUpVacant(EmployeeRequired, RedirectView):
             return http.HttpResponsePermanentRedirect(self.url)
         date = shift.date
         shift_date = date + timedelta(days = 7)
-        scheduleperiod = SchedulePeriod.objects.get(House=House.objects.get(name='AOpi'))
+        scheduleperiod = SchedulePeriod.objects.get(House=House.objects.get(pk=1))
         end_date = scheduleperiod.end_date
         while shift_date < end_date:
             shift = Shift.objects.create(
