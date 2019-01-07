@@ -99,12 +99,13 @@ class PickUpVacant(EmployeeRequired, RedirectView):
         scheduleperiod = SchedulePeriod.objects.get(House=House.objects.get(name='Aoii'))
         end_date = scheduleperiod.end_date
         while shift_date < end_date:
-            shift = Shift.objects.update_or_create(
+            shifts = Shift.objects.filter(
                 Type = shift.Type,
                 Employee = default,
                 date = shift_date,
-                defaults={'Employee': employee},
             )
+            shift = shifts[0]
+            shift.Employee = employee
             shift_date += timedelta(days = 7)
         return self.get(self, *args, **kwargs)
 
