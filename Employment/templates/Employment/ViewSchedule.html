@@ -41,7 +41,7 @@
           {% endfor %}
           <tr class="divider">
             <td class="label">Breakfast</td>
-            {% for shift in shifts|dictsort:"pk"|slice:":5" %}
+            {% for shift in shifts|slice:":5" %}
               {% if shift.Employee.user == default %}
                 <td><a class="btn btn-danger" href="{% url 'Scheduling:PickUpVacantPage' shift.pk %}">Vacant</a></td>
               {% else %}
@@ -61,7 +61,7 @@
           </tr>
           <tr class="divider">
             <td class="lunch label">Lunch</td>
-            {% for shift in shifts|dictsort:"pk"|slice:"10:15" %}
+            {% for shift in shifts|slice:"10:15" %}
               {% if shift.Employee.user == default %}
                 <td class="lunch"><a class="btn btn-danger"  href="{% url 'Scheduling:PickUpVacantPage' shift.pk %}">Vacant</a></td>
               {% else %}
@@ -71,7 +71,7 @@
           </tr>
           <tr>
             <td class="label">Dinner</td>
-            {% for shift in shifts|dictsort:"pk"|slice:"15:20" %}
+            {% for shift in shifts|slice:"15:20" %}
               {% if shift.Employee.user == default %}
                 <td><a class="btn btn-danger"  href="{% url 'Scheduling:PickUpVacantPage' shift.pk %}">Vacant</a></td>
               {% else %}
@@ -81,7 +81,7 @@
           </tr>
           <tr>
             <td class="label">Dinner</td>
-            {% for shift in shifts|dictsort:"pk"|slice:"20:25" %}
+            {% for shift in shifts|slice:"20:25" %}
               {% if shift.Employee.user == default %}
               <td><a class="btn btn-danger" href="{% url 'Scheduling:PickUpVacantPage' shift.pk %}">Vacant</a></td>
               {% else %}
@@ -91,7 +91,7 @@
           </tr>
           <tr class="divider">
             <td class="label" >Dinner</td>
-            {% for shift in shifts|dictsort:"pk"|slice:"25:30" %}
+            {% for shift in shifts|slice:"25:30" %}
               {% if shift.Employee.user == default %}
                 <td><a class="btn btn-danger" href="{% url 'Scheduling:PickUpVacantPage' shift.pk %}">Vacant</a></td>
               {% else %}
@@ -102,9 +102,6 @@
         </table>
         <br/>
         <a href="{% url 'website:homepage_view' %}" class="btn btn-success">Go back</a>
-        <!-- {% for shift in shifts %}
-          <strong>{{ shift.Employee }} + {{ shift }}</strong>
-        {% endfor %} -->
       {% else %}
         <h1>Schedule has not been created yet, please check back!</h1>
         <a href="{% url 'website:homepage_view' %}" class="btn btn-primary">Go back</a>
