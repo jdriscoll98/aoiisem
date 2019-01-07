@@ -106,10 +106,8 @@ class PickUpVacant(EmployeeRequired, RedirectView):
                 date = shift_date,
             )
             shift = shifts[0]
-            print(shift)
             shift.Employee = employee
             shift.save()
-            print(shift)
             shift_date += timedelta(days = 7)
         return self.get(self, *args, **kwargs)
 
