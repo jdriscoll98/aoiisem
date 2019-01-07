@@ -112,6 +112,7 @@ class ViewSchedule(LoginRequiredMixin, TemplateView):
     def get_context_data(self, **kwargs):
         Types = ShiftType.objects.all()
         shifts = Shift.objects.all().order_by('pk')
+        default = User.objects.get(username='default')
         if len(shifts) >= 30:
             full_schedule = True
         else:
@@ -122,7 +123,8 @@ class ViewSchedule(LoginRequiredMixin, TemplateView):
             'ShiftTypes': Types,
             'days': Days.objects.all(),
             'full_schedule': full_schedule,
-            'default': User.objects.get(username='default'),
+            'default': default,
+            'vacant': Shift.objects.get(Employee=Employee.objects.get(user=default)),
             'self': User.objects.get(username=self.request.user.username)
         }
         return context
