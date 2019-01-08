@@ -56,8 +56,8 @@
       {% for shift in shifts_tomorrow %}
         <tr><td>{{ shift }}</td>
         <td><a href="{% url 'Scheduling:UpdateShift' shift.pk %}"
-  class="btn btn-primary btn-sm"
-  role="button">Post</a></td></tr>
+ class="btn btn-primary btn-sm"
+ role="button">Post</a></td></tr>
       {% endfor %}
     {% else %}
         <tr><td>No Shifts Tomorrow!</td></tr>
