@@ -32,4 +32,14 @@ margin-right: auto;
 background-color: rgba(255,255, 255, .1);
 font-weight: bold;
 }
+button {
+
+     margin-top:10px;
+
+}
+a {
+
+     margin-top:10px;
+
+}
 </style>
