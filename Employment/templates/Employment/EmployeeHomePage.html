@@ -52,7 +52,7 @@
     <div class="col text-center first"
     <table>
       <th colspan="2">Shifts Tomorrow</th>
-    {% if shifts_tomorrw %}
+    {% if shifts_tomorrow %}
       {% for shift in shifts_tomorrow %}
         <tr><td>{{ shift }}</td>
         <td><a href="{% url 'Scheduling:UpdateShift' shift.pk %}"
