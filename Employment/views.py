@@ -64,10 +64,12 @@ class EmployeeHomePage(EmployeeRequired, TemplateView):
         default = User.objects.get(username='default')
         default_employee = Employee.objects.get(user=default)
         today = datetime.date.today()
+        tomorrow = today + timedelta(days = 1)
         context = super(EmployeeHomePage, self).get_context_data(**kwargs)
         context = {
             'employee': employee,
             'shifts': Shift.objects.filter(Employee=employee, date=today),
+            'shifts_tomorrow': Shift.objects.filter(Employee=employee, date=tomorrow),
             'date': str(calendar.day_name[today.weekday()]) + ',' + ' ' + today.strftime('%b, %d'),
             'available': Shift.objects.filter(is_posted=True).exclude(Employee=employee),
             'vacant': Shift.objects.filter(Employee=default_employee),

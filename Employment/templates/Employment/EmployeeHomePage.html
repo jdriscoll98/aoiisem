@@ -47,6 +47,17 @@
     {% else %}
         <tr><td>No Shifts Today!</td></tr>
     {% endif %}
+    <th colspan="2">Shifts Today</th>
+  {% if shifts_tomorrw %}
+    {% for shift in shifts_tomorrow %}
+      <tr><td>{{ shift }}</td>
+      <td><a href="{% url 'Scheduling:UpdateShift' shift.pk %}"
+class="btn btn-primary btn-sm"
+role="button">Post</a></td></tr>
+    {% endfor %}
+  {% else %}
+      <tr><td>No Shifts Tomorrow!</td></tr>
+  {% endif %}
     </table>
     </div>
     <div class="col text-center middle">
