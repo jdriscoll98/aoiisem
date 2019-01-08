@@ -47,6 +47,7 @@ class ManagerHomePage(ManagerRequired, TemplateView):
         for shift in  Shift.objects.filter(date=datetime.date.today()):
             if shift.Type.end_time > datetime.datetime.now().time():
                 scheduled.append(shift)
+        scheduled.sort(key=lambda x:, x.Type.start_time)
         context = {
             'employees': Employee.objects.exclude(user=default),
             'scheduled': scheduled,
