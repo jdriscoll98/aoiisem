@@ -49,7 +49,7 @@ class ManagerHomePage(ManagerRequired, TemplateView):
                 scheduled.append(shift)
         context = {
             'employees': Employee.objects.exclude(user=default),
-            'scheduled': scheduled.sort(key=lambda x: x.Type.start_time),
+            'scheduled': scheduled.sort(key=lambda x: x.Type),
             'manager': self.request.user,
             'applicants': Applicant.objects.filter(old=False),
         }
