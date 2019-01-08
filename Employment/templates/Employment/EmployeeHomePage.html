@@ -34,7 +34,7 @@
   <br/>
   <br/>
   <div class="row">
-    <div class="col text-center">
+    <div class="col-2 text-center">
     <table>
       <th colspan="2">Shifts Today</th>
     {% if shifts %}
@@ -49,7 +49,7 @@
     {% endif %}
     </table>
     </div>
-    <div class="col text-center first">
+    <div class="col-2 text-center first">
     <table>
       <th colspan="2">Shifts Tomorrow</th>
     {% if shifts_tomorrow %}
@@ -64,7 +64,7 @@
     {% endif %}
     </table>
     </div>
-    <div class="col text-center middle">
+    <div class="col-4 text-center middle">
       <table>
         <th colspan="2">Availabile Shifts</th>
         {% if available %}
@@ -97,7 +97,7 @@
         {% endif %}
       </table>
     </div>
-    <div class="col text-center last">
+    <div class="col-4 text-center last">
       <table>
         <th colspan="1">Your posted shifts</th>
         <td><a href="{% url 'Scheduling:PostShift' pk=employee.pk %}"
